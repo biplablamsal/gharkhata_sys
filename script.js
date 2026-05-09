@@ -6669,20 +6669,32 @@ window.doRegisterModern = doRegisterModern;
       document.body.style.overflow = "";
     }
 
+    // Hamburger button click handler
     if (hamburger) {
       hamburger.addEventListener("click", function (e) {
         e.preventDefault();
         e.stopPropagation();
         openSidebar();
       });
+
+      // Also add touch event for better mobile support
+      hamburger.addEventListener("touchstart", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openSidebar();
+      });
     }
 
+    // Sidebar close button handler
     if (sidebarClose) {
       sidebarClose.addEventListener("click", closeSidebar);
+      sidebarClose.addEventListener("touchstart", closeSidebar);
     }
 
+    // Backdrop click handler
     if (backdrop) {
       backdrop.addEventListener("click", closeSidebar);
+      backdrop.addEventListener("touchstart", closeSidebar);
     }
 
     // Close sidebar when a nav item is clicked
@@ -6690,7 +6702,7 @@ window.doRegisterModern = doRegisterModern;
       item.addEventListener("click", closeSidebar);
     });
 
-    console.log("Mobile menu initialized");
+    console.log("Mobile menu initialized - Hamburger menu ready for mobile");
   });
 
   // Make functions global
