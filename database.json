@@ -1,7 +1,7 @@
 {
   "household": [
     {
-      "id": "moweo7okx6wg",
+      "id": "moydj55a1220",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 10,
@@ -34,7 +34,7 @@
       "notes": "Monthly market run"
     },
     {
-      "id": "moweo7okzao2",
+      "id": "moydj55adlad",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 8,
@@ -53,7 +53,7 @@
       "notes": ""
     },
     {
-      "id": "moweo7okx096",
+      "id": "moydj55bhxk4",
       "bsY": 2080,
       "bsM": 12,
       "bsD": 15,
@@ -72,7 +72,7 @@
       "notes": ""
     },
     {
-      "id": "moweo7ok7oua",
+      "id": "moydj55bhr2b",
       "bsY": 2080,
       "bsM": 12,
       "bsD": 28,
@@ -96,11 +96,30 @@
         }
       ],
       "notes": "Festival shopping"
+    },
+    {
+      "id": "moydk1jqelrv",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 27,
+      "ad": "2026-05-08",
+      "items": [
+        {
+          "itemType": "Grains & Cereals",
+          "itemName": "Rice",
+          "quantity": 1000,
+          "rate": 100,
+          "lineTotal": 100000
+        }
+      ],
+      "amount": 100000,
+      "category": "Grains & Cereals",
+      "notes": ""
     }
   ],
   "income": [
     {
-      "id": "moweo7okk0b1",
+      "id": "moydj559w2uz",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 15,
@@ -111,7 +130,7 @@
       "notes": "Monthly from Hari"
     },
     {
-      "id": "moweo7okxq48",
+      "id": "moydj55av55g",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 5,
@@ -122,7 +141,7 @@
       "notes": "Rice sale"
     },
     {
-      "id": "moweo7okr6cm",
+      "id": "moydj55audf0",
       "bsY": 2080,
       "bsM": 12,
       "bsD": 20,
@@ -135,7 +154,7 @@
   ],
   "agriculture": [
     {
-      "id": "moweo7ok0trw",
+      "id": "moydj55b9fb3",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 1,
@@ -148,7 +167,7 @@
       "notes": "Paddy sold to market"
     },
     {
-      "id": "moweo7okcnuu",
+      "id": "moydj55bdmhj",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 3,
@@ -161,7 +180,7 @@
       "notes": "Fertilizer"
     },
     {
-      "id": "moweo7okjtmm",
+      "id": "moydj55brbaw",
       "bsY": 2080,
       "bsM": 12,
       "bsD": 5,
@@ -174,7 +193,7 @@
       "notes": "Wheat sold"
     },
     {
-      "id": "moweo7okbpla",
+      "id": "moydj55bjxed",
       "bsY": 2080,
       "bsM": 12,
       "bsD": 2,
@@ -189,7 +208,7 @@
   ],
   "livestock": [
     {
-      "id": "moweo7okznn6",
+      "id": "moydj55c2of2",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 5,
@@ -201,7 +220,7 @@
       "notes": "Morning + evening"
     },
     {
-      "id": "moweo7okc9rg",
+      "id": "moydj55ca47z",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 6,
@@ -213,7 +232,7 @@
       "notes": ""
     },
     {
-      "id": "moweo7okowua",
+      "id": "moydj55cz1ws",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 7,
@@ -225,7 +244,7 @@
       "notes": "Sold to neighbor"
     },
     {
-      "id": "moweo7okss93",
+      "id": "moydj55cdr1o",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 4,
@@ -237,7 +256,7 @@
       "notes": "Hay and feed"
     },
     {
-      "id": "moweo7okvngz",
+      "id": "moydj55cd2x0",
       "bsY": 2080,
       "bsM": 12,
       "bsD": 25,
@@ -251,7 +270,7 @@
   ],
   "labour": [
     {
-      "id": "moweo7ok0ks9",
+      "id": "moydj55ca35t",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 3,
@@ -266,7 +285,7 @@
       "notes": ""
     },
     {
-      "id": "moweo7okr4kg",
+      "id": "moydj55cjynq",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 8,
@@ -281,7 +300,7 @@
       "notes": "Upper field"
     },
     {
-      "id": "moweo7okqxi2",
+      "id": "moydj55czigm",
       "bsY": 2080,
       "bsM": 12,
       "bsD": 20,
@@ -296,7 +315,7 @@
       "notes": "With tractor"
     },
     {
-      "id": "moweo7oku2qc",
+      "id": "moydj55cesrt",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 12,
@@ -313,7 +332,7 @@
   ],
   "vehicle": [
     {
-      "id": "moweo7okokob",
+      "id": "moydj55ddcyc",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 2,
@@ -324,7 +343,7 @@
       "notes": "Diesel 20L"
     },
     {
-      "id": "moweo7okd8ja",
+      "id": "moydj55dbgnq",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 9,
@@ -335,7 +354,7 @@
       "notes": "Oil change"
     },
     {
-      "id": "moweo7okgrn0",
+      "id": "moydj55dse9o",
       "bsY": 2080,
       "bsM": 12,
       "bsD": 18,
@@ -346,7 +365,7 @@
       "notes": "Petrol"
     },
     {
-      "id": "moweo7okd81t",
+      "id": "moydj55dkcst",
       "bsY": 2080,
       "bsM": 12,
       "bsD": 25,
@@ -355,22 +374,11 @@
       "category": "Repair",
       "amount": 3500,
       "notes": "Hydraulic repair"
-    },
-    {
-      "id": "moycxuzb2vpe",
-      "bsY": 2083,
-      "bsM": 1,
-      "bsD": 27,
-      "ad": "2026-05-08",
-      "vehicle": "Bike",
-      "category": "Maintenance",
-      "amount": 3000,
-      "notes": ""
     }
   ],
   "medical": [
     {
-      "id": "moweo7okzegt",
+      "id": "moydj55dchob",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 6,
@@ -382,7 +390,7 @@
       "notes": "BP checkup"
     },
     {
-      "id": "moweo7ol2y2w",
+      "id": "moydj55dx0s3",
       "bsY": 2081,
       "bsM": 1,
       "bsD": 11,
@@ -394,7 +402,7 @@
       "notes": "Thyroid medicine"
     },
     {
-      "id": "moweo7olw04s",
+      "id": "moydj55dl12w",
       "bsY": 2080,
       "bsM": 12,
       "bsD": 28,
@@ -408,7 +416,7 @@
   ],
   "family": [
     {
-      "id": "moweo7oj830r",
+      "id": "moydj558wxju",
       "name": "Ram Prasad Sharma",
       "relation": "Father",
       "gender": "Male",
@@ -417,7 +425,7 @@
       "notes": "Head of household"
     },
     {
-      "id": "moweo7ojj0kv",
+      "id": "moydj5589ces",
       "name": "Sita Devi Sharma",
       "relation": "Mother",
       "gender": "Female",
@@ -426,7 +434,7 @@
       "notes": ""
     },
     {
-      "id": "moweo7ojxa1q",
+      "id": "moydj5587t7i",
       "name": "Hari Sharma",
       "relation": "Son",
       "gender": "Male",
@@ -435,7 +443,7 @@
       "notes": "Working in Kathmandu"
     },
     {
-      "id": "moweo7ojtkge",
+      "id": "moydj558wd9y",
       "name": "Gita Sharma",
       "relation": "Daughter",
       "gender": "Female",
@@ -466,5 +474,5 @@
       "name": "vision"
     }
   ],
-  "lastUpdated": "2026-05-09T13:06:32.124Z"
+  "lastUpdated": "2026-05-09T13:24:55.746Z"
 }
