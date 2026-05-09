@@ -6531,7 +6531,6 @@ window.doRegisterModern = doRegisterModern;
   }
 
   // Override doRegister to work with modal
-  const originalDoRegister = window.doRegister;
   window.doRegister = function () {
     const name = document.getElementById("regName").value.trim();
     const user = document.getElementById("regUser").value.trim();
@@ -6572,7 +6571,6 @@ window.doRegisterModern = doRegisterModern;
   };
 
   // Make sure doLogin uses the new form
-  const originalDoLogin = window.doLogin;
   window.doLogin = function () {
     const user = document.getElementById("loginUser").value.trim();
     const pass = document.getElementById("loginPass").value;
