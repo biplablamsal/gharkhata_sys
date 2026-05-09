@@ -6648,7 +6648,7 @@ window.doRegisterModern = doRegisterModern;
   });
 
   // ====================================================
-  //  MOBILE HAMBURGER MENU FIX
+  //  MOBILE HAMBURGER MENU FIX FOR TOUCH DEVICES
   // ====================================================
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -6657,52 +6657,61 @@ window.doRegisterModern = doRegisterModern;
     const backdrop = document.getElementById("sidebarBackdrop");
     const sidebarClose = document.getElementById("sidebarClose");
 
-    function openSidebar() {
+    if (!hamburger) {
+      console.log("Hamburger button not found!");
+      return;
+    }
+
+    console.log("Mobile menu initializing...");
+
+    function openSidebar(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      console.log("Opening sidebar");
       sidebar.classList.add("open");
       if (backdrop) backdrop.classList.add("open");
       document.body.style.overflow = "hidden";
+      document.body.style.position = "fixed";
     }
 
-    function closeSidebar() {
+    function closeSidebar(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      console.log("Closing sidebar");
       sidebar.classList.remove("open");
       if (backdrop) backdrop.classList.remove("open");
       document.body.style.overflow = "";
+      document.body.style.position = "";
     }
 
-    // Hamburger button click handler
-    if (hamburger) {
-      hamburger.addEventListener("click", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        openSidebar();
-      });
+    // Use both click and touch events for better mobile support
+    hamburger.addEventListener("click", openSidebar);
+    hamburger.addEventListener("touchstart", openSidebar);
 
-      // Also add touch event for better mobile support
-      hamburger.addEventListener("touchstart", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        openSidebar();
-      });
-    }
-
-    // Sidebar close button handler
     if (sidebarClose) {
       sidebarClose.addEventListener("click", closeSidebar);
       sidebarClose.addEventListener("touchstart", closeSidebar);
     }
 
-    // Backdrop click handler
     if (backdrop) {
       backdrop.addEventListener("click", closeSidebar);
       backdrop.addEventListener("touchstart", closeSidebar);
     }
 
-    // Close sidebar when a nav item is clicked
+    // Close sidebar when a nav item is clicked/tapped
     document.querySelectorAll(".nav-item").forEach((item) => {
       item.addEventListener("click", closeSidebar);
+      item.addEventListener("touchstart", closeSidebar);
     });
 
-    console.log("Mobile menu initialized - Hamburger menu ready for mobile");
+    // Debug: Check if button is visible
+    const styles = window.getComputedStyle(hamburger);
+    console.log("Hamburger display:", styles.display);
+    console.log("Hamburger visibility:", styles.visibility);
   });
 
   // Make functions global
