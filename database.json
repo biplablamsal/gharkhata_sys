@@ -185,6 +185,20 @@
       "quantity": 0,
       "amount": 1800,
       "notes": "Seeds purchased"
+    },
+    {
+      "id": "moy07ci0xxfl",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 27,
+      "ad": "2026-05-08",
+      "type": "Income",
+      "crop": "Maize",
+      "season": "Rabi (Winter)",
+      "quantity": 1000,
+      "rate": 50,
+      "amount": 50000,
+      "notes": ""
     }
   ],
   "livestock": [
@@ -477,5 +491,5 @@
       "name": "vision"
     }
   ],
-  "lastUpdated": "2026-05-09T07:01:24.141Z"
+  "lastUpdated": "2026-05-09T07:10:15.831Z"
 }
