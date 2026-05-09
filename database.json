@@ -1,0 +1,481 @@
+{
+  "household": [
+    {
+      "id": "moweo7okx6wg",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 10,
+      "ad": "2024-04-21",
+      "category": "Mixed bill",
+      "amount": 2950,
+      "items": [
+        {
+          "itemType": "Grains & Cereals",
+          "itemName": "Rice 25kg",
+          "quantity": 1,
+          "rate": 1800,
+          "lineTotal": 1800
+        },
+        {
+          "itemType": "Vegetables",
+          "itemName": "Potato",
+          "quantity": 5,
+          "rate": 70,
+          "lineTotal": 350
+        },
+        {
+          "itemType": "Oil & Ghee",
+          "itemName": "Mustard oil",
+          "quantity": 2,
+          "rate": 400,
+          "lineTotal": 800
+        }
+      ],
+      "notes": "Monthly market run"
+    },
+    {
+      "id": "moweo7okzao2",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 8,
+      "ad": "2024-04-19",
+      "category": "Household Essentials",
+      "amount": 1200,
+      "items": [
+        {
+          "itemType": "Household Essentials",
+          "itemName": "Electricity bill",
+          "quantity": 1,
+          "rate": 1200,
+          "lineTotal": 1200
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "moweo7okx096",
+      "bsY": 2080,
+      "bsM": 12,
+      "bsD": 15,
+      "ad": "2024-03-26",
+      "category": "Other",
+      "amount": 3500,
+      "items": [
+        {
+          "itemType": "Other",
+          "itemName": "School fees Gita",
+          "quantity": 1,
+          "rate": 3500,
+          "lineTotal": 3500
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "moweo7ok7oua",
+      "bsY": 2080,
+      "bsM": 12,
+      "bsD": 28,
+      "ad": "2024-04-08",
+      "category": "Mixed bill",
+      "amount": 1800,
+      "items": [
+        {
+          "itemType": "Household Essentials",
+          "itemName": "Cloth",
+          "quantity": 1,
+          "rate": 1100,
+          "lineTotal": 1100
+        },
+        {
+          "itemType": "Packaged Food / Snacks",
+          "itemName": "Sweets",
+          "quantity": 1,
+          "rate": 700,
+          "lineTotal": 700
+        }
+      ],
+      "notes": "Festival shopping"
+    }
+  ],
+  "income": [
+    {
+      "id": "moweo7okk0b1",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 15,
+      "ad": "2024-04-26",
+      "source": "Remittance",
+      "member": "Hari Sharma",
+      "amount": 25000,
+      "notes": "Monthly from Hari"
+    },
+    {
+      "id": "moweo7okxq48",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 5,
+      "ad": "2024-04-16",
+      "source": "Agriculture",
+      "member": "Ram Prasad Sharma",
+      "amount": 17000,
+      "notes": "Rice sale"
+    },
+    {
+      "id": "moweo7okr6cm",
+      "bsY": 2080,
+      "bsM": 12,
+      "bsD": 20,
+      "ad": "2024-03-31",
+      "source": "Livestock",
+      "member": "Sita Devi Sharma",
+      "amount": 4500,
+      "notes": "Milk sale this month"
+    }
+  ],
+  "agriculture": [
+    {
+      "id": "moweo7ok0trw",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 1,
+      "ad": "2024-04-12",
+      "type": "Income",
+      "crop": "Rice",
+      "season": "Kharif (Monsoon)",
+      "quantity": 850,
+      "amount": 17000,
+      "notes": "Paddy sold to market"
+    },
+    {
+      "id": "moweo7okcnuu",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 3,
+      "ad": "2024-04-14",
+      "type": "Expense",
+      "crop": "Jaighas",
+      "season": "Rabi (Winter)",
+      "quantity": 0,
+      "amount": 2400,
+      "notes": "Fertilizer"
+    },
+    {
+      "id": "moweo7okjtmm",
+      "bsY": 2080,
+      "bsM": 12,
+      "bsD": 5,
+      "ad": "2024-03-16",
+      "type": "Income",
+      "crop": "Wheat",
+      "season": "Rabi (Winter)",
+      "quantity": 600,
+      "amount": 13200,
+      "notes": "Wheat sold"
+    },
+    {
+      "id": "moweo7okbpla",
+      "bsY": 2080,
+      "bsM": 12,
+      "bsD": 2,
+      "ad": "2024-03-13",
+      "type": "Expense",
+      "crop": "Rice",
+      "season": "Kharif (Monsoon)",
+      "quantity": 0,
+      "amount": 1800,
+      "notes": "Seeds purchased"
+    }
+  ],
+  "livestock": [
+    {
+      "id": "moweo7okznn6",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 5,
+      "ad": "2024-04-16",
+      "animal": "Cow",
+      "type": "Milk Production",
+      "quantity": 12,
+      "amount": 0,
+      "notes": "Morning + evening"
+    },
+    {
+      "id": "moweo7okc9rg",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 6,
+      "ad": "2024-04-17",
+      "animal": "Cow",
+      "type": "Milk Production",
+      "quantity": 11,
+      "amount": 0,
+      "notes": ""
+    },
+    {
+      "id": "moweo7okowua",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 7,
+      "ad": "2024-04-18",
+      "animal": "Cow",
+      "type": "Milk Sale",
+      "quantity": 20,
+      "amount": 1000,
+      "notes": "Sold to neighbor"
+    },
+    {
+      "id": "moweo7okss93",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 4,
+      "ad": "2024-04-15",
+      "animal": "Cow",
+      "type": "Feed Expense",
+      "quantity": 0,
+      "amount": 800,
+      "notes": "Hay and feed"
+    },
+    {
+      "id": "moweo7okvngz",
+      "bsY": 2080,
+      "bsM": 12,
+      "bsD": 25,
+      "ad": "2024-04-05",
+      "animal": "Cow",
+      "type": "Vet Expense",
+      "quantity": 0,
+      "amount": 600,
+      "notes": "Routine checkup"
+    }
+  ],
+  "labour": [
+    {
+      "id": "moweo7ok0ks9",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 3,
+      "ad": "2024-04-14",
+      "name": "Ram Bahadur",
+      "gender": "Male",
+      "task": "Grass Cutting",
+      "hours": 8,
+      "days": 3,
+      "wage": 500,
+      "amount": 1500,
+      "notes": ""
+    },
+    {
+      "id": "moweo7okr4kg",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 8,
+      "ad": "2024-04-19",
+      "name": "Sita Devi",
+      "gender": "Female",
+      "task": "Weeding",
+      "hours": 6,
+      "days": 2,
+      "wage": 400,
+      "amount": 800,
+      "notes": "Upper field"
+    },
+    {
+      "id": "moweo7okqxi2",
+      "bsY": 2080,
+      "bsM": 12,
+      "bsD": 20,
+      "ad": "2024-03-31",
+      "name": "Hari Prasad",
+      "gender": "Male",
+      "task": "Ploughing",
+      "hours": 8,
+      "days": 2.5,
+      "wage": 600,
+      "amount": 1500,
+      "notes": "With tractor"
+    },
+    {
+      "id": "moweo7oku2qc",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 12,
+      "ad": "2024-04-23",
+      "name": "Maya Thapa",
+      "gender": "Female",
+      "task": "Harvesting",
+      "hours": 7,
+      "days": 4,
+      "wage": 420,
+      "amount": 1680,
+      "notes": "Rice harvest"
+    }
+  ],
+  "vehicle": [
+    {
+      "id": "moweo7okokob",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 2,
+      "ad": "2024-04-13",
+      "vehicle": "Tractor",
+      "category": "Fuel",
+      "amount": 1200,
+      "notes": "Diesel 20L"
+    },
+    {
+      "id": "moweo7okd8ja",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 9,
+      "ad": "2024-04-20",
+      "vehicle": "Bike",
+      "category": "Maintenance",
+      "amount": 450,
+      "notes": "Oil change"
+    },
+    {
+      "id": "moweo7okgrn0",
+      "bsY": 2080,
+      "bsM": 12,
+      "bsD": 18,
+      "ad": "2024-03-29",
+      "vehicle": "Scooter",
+      "category": "Fuel",
+      "amount": 300,
+      "notes": "Petrol"
+    },
+    {
+      "id": "moweo7okd81t",
+      "bsY": 2080,
+      "bsM": 12,
+      "bsD": 25,
+      "ad": "2024-04-05",
+      "vehicle": "Tractor",
+      "category": "Repair",
+      "amount": 3500,
+      "notes": "Hydraulic repair"
+    },
+    {
+      "id": "moweoshdmqhw",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 26,
+      "ad": "2026-05-07",
+      "vehicle": "Scooter",
+      "category": "Fuel",
+      "amount": 1000,
+      "notes": ""
+    },
+    {
+      "id": "mowl9z52d2sy",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 26,
+      "ad": "2026-05-07",
+      "vehicle": "Tractor",
+      "category": "Fuel",
+      "amount": 10000,
+      "notes": ""
+    }
+  ],
+  "medical": [
+    {
+      "id": "moweo7okzegt",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 6,
+      "ad": "2024-04-17",
+      "member": "Ram Prasad Sharma",
+      "type": "Doctor Visit",
+      "amount": 500,
+      "doctor": "Dr. Sharma",
+      "notes": "BP checkup"
+    },
+    {
+      "id": "moweo7ol2y2w",
+      "bsY": 2081,
+      "bsM": 1,
+      "bsD": 11,
+      "ad": "2024-04-22",
+      "member": "Sita Devi Sharma",
+      "type": "Medicine",
+      "amount": 820,
+      "doctor": "City Pharmacy",
+      "notes": "Thyroid medicine"
+    },
+    {
+      "id": "moweo7olw04s",
+      "bsY": 2080,
+      "bsM": 12,
+      "bsD": 28,
+      "ad": "2024-04-08",
+      "member": "Gita Sharma",
+      "type": "Lab Test",
+      "amount": 1200,
+      "doctor": "Pathology Lab",
+      "notes": "Blood test"
+    }
+  ],
+  "family": [
+    {
+      "id": "moweo7oj830r",
+      "name": "Ram Prasad Sharma",
+      "relation": "Father",
+      "gender": "Male",
+      "age": 55,
+      "phone": "9801234567",
+      "notes": "Head of household"
+    },
+    {
+      "id": "moweo7ojj0kv",
+      "name": "Sita Devi Sharma",
+      "relation": "Mother",
+      "gender": "Female",
+      "age": 50,
+      "phone": "9807654321",
+      "notes": ""
+    },
+    {
+      "id": "moweo7ojxa1q",
+      "name": "Hari Sharma",
+      "relation": "Son",
+      "gender": "Male",
+      "age": 25,
+      "phone": "9800011223",
+      "notes": "Working in Kathmandu"
+    },
+    {
+      "id": "moweo7ojtkge",
+      "name": "Gita Sharma",
+      "relation": "Daughter",
+      "gender": "Female",
+      "age": 20,
+      "phone": "",
+      "notes": "Student"
+    }
+  ],
+  "users": [
+    {
+      "username": "admin",
+      "password": "1234",
+      "name": "Admin"
+    },
+    {
+      "username": "boss",
+      "password": "boss",
+      "name": "boss"
+    },
+    {
+      "username": "abcde",
+      "password": "test",
+      "name": "test"
+    },
+    {
+      "username": "vision",
+      "password": "1234",
+      "name": "vision"
+    }
+  ],
+  "lastUpdated": "2026-05-09T07:01:24.141Z"
+}
