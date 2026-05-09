@@ -6695,3 +6695,24 @@ button,
   cursor: pointer;
   padding: 8px;
 }
+
+/* Fix for mobile touch targets */
+.nav-item {
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.nav-item:active {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(0.98);
+}
+
+/* Ensure sidebar is touch-friendly */
+.sidebar {
+  -webkit-overflow-scrolling: touch;
+}
+
+.sidebar-nav {
+  touch-action: pan-y pinch-zoom;
+}
