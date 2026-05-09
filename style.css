@@ -6464,3 +6464,232 @@ body {
     font-size: 13px;
   }
 }
+
+/* =====================================================
+   IPHONE 11 PRO MAX & MOBILE FIXES
+   ===================================================== */
+
+/* Fix hamburger button clickability */
+.hamburger {
+  display: block !important;
+  cursor: pointer;
+  z-index: 1001;
+  position: relative;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  padding: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+}
+
+.hamburger:active {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure sidebar opens properly on mobile */
+@media (max-width: 820px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 80%;
+    max-width: 300px;
+    height: 100%;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    background: var(--text-1);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .sidebar-backdrop.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .main-wrapper {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  /* Fix dashboard cards on iPhone */
+  .dashboard-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 14px;
+  }
+
+  .stat-value {
+    font-size: 1.3rem;
+  }
+
+  /* Fix charts container */
+  .dashboard-charts-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .chart-card-modern {
+    padding: 14px;
+  }
+
+  /* Fix recent transactions */
+  .recent-item-enhanced {
+    flex-wrap: wrap;
+    padding: 12px;
+  }
+
+  .recent-icon-enhanced {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
+  .recent-amount-enhanced {
+    margin-left: auto;
+  }
+
+  /* Fix topbar */
+  .topbar {
+    padding: 0 12px;
+    height: 56px;
+  }
+
+  .topbar-title {
+    font-size: 0.9rem;
+  }
+
+  .topbar-dates {
+    font-size: 0.7rem;
+  }
+
+  /* Fix filter bars */
+  .filter-bar-modern,
+  .income-filters,
+  .livestock-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  /* Fix tables - make scrollable */
+  .table-container,
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  /* Fix buttons for touch */
+  .btn-primary,
+  .btn-outline,
+  .signin-button,
+  .quick-add-btn {
+    min-height: 44px;
+    padding: 12px 16px;
+  }
+
+  /* Fix login screen on mobile */
+  .gharkata-layout {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .left-hero {
+    text-align: center;
+  }
+
+  .cards-four {
+    justify-content: center;
+  }
+
+  .login-box-modern {
+    margin-top: 20px;
+    padding: 24px;
+  }
+}
+
+/* iPhone 11 Pro Max specific (414px width) */
+@media (max-width: 414px) {
+  .dashboard-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    margin-bottom: 0;
+  }
+
+  .insights-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content {
+    padding: 16px;
+  }
+
+  .page-header h1 {
+    font-size: 1.2rem;
+  }
+
+  .stat-value {
+    font-size: 1.2rem;
+  }
+
+  .quick-add-btn {
+    bottom: 20px;
+    right: 20px;
+    padding: 12px;
+  }
+
+  .quick-add-text {
+    display: none;
+  }
+}
+
+/* Fix for iOS tap highlight */
+button,
+.nav-item,
+.vehicle-chip,
+.filter-badge,
+.quick-action-btn {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure sidebar close button works */
+.sidebar-close {
+  display: block !important;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 8px;
+}
