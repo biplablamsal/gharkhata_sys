@@ -6716,3 +6716,19 @@ button,
 .sidebar-nav {
   touch-action: pan-y pinch-zoom;
 }
+/* Fix sidebar scrolling without triggering navigation */
+.sidebar-nav {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y pinch-zoom; /* Allows vertical scroll only */
+}
+
+.nav-item {
+  touch-action: manipulation; /* Prevents zoom on double-tap but allows scroll */
+}
+
+/* Prevent accidental navigation while scrolling */
+.nav-item {
+  user-select: none; /* Prevents text selection while scrolling */
+  -webkit-user-select: none;
+}

@@ -6984,3 +6984,63 @@ window.navigate = function (page) {
 
   console.log("✅ Navigated to", page);
 };
+
+// ====================================================
+//  PREVENT ACCIDENTAL NAVIGATION WHILE SCROLLING
+// ====================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+  let touchStartY = 0;
+  let touchEndY = 0;
+  let isScrolling = false;
+
+  const navItems = document.querySelectorAll(".nav-item");
+
+  function handleTouchStart(e) {
+    touchStartY = e.touches[0].clientY;
+    isScrolling = false;
+  }
+
+  function handleTouchMove(e) {
+    touchEndY = e.touches[0].clientY;
+    const deltaY = Math.abs(touchEndY - touchStartY);
+
+    // If user moved finger more than 10px, it's scrolling, not tapping
+    if (deltaY > 10) {
+      isScrolling = true;
+    }
+  }
+
+  function handleTouchEnd(e, page) {
+    // Only navigate if user didn't scroll
+    if (!isScrolling) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log("Valid tap detected, navigating to:", page);
+      if (page) navigate(page);
+    } else {
+      console.log("Scrolling detected, ignoring tap");
+    }
+
+    // Reset
+    isScrolling = false;
+    touchStartY = 0;
+    touchEndY = 0;
+  }
+
+  navItems.forEach((item) => {
+    const page = item.getAttribute("data-page");
+
+    item.addEventListener("touchstart", handleTouchStart, { passive: true });
+    item.addEventListener("touchmove", handleTouchMove, { passive: true });
+    item.addEventListener("touchend", (e) => handleTouchEnd(e, page));
+
+    // Keep click for mouse users
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (page) navigate(page);
+    });
+  });
+
+  console.log("✅ Fixed touch-scroll conflict on sidebar");
+});
