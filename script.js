@@ -6704,8 +6704,20 @@ window.doRegisterModern = doRegisterModern;
 
     // Close sidebar when a nav item is clicked/tapped
     document.querySelectorAll(".nav-item").forEach((item) => {
-      item.addEventListener("click", closeSidebar);
-      item.addEventListener("touchstart", closeSidebar);
+      item.addEventListener("click", function (e) {
+        const page = this.getAttribute("data-page");
+        if (page) {
+          navigate(page);
+        }
+        closeSidebar();
+      });
+      item.addEventListener("touchstart", function (e) {
+        const page = this.getAttribute("data-page");
+        if (page) {
+          navigate(page);
+        }
+        closeSidebar();
+      });
     });
 
     // Debug: Check if button is visible
@@ -6718,6 +6730,7 @@ window.doRegisterModern = doRegisterModern;
   window.togglePasswordMinimal = togglePasswordMinimal;
   window.doLoginMinimal = doLoginMinimal;
   window.doRegisterMinimal = doRegisterMinimal;
+  window.navigate = navigate;
   // Make functions global
   window.selectSource = selectSource;
   window.setAmount = setAmount;
