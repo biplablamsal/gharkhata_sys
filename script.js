@@ -6730,3 +6730,127 @@ window.doRegisterModern = doRegisterModern;
 
   window.doRegisterWithTerms = doRegisterWithTerms;
 })();
+
+// ============================================================
+//  GITHUB CLOUD SYNC - Master JSON Database
+// ============================================================
+
+const GITHUB_RAW =
+  "https://raw.githubusercontent.com/biplablamsal/gharkhata_sys/main/database.json";
+const GITHUB_API =
+  "https://api.github.com/repos/biplablamsal/gharkhata_sys/contents/database.json";
+
+// Download data from GitHub JSON to current device
+async function downloadFromCloud() {
+  showToast("📥 Downloading from cloud...", "info");
+
+  try {
+    const response = await fetch(GITHUB_RAW + "?t=" + Date.now());
+
+    if (response.ok) {
+      const cloudData = await response.json();
+
+      // Save to current device's localStorage
+      if (cloudData.household) saveData("household", cloudData.household);
+      if (cloudData.income) saveData("income", cloudData.income);
+      if (cloudData.agriculture) saveData("agriculture", cloudData.agriculture);
+      if (cloudData.livestock) saveData("livestock", cloudData.livestock);
+      if (cloudData.labour) saveData("labour", cloudData.labour);
+      if (cloudData.vehicle) saveData("vehicle", cloudData.vehicle);
+      if (cloudData.medical) saveData("medical", cloudData.medical);
+      if (cloudData.family) saveData("family", cloudData.family);
+      if (cloudData.users) saveUsers(cloudData.users);
+
+      showToast("✅ Cloud data downloaded! Refreshing...", "success");
+      setTimeout(() => location.reload(), 1000);
+    } else if (response.status === 404) {
+      showToast(
+        "⚠️ No cloud database found. Create one by syncing first.",
+        "error",
+      );
+    }
+  } catch (error) {
+    console.error(error);
+    showToast("❌ Failed to download from cloud", "error");
+  }
+}
+
+// Sync current device data to GitHub JSON (overwrites cloud database)
+async function syncToCloud() {
+  showToast("☁️ Syncing to cloud...", "info");
+
+  // Collect all current data
+  const cloudData = {
+    household: loadData("household"),
+    income: loadData("income"),
+    agriculture: loadData("agriculture"),
+    livestock: loadData("livestock"),
+    labour: loadData("labour"),
+    vehicle: loadData("vehicle"),
+    medical: loadData("medical"),
+    family: loadData("family"),
+    users: loadUsers(),
+    lastUpdated: new Date().toISOString(),
+  };
+
+  const content = JSON.stringify(cloudData, null, 2);
+  const encodedContent = btoa(unescape(encodeURIComponent(content)));
+
+  try {
+    // Check if file exists to get SHA
+    let sha = "";
+    const fileCheck = await fetch(GITHUB_API);
+    if (fileCheck.ok) {
+      const fileInfo = await fileCheck.json();
+      sha = fileInfo.sha;
+    }
+
+    // IMPORTANT: You need a GitHub token
+    const GITHUB_TOKEN = prompt(
+      "🔐 Enter your GitHub Personal Access Token (create at github.com/settings/tokens):",
+    );
+
+    if (!GITHUB_TOKEN) {
+      showToast("❌ Token required to sync to cloud", "error");
+      return;
+    }
+
+    const response = await fetch(GITHUB_API, {
+      method: "PUT",
+      headers: {
+        Accept: "application/vnd.github.v3+json",
+        Authorization: `token ${GITHUB_TOKEN}`,
+      },
+      body: JSON.stringify({
+        message: "Sync data from GharKhata",
+        content: encodedContent,
+        sha: sha,
+        branch: "main",
+      }),
+    });
+
+    if (response.ok) {
+      showToast("✅ Synced to cloud! All devices can now download.", "success");
+    } else {
+      const error = await response.json();
+      showToast(
+        "❌ Sync failed: " + (error.message || "Check your token"),
+        "error",
+      );
+    }
+  } catch (error) {
+    console.error(error);
+    showToast("❌ Sync failed. Check console for details.", "error");
+  }
+}
+
+// Connect buttons
+document.addEventListener("DOMContentLoaded", function () {
+  const downloadBtn = document.getElementById("downloadFromCloudBtn");
+  const syncBtn = document.getElementById("syncToCloudBtn");
+
+  if (downloadBtn) downloadBtn.onclick = downloadFromCloud;
+  if (syncBtn) syncBtn.onclick = syncToCloud;
+
+  console.log("✅ Cloud sync buttons ready!");
+});
