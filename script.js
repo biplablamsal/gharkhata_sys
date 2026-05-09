@@ -6867,3 +6867,120 @@ document.addEventListener("DOMContentLoaded", function () {
 
   console.log("✅ Cloud sync buttons ready!");
 });
+
+// ====================================================
+//  MOBILE NAVIGATION FIX - Touch Events
+// ====================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("Fixing mobile navigation...");
+
+  // Get all navigation items
+  const navItems = document.querySelectorAll(".nav-item");
+
+  function handleNavigation(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const page = this.getAttribute("data-page");
+    console.log("Navigating to:", page);
+
+    if (page) {
+      navigate(page);
+      // Close sidebar on mobile after navigation
+      const sidebar = document.getElementById("sidebar");
+      const backdrop = document.getElementById("sidebarBackdrop");
+      if (sidebar && window.innerWidth <= 820) {
+        sidebar.classList.remove("open");
+        if (backdrop) backdrop.classList.remove("open");
+        document.body.style.overflow = "";
+      }
+    }
+  }
+
+  // Add both click and touchstart events for mobile
+  navItems.forEach((item) => {
+    // Remove any existing listeners to avoid duplicates
+    item.removeEventListener("click", handleNavigation);
+    item.removeEventListener("touchstart", handleNavigation);
+
+    // Add both events
+    item.addEventListener("click", handleNavigation);
+    item.addEventListener("touchstart", handleNavigation, { passive: false });
+
+    // Make sure cursor is pointer on mobile
+    item.style.cursor = "pointer";
+  });
+
+  console.log(
+    "✅ Mobile navigation fixed. Found",
+    navItems.length,
+    "nav items",
+  );
+});
+
+// Also fix the navigate function to work on mobile
+const originalNavigate = navigate;
+window.navigate = function (page) {
+  console.log("Navigate function called for page:", page);
+
+  const pageEl = document.getElementById("page-" + page);
+  if (!pageEl) {
+    console.warn(`Page not found: page-${page}`);
+    return;
+  }
+
+  // Hide all pages
+  document.querySelectorAll(".page").forEach((p) => {
+    p.classList.remove("active");
+  });
+
+  // Show selected page
+  pageEl.classList.add("active");
+
+  // Update active nav state
+  document.querySelectorAll(".nav-item").forEach((n) => {
+    if (n.getAttribute("data-page") === page) {
+      n.classList.add("active");
+    } else {
+      n.classList.remove("active");
+    }
+  });
+
+  // Update title
+  const titles = {
+    dashboard: "Dashboard",
+    household: "Household Expenses",
+    income: "Income Records",
+    agriculture: "Agriculture Records",
+    livestock: "Livestock Records",
+    labour: "Labour Records",
+    vehicle: "Vehicle Expenses",
+    medical: "Medical Records",
+    family: "Family Members",
+  };
+
+  const titleEl = document.getElementById("topbarTitle");
+  if (titleEl) titleEl.textContent = titles[page] || page;
+
+  // Close sidebar on mobile
+  if (window.innerWidth <= 820) {
+    const sidebar = document.getElementById("sidebar");
+    const backdrop = document.getElementById("sidebarBackdrop");
+    if (sidebar) sidebar.classList.remove("open");
+    if (backdrop) backdrop.classList.remove("open");
+  }
+
+  // Load page content
+  if (page === "dashboard") {
+    if (typeof renderDashboard === "function") renderDashboard();
+  } else if (page === "family") {
+    if (typeof renderFamily === "function") renderFamily();
+  } else {
+    if (typeof renderTable === "function") renderTable(page);
+    if (page === "labour" && typeof renderLabourCharts === "function")
+      renderLabourCharts();
+  }
+
+  console.log("✅ Navigated to", page);
+};
