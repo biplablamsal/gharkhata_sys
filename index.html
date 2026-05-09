@@ -1,0 +1,1805 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>GharKhata — Household Manager</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <!-- LOGIN SCREEN - NEW DESIGN (Right side login box) -->
+    <div class="login-screen" id="loginScreen">
+      <div class="gharkata-layout">
+        <!-- LEFT: Everything else (Logo + description + features) -->
+        <div class="left-hero">
+          <div class="brand-logo-container">
+            <svg
+              class="logo-precise-svg"
+              viewBox="0 0 560 140"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g transform="translate(18, 10)">
+                <rect
+                  x="0"
+                  y="0"
+                  width="92"
+                  height="70"
+                  rx="16"
+                  fill="rgba(255,218,145,0.08)"
+                  stroke="rgba(255,200,100,0.22)"
+                  stroke-width="1.2"
+                />
+                <text
+                  x="46"
+                  y="32"
+                  font-family="'Poppins',sans-serif"
+                  font-size="24"
+                  fill="#FFCC7A"
+                  text-anchor="middle"
+                  font-weight="600"
+                >
+                  💰
+                </text>
+                <text
+                  x="46"
+                  y="56"
+                  font-family="'Poppins',sans-serif"
+                  font-size="12"
+                  fill="#f3dfce"
+                  text-anchor="middle"
+                  font-weight="600"
+                >
+                  Income
+                </text>
+
+                <rect
+                  x="106"
+                  y="0"
+                  width="92"
+                  height="70"
+                  rx="16"
+                  fill="rgba(255,218,145,0.08)"
+                  stroke="rgba(255,200,100,0.22)"
+                  stroke-width="1.2"
+                />
+                <text
+                  x="152"
+                  y="32"
+                  font-family="'Poppins',sans-serif"
+                  font-size="24"
+                  fill="#FFCC7A"
+                  text-anchor="middle"
+                >
+                  🌾
+                </text>
+                <text
+                  x="152"
+                  y="56"
+                  font-family="'Poppins',sans-serif"
+                  font-size="12"
+                  fill="#f3dfce"
+                  text-anchor="middle"
+                  font-weight="600"
+                >
+                  Agriculture
+                </text>
+
+                <rect
+                  x="212"
+                  y="0"
+                  width="92"
+                  height="70"
+                  rx="16"
+                  fill="rgba(255,218,145,0.08)"
+                  stroke="rgba(255,200,100,0.22)"
+                  stroke-width="1.2"
+                />
+                <text
+                  x="258"
+                  y="32"
+                  font-family="'Poppins',sans-serif"
+                  font-size="24"
+                  fill="#FFCC7A"
+                  text-anchor="middle"
+                >
+                  🐄
+                </text>
+                <text
+                  x="258"
+                  y="56"
+                  font-family="'Poppins',sans-serif"
+                  font-size="12"
+                  fill="#f3dfce"
+                  text-anchor="middle"
+                  font-weight="600"
+                >
+                  Livestock
+                </text>
+
+                <rect
+                  x="318"
+                  y="0"
+                  width="92"
+                  height="70"
+                  rx="16"
+                  fill="rgba(255,218,145,0.08)"
+                  stroke="rgba(255,200,100,0.22)"
+                  stroke-width="1.2"
+                />
+                <text
+                  x="364"
+                  y="32"
+                  font-family="'Poppins',sans-serif"
+                  font-size="24"
+                  fill="#FFCC7A"
+                  text-anchor="middle"
+                >
+                  👷
+                </text>
+                <text
+                  x="364"
+                  y="56"
+                  font-family="'Poppins',sans-serif"
+                  font-size="12"
+                  fill="#f3dfce"
+                  text-anchor="middle"
+                  font-weight="600"
+                >
+                  Labour
+                </text>
+              </g>
+              <text
+                x="280"
+                y="112"
+                font-family="'Poppins',sans-serif"
+                font-size="36"
+                font-weight="800"
+                fill="#FFFFFF"
+                text-anchor="middle"
+                letter-spacing="1.8"
+              >
+                GHARKHATA
+              </text>
+              <text
+                x="280"
+                y="132"
+                font-family="'Poppins',sans-serif"
+                font-size="12"
+                fill="#E7CAA9"
+                text-anchor="middle"
+                letter-spacing="3.5"
+                font-weight="500"
+              >
+                TRACK · MANAGE · SAVE
+              </text>
+            </svg>
+          </div>
+
+          <div class="tagline-text">
+            Manage your <span>household expenses</span>, agriculture, livestock,
+            income and more — all in one place.
+          </div>
+
+          <div class="cards-four">
+            <div class="feature-card-item">
+              <div class="feature-emoji">💰</div>
+              <p>Track Expenses</p>
+            </div>
+            <div class="feature-card-item">
+              <div class="feature-emoji">🌾</div>
+              <p>Manage Agriculture</p>
+            </div>
+            <div class="feature-card-item">
+              <div class="feature-emoji">🐄</div>
+              <p>Livestock Records</p>
+            </div>
+            <div class="feature-card-item">
+              <div class="feature-emoji">👷</div>
+              <p>Labour Tracking</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: The Login Box -->
+        <div class="right-login-area">
+          <div class="login-box-modern">
+            <h2>Welcome <span>Back!</span></h2>
+            <div class="welcome-sub">Sign in to continue to GharKhata</div>
+
+            <!-- Username field -->
+            <div class="input-field-group">
+              <label>Username</label>
+              <div class="icon-input-holder">
+                <span class="leading-icon">👤</span>
+                <input
+                  type="text"
+                  id="loginUser"
+                  placeholder="Enter your username"
+                  autocomplete="username"
+                />
+              </div>
+            </div>
+
+            <!-- Password field -->
+            <div class="input-field-group">
+              <label>Password</label>
+              <div class="icon-input-holder">
+                <span class="leading-icon">🔒</span>
+                <input
+                  type="password"
+                  id="loginPass"
+                  placeholder="Enter your password"
+                  autocomplete="current-password"
+                />
+                <button
+                  type="button"
+                  class="password-eye"
+                  id="togglePasswordVisibility"
+                  onclick="togglePasswordField()"
+                >
+                  👁️
+                </button>
+              </div>
+            </div>
+
+            <!-- Options -->
+            <div class="action-row">
+              <div class="remember-check">
+                <input type="checkbox" id="rememberCheckbox" />
+                <label for="rememberCheckbox">Remember me</label>
+              </div>
+              <a
+                href="#"
+                class="forgot-pass"
+                onclick="
+                  alert('📧 Password reset link would be sent to your email.');
+                  return false;
+                "
+                >Forgot Password?</a
+              >
+            </div>
+
+            <!-- Sign In Button -->
+            <button class="signin-button" onclick="doLogin()">Sign In →</button>
+
+            <div class="divider-or">OR</div>
+
+            <!-- Create Account Button -->
+            <button class="create-new-btn" onclick="showRegisterForm()">
+              💡 Create New Account
+            </button>
+
+            <!-- Security message -->
+            <div class="security-footer">
+              🛡️ Your data is safe and secure with us.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden Register Modal (Lightbox style) -->
+    <div
+      id="registerModal"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <div
+        style="
+          background: white;
+          max-width: 450px;
+          width: 90%;
+          border-radius: 32px;
+          padding: 40px;
+          position: relative;
+        "
+      >
+        <button
+          onclick="closeRegisterModal()"
+          style="
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+          "
+        >
+          ✕
+        </button>
+        <h2 style="color: #2c2416; margin-bottom: 24px">Create Account</h2>
+        <div class="input-field-group">
+          <label>Full Name</label>
+          <input
+            type="text"
+            id="regName"
+            placeholder="Your full name"
+            style="
+              width: 100%;
+              padding: 14px;
+              border: 1px solid #ddd;
+              border-radius: 16px;
+            "
+          />
+        </div>
+        <div class="input-field-group">
+          <label>Username</label>
+          <input
+            type="text"
+            id="regUser"
+            placeholder="Choose a username"
+            style="
+              width: 100%;
+              padding: 14px;
+              border: 1px solid #ddd;
+              border-radius: 16px;
+            "
+          />
+        </div>
+        <div class="input-field-group">
+          <label>Password</label>
+          <input
+            type="password"
+            id="regPass"
+            placeholder="Create a password"
+            style="
+              width: 100%;
+              padding: 14px;
+              border: 1px solid #ddd;
+              border-radius: 16px;
+            "
+          />
+        </div>
+        <div class="remember-check" style="margin-bottom: 24px">
+          <input type="checkbox" id="termsCheckbox" />
+          <label>I agree to the Terms & Conditions</label>
+        </div>
+        <div
+          class="login-error"
+          id="regError"
+          style="color: red; margin-bottom: 16px"
+        ></div>
+        <button
+          class="signin-button"
+          onclick="doRegister()"
+          style="width: 100%"
+        >
+          Create Account →
+        </button>
+      </div>
+    </div>
+
+    <!-- APP SHELL -->
+    <div class="app-shell" id="appShell" style="display: none">
+      <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <div class="logo">
+            <span class="logo-icon">🏡</span>
+            <div>
+              <div class="logo-title">GharKhata</div>
+              <div class="logo-sub" id="sidebarUser">Welcome</div>
+            </div>
+          </div>
+          <button class="sidebar-close" id="sidebarClose">✕</button>
+        </div>
+        <nav class="sidebar-nav">
+          <a class="nav-item active" data-page="dashboard"
+            ><span class="nav-icon">📊</span
+            ><span class="nav-label">Dashboard</span></a
+          >
+          <a class="nav-item" data-page="household"
+            ><span class="nav-icon">🏠</span
+            ><span class="nav-label">Household</span></a
+          >
+          <a class="nav-item" data-page="income"
+            ><span class="nav-icon">💵</span
+            ><span class="nav-label">Income</span></a
+          >
+          <a class="nav-item" data-page="agriculture"
+            ><span class="nav-icon">🌾</span
+            ><span class="nav-label">Agriculture</span></a
+          >
+          <a class="nav-item" data-page="livestock"
+            ><span class="nav-icon">🐄</span
+            ><span class="nav-label">Livestock</span></a
+          >
+          <a class="nav-item" data-page="labour"
+            ><span class="nav-icon">👷</span
+            ><span class="nav-label">Labour</span></a
+          >
+          <a class="nav-item" data-page="vehicle"
+            ><span class="nav-icon">🚜</span
+            ><span class="nav-label">Vehicles</span></a
+          >
+          <a class="nav-item" data-page="medical"
+            ><span class="nav-icon">🏥</span
+            ><span class="nav-label">Medical</span></a
+          >
+          <a class="nav-item" data-page="family"
+            ><span class="nav-icon">👨‍👩‍👧‍👦</span
+            ><span class="nav-label">Family Members</span></a
+          >
+        </nav>
+        <div class="sidebar-footer">
+          <button
+            class="btn-export"
+            id="backupBtn"
+            style="width: 100%; margin-bottom: 8px"
+          >
+            💾 Backup All Data
+          </button>
+          <button
+            class="btn-export"
+            id="restoreBtn"
+            style="width: 100%; margin-bottom: 8px"
+          >
+            🔄 Restore from Backup
+          </button>
+          <button class="btn-export" id="exportAllBtn">⬇ Export All CSV</button>
+          <button class="btn-logout" id="logoutBtn">🔒 Logout</button>
+        </div>
+      </aside>
+
+      <div class="main-wrapper">
+        <header class="topbar">
+          <button class="hamburger" id="hamburgerBtn">☰</button>
+          <div class="topbar-title" id="topbarTitle">Dashboard</div>
+          <button
+            id="globalSearchBtn"
+            style="
+              background: none;
+              border: none;
+              font-size: 1.2rem;
+              cursor: pointer;
+              padding: 8px;
+              border-radius: 8px;
+              margin-left: auto;
+            "
+            title="Search across all records"
+          >
+            🔍 Search
+          </button>
+          <div class="topbar-dates">
+            <div class="topbar-date-bs" id="topbarDateBS"></div>
+            <div class="topbar-date-ad" id="topbarDateAD"></div>
+          </div>
+        </header>
+
+        <main class="content">
+          <!-- DASHBOARD -->
+          <section class="page active" id="page-dashboard">
+            <div class="page-header">
+              <h1>📊 Dashboard Overview</h1>
+              <div class="month-filter-wrap">
+                <label>BS Year:</label
+                ><select id="dashBSYear" onchange="renderDashboard()"></select
+                ><label>Month:</label
+                ><select id="dashBSMonth" onchange="renderDashboard()">
+                  <option value="">All</option>
+                  <option value="1">बैशाख</option>
+                  <option value="2">जेठ</option>
+                  <option value="3">असार</option>
+                  <option value="4">श्रावण</option>
+                  <option value="5">भाद्र</option>
+                  <option value="6">आश्विन</option>
+                  <option value="7">कार्तिक</option>
+                  <option value="8">मंसिर</option>
+                  <option value="9">पुष</option>
+                  <option value="10">माघ</option>
+                  <option value="11">फाल्गुन</option>
+                  <option value="12">चैत्र</option></select
+                ><button
+                  class="btn-sm btn-outline"
+                  onclick="
+                    document.getElementById('dashBSMonth').value = '';
+                    renderDashboard();
+                  "
+                >
+                  All Time
+                </button>
+              </div>
+            </div>
+            <div class="dashboard-stats-grid">
+              <div class="stat-card income">
+                <div class="stat-header">
+                  <span class="stat-icon">💰</span
+                  ><span class="stat-trend up" id="incomeTrend">↑ 0%</span>
+                </div>
+                <div class="stat-value" id="totalIncome">₹0</div>
+                <div class="stat-label">Total Income</div>
+                <div class="stat-sub" id="incomeSub">This month</div>
+              </div>
+              <div class="stat-card expense">
+                <div class="stat-header">
+                  <span class="stat-icon">💸</span
+                  ><span class="stat-trend down" id="expenseTrend">↓ 0%</span>
+                </div>
+                <div class="stat-value" id="totalExpense">₹0</div>
+                <div class="stat-label">Total Expenses</div>
+                <div class="stat-sub" id="expenseSub">This month</div>
+              </div>
+              <div class="stat-card balance">
+                <div class="stat-header">
+                  <span class="stat-icon">⚖️</span
+                  ><span class="stat-trend" id="balanceTrend">↗︎ 0%</span>
+                </div>
+                <div class="stat-value" id="netBalance">₹0</div>
+                <div class="stat-label">Net Balance</div>
+                <div class="stat-sub" id="balanceSub">After all expenses</div>
+              </div>
+              <div class="stat-card milk">
+                <div class="stat-header">
+                  <span class="stat-icon">🥛</span
+                  ><span class="stat-trend up" id="milkTrend">↑ 0%</span>
+                </div>
+                <div class="stat-value" id="milkTotal">0 L</div>
+                <div class="stat-label">Milk Produced</div>
+                <div class="stat-sub" id="milkSub">Monthly</div>
+              </div>
+              <div class="stat-card labour">
+                <div class="stat-header">
+                  <span class="stat-icon">👷</span
+                  ><span class="stat-trend" id="labourTrend">= 0%</span>
+                </div>
+                <div class="stat-value" id="labourTotal">₹0</div>
+                <div class="stat-label">Labour Cost</div>
+                <div class="stat-sub" id="labourSub">Total wages</div>
+              </div>
+              <div class="stat-card crop">
+                <div class="stat-header">
+                  <span class="stat-icon">🌾</span
+                  ><span class="stat-trend up" id="cropTrend">↑ 0%</span>
+                </div>
+                <div class="stat-value" id="cropYield">0 kg</div>
+                <div class="stat-label">Crop Yield</div>
+                <div class="stat-sub" id="cropSub">Harvested</div>
+              </div>
+              <div class="stat-card vehicle">
+                <div class="stat-header"><span class="stat-icon">🚜</span></div>
+                <div class="stat-value" id="vehicleTotal">₹0</div>
+                <div class="stat-label">Vehicle Expenses</div>
+              </div>
+              <div class="stat-card medical">
+                <div class="stat-header"><span class="stat-icon">🏥</span></div>
+                <div class="stat-value" id="medicalTotal">₹0</div>
+                <div class="stat-label">Medical Expenses</div>
+              </div>
+            </div>
+            <div class="insights-grid">
+              <div class="insight-card">
+                <div class="insight-title">💰 Top Income Source</div>
+                <div class="insight-content">
+                  <span class="insight-label" id="topIncomeSource">—</span
+                  ><span class="insight-value" id="topIncomeAmount">₹0</span>
+                </div>
+                <div class="insight-bar">
+                  <div
+                    class="insight-bar-fill"
+                    id="topIncomeBar"
+                    style="width: 0%"
+                  ></div>
+                </div>
+              </div>
+              <div class="insight-card">
+                <div class="insight-title">📉 Top Expense Category</div>
+                <div class="insight-content">
+                  <span class="insight-label" id="topExpenseCat">—</span
+                  ><span class="insight-value" id="topExpenseAmount">₹0</span>
+                </div>
+                <div class="insight-bar">
+                  <div
+                    class="insight-bar-fill"
+                    id="topExpenseBar"
+                    style="width: 0%"
+                  ></div>
+                </div>
+              </div>
+              <div class="insight-card">
+                <div class="insight-title">🥛 Milk Value (₹60/L)</div>
+                <div class="insight-content">
+                  <span class="insight-label">Milk Income</span
+                  ><span class="insight-value" id="milkValueTotal">₹0</span>
+                </div>
+                <div class="insight-bar">
+                  <div
+                    class="insight-bar-fill"
+                    id="milkValueBar"
+                    style="width: 0%"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <div class="dashboard-charts-grid">
+              <div class="chart-card-modern">
+                <div class="chart-header">
+                  <h3>📈 Income vs Expense</h3>
+                  <span class="chart-value" id="netProfit">Net: ₹0</span>
+                </div>
+                <canvas
+                  id="incomeExpenseBar"
+                  style="max-height: 250px"
+                ></canvas>
+              </div>
+              <div class="chart-card-modern">
+                <div class="chart-header">
+                  <h3>🥧 Expense Breakdown</h3>
+                  <span class="chart-value" id="totalExpensesLabel"
+                    >Total: ₹0</span
+                  >
+                </div>
+                <canvas id="expensePieChart" style="max-height: 250px"></canvas>
+              </div>
+              <div class="chart-card-modern">
+                <div class="chart-header">
+                  <h3>🥛 Daily Milk Production</h3>
+                  <span class="chart-value" id="avgMilkLabel"
+                    >Avg: 0 L/day</span
+                  >
+                </div>
+                <canvas id="milkLineChart" style="max-height: 250px"></canvas>
+              </div>
+              <div class="chart-card-modern">
+                <div class="chart-header">
+                  <h3>👥 Labour Distribution</h3>
+                  <span class="chart-value" id="labourTotalLabel"
+                    >Total: ₹0</span
+                  >
+                </div>
+                <canvas id="labourDoughnut" style="max-height: 250px"></canvas>
+              </div>
+            </div>
+            <div class="recent-section-modern">
+              <div class="recent-header">
+                <h3>🕐 Recent Transactions</h3>
+                <a
+                  href="#"
+                  class="view-all"
+                  onclick="
+                    showAllTransactions();
+                    return false;
+                  "
+                  >View all →</a
+                >
+              </div>
+              <div id="recentActivity" class="recent-list-modern"></div>
+            </div>
+          </section>
+
+          <!-- HOUSEHOLD -->
+          <section class="page" id="page-household">
+            <div class="page-header-stats">
+              <div class="page-title">
+                <h1>🏠 Household Expenses</h1>
+                <p>Track daily grocery, food, and household items</p>
+              </div>
+              <div class="header-stats">
+                <div class="header-stat-item">
+                  <div class="header-stat-label">This Month</div>
+                  <div class="header-stat-value" id="hhThisMonth">₹0</div>
+                </div>
+                <div class="header-stat-item">
+                  <div class="header-stat-label">This Year</div>
+                  <div class="header-stat-value" id="hhThisYear">₹0</div>
+                </div>
+              </div>
+            </div>
+            <div class="filter-bar-modern">
+              <div class="filter-group">
+                <label>📅 Year</label
+                ><select id="hhBSYear" onchange="renderHouseholdTable()">
+                  <option value="">All</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label>🗓️ Month</label
+                ><select id="hhBSMonth" onchange="renderHouseholdTable()">
+                  <option value="">All Months</option>
+                  <option value="1">बैशाख</option>
+                  <option value="2">जेठ</option>
+                  <option value="3">असार</option>
+                  <option value="4">श्रावण</option>
+                  <option value="5">भाद्र</option>
+                  <option value="6">आश्विन</option>
+                  <option value="7">कार्तिक</option>
+                  <option value="8">मंसिर</option>
+                  <option value="9">पुष</option>
+                  <option value="10">माघ</option>
+                  <option value="11">फाल्गुन</option>
+                  <option value="12">चैत्र</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label>🏷️ Category</label
+                ><select id="hhCatFilter" onchange="renderHouseholdTable()">
+                  <option value="">All Categories</option>
+                  <option>Grains &amp; Cereals</option>
+                  <option>Vegetables</option>
+                  <option>Dairy Products</option>
+                  <option>Meat &amp; Protein</option>
+                  <option>Household Essentials</option>
+                  <option>Other</option>
+                  <option>Mixed bill</option>
+                </select>
+              </div>
+              <div class="filter-group search-group">
+                <label>🔍 Search</label
+                ><input
+                  type="text"
+                  id="hhSearch"
+                  placeholder="Search items or notes..."
+                  oninput="renderHouseholdTable()"
+                />
+              </div>
+              <div class="filter-actions">
+                <button class="btn-primary" onclick="openModal('household')">
+                  + Add Record</button
+                ><button class="btn-outline" onclick="exportCSV('household')">
+                  📥 CSV</button
+                ><button
+                  class="btn-outline"
+                  onclick="printModuleReport('household')"
+                >
+                  🖨️ Print
+                </button>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="household-table">
+                <thead>
+                  <tr>
+                    <th>Date (BS)</th>
+                    <th>Category</th>
+                    <th>Items</th>
+                    <th>Amount</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="householdBody"></tbody>
+              </table>
+            </div>
+            <div id="householdEmpty" class="empty-state" style="display: none">
+              <div class="empty-icon">🛒</div>
+              <div class="empty-title">No household expenses yet</div>
+              <div class="empty-text">
+                Click "Add Record" to track your grocery and household spending
+              </div>
+            </div>
+            <div class="summary-cards">
+              <div class="summary-card total">
+                <div class="summary-label">💰 Total Expenses</div>
+                <div class="summary-value" id="totalHouseholdExpense">₹0</div>
+              </div>
+              <div class="summary-card avg">
+                <div class="summary-label">📊 Average per Month</div>
+                <div class="summary-value" id="avgHouseholdExpense">₹0</div>
+              </div>
+              <div class="summary-card count">
+                <div class="summary-label">📋 Total Records</div>
+                <div class="summary-value" id="householdRecordCount">0</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-label">🏷️ Most Used</div>
+                <div class="summary-value" id="topCategory">—</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- INCOME -->
+          <!-- INCOME - REDESIGNED -->
+          <section class="page" id="page-income">
+            <div class="income-header">
+              <div class="income-title-section">
+                <h1>💰 Income Records</h1>
+                <p>Track all your earnings from different sources</p>
+              </div>
+              <div class="income-stats-cards">
+                <div class="income-stat-card">
+                  <div class="stat-icon">📊</div>
+                  <div class="stat-info">
+                    <div class="stat-label">Total Income</div>
+                    <div class="stat-value" id="incomeTotalMain">₹0</div>
+                  </div>
+                </div>
+                <div class="income-stat-card">
+                  <div class="stat-icon">📅</div>
+                  <div class="stat-info">
+                    <div class="stat-label">This Month</div>
+                    <div class="stat-value" id="incomeThisMonth">₹0</div>
+                  </div>
+                </div>
+                <div class="income-stat-card">
+                  <div class="stat-icon">👥</div>
+                  <div class="stat-info">
+                    <div class="stat-label">Top Source</div>
+                    <div class="stat-value" id="incomeTopSource">—</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Add Floating Button -->
+            <button class="quick-add-btn" onclick="openModal('income')">
+              <span class="quick-add-icon">+</span>
+              <span class="quick-add-text">Add Income</span>
+            </button>
+
+            <!-- Filters Bar -->
+            <div class="income-filters">
+              <div class="filter-row">
+                <div class="filter-input-group">
+                  <span class="filter-icon">📅</span>
+                  <select id="incBSYear" onchange="renderIncomeTable()">
+                    <option value="">All Years</option>
+                  </select>
+                </div>
+                <div class="filter-input-group">
+                  <span class="filter-icon">🗓️</span>
+                  <select id="incBSMonth" onchange="renderIncomeTable()">
+                    <option value="">All Months</option>
+                    <option value="1">बैशाख</option>
+                    <option value="2">जेठ</option>
+                    <option value="3">असार</option>
+                    <option value="4">श्रावण</option>
+                    <option value="5">भाद्र</option>
+                    <option value="6">आश्विन</option>
+                    <option value="7">कार्तिक</option>
+                    <option value="8">मंसिर</option>
+                    <option value="9">पुष</option>
+                    <option value="10">माघ</option>
+                    <option value="11">फाल्गुन</option>
+                    <option value="12">चैत्र</option>
+                  </select>
+                </div>
+                <div class="filter-input-group">
+                  <span class="filter-icon">🏷️</span>
+                  <select id="incSourceFilter" onchange="renderIncomeTable()">
+                    <option value="">All Sources</option>
+                    <option>Salary</option>
+                    <option>Business</option>
+                    <option>Agriculture</option>
+                    <option>Livestock</option>
+                    <option>Rental</option>
+                    <option>Remittance</option>
+                    <option>Government Aid</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="filter-input-group">
+                  <span class="filter-icon">👤</span>
+                  <select id="incMemberFilter" onchange="renderIncomeTable()">
+                    <option value="">All Members</option>
+                  </select>
+                </div>
+                <div class="filter-input-group search-group">
+                  <span class="filter-icon">🔍</span>
+                  <input
+                    type="text"
+                    id="incSearch"
+                    placeholder="Search notes..."
+                    oninput="renderIncomeTable()"
+                  />
+                </div>
+                <button class="filter-clear-btn" onclick="clearIncomeFilters()">
+                  Clear All
+                </button>
+              </div>
+            </div>
+
+            <!-- Income Table -->
+            <div class="income-table-container">
+              <div class="table-header-actions">
+                <div class="records-count" id="incomeRecordsCount">
+                  0 records
+                </div>
+                <div class="table-actions">
+                  <button
+                    class="action-btn"
+                    onclick="exportCSV('income')"
+                    title="Export CSV"
+                  >
+                    📥 CSV
+                  </button>
+                  <button
+                    class="action-btn"
+                    onclick="printModuleReport('income')"
+                    title="Print Report"
+                  >
+                    🖨️ Print
+                  </button>
+                </div>
+              </div>
+              <div class="table-wrapper">
+                <table class="income-table">
+                  <thead>
+                    <tr>
+                      <th>Date (BS)</th>
+                      <th>Source</th>
+                      <th>Member</th>
+                      <th>Amount</th>
+                      <th>Notes</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="incomeBody"></tbody>
+                </table>
+              </div>
+              <div
+                id="incomeEmptyState"
+                class="income-empty-state"
+                style="display: none"
+              >
+                <div class="empty-illustration">💰</div>
+                <div class="empty-title">No income records yet</div>
+                <div class="empty-text">
+                  Click the <strong>+ Add Income</strong> button to start
+                  tracking your earnings
+                </div>
+              </div>
+            </div>
+
+            <!-- Summary Bar -->
+            <div class="income-summary-bar" id="incomeSummaryBar">
+              <div class="summary-item">
+                <span class="summary-label">📊 Total Income</span>
+                <span class="summary-value" id="incomeSummaryTotal">₹0</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">📋 Total Records</span>
+                <span class="summary-value" id="incomeSummaryCount">0</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">🏆 Top Source</span>
+                <span class="summary-value" id="incomeSummaryTopSource">—</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- AGRICULTURE -->
+          <section class="page" id="page-agriculture">
+            <div class="page-header">
+              <h1>🌾 Agriculture Records</h1>
+              <div style="display: flex; gap: 10px">
+                <button class="btn-primary" onclick="openModal('agriculture')">
+                  + Add Record</button
+                ><button class="btn-outline" onclick="exportCSV('agriculture')">
+                  📥 CSV</button
+                ><button
+                  class="btn-outline"
+                  onclick="printModuleReport('agriculture')"
+                >
+                  🖨️ Print
+                </button>
+              </div>
+            </div>
+            <div class="agriculture-stats-grid">
+              <div class="agri-stat-card income">
+                <div class="stat-icon">💰</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="agriIncomeTotal">₹0</div>
+                  <div class="stat-label">Total Income</div>
+                </div>
+              </div>
+              <div class="agri-stat-card expense">
+                <div class="stat-icon">💸</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="agriExpenseTotal">₹0</div>
+                  <div class="stat-label">Total Expenses</div>
+                </div>
+              </div>
+              <div class="agri-stat-card profit">
+                <div class="stat-icon">📈</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="agriProfit">₹0</div>
+                  <div class="stat-label">Net Profit</div>
+                </div>
+              </div>
+              <div class="agri-stat-card yield">
+                <div class="stat-icon">🌾</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="agriYieldTotal">0 kg</div>
+                  <div class="stat-label">Total Yield</div>
+                </div>
+              </div>
+            </div>
+            <div class="agri-charts-row">
+              <div class="chart-box">
+                <h3>📊 Income vs Expense by Crop</h3>
+                <canvas
+                  id="cropComparisonChart"
+                  style="max-height: 280px"
+                ></canvas>
+              </div>
+              <div class="chart-box">
+                <h3>🥧 Crop Yield Distribution</h3>
+                <canvas id="cropYieldChart" style="max-height: 280px"></canvas>
+              </div>
+            </div>
+            <div class="filter-bar">
+              <select
+                id="agriBSYear"
+                onchange="renderAgricultureTable()"
+              ></select
+              ><select id="agriBSMonth" onchange="renderAgricultureTable()">
+                <option value="">All Months</option>
+                <option value="1">बैशाख</option>
+                <option value="2">जेठ</option>
+                <option value="3">असार</option>
+                <option value="4">श्रावण</option>
+                <option value="5">भाद्र</option>
+                <option value="6">आश्विन</option>
+                <option value="7">कार्तिक</option>
+                <option value="8">मंसिर</option>
+                <option value="9">पुष</option>
+                <option value="10">माघ</option>
+                <option value="11">फाल्गुन</option>
+                <option value="12">चैत्र</option></select
+              ><select id="agriTypeFilter" onchange="renderAgricultureTable()">
+                <option value="">All Types</option>
+                <option>Income</option>
+                <option>Expense</option></select
+              ><select id="agriCropFilter" onchange="renderAgricultureTable()">
+                <option value="">All Crops</option>
+                <option>Rice</option>
+                <option>Wheat</option>
+                <option>Maize</option>
+                <option>Vegetables</option>
+                <option>Other</option></select
+              ><button
+                class="btn-sm btn-outline"
+                onclick="exportCSV('agriculture')"
+              >
+                ⬇ CSV
+              </button>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>BS Date</th>
+                    <th>Crop</th>
+                    <th>Season</th>
+                    <th>Qty (kg)</th>
+                    <th>Amount (₹)</th>
+                    <th>Type</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                  </tr>
+                  <tr></tr>
+                </thead>
+                <tbody id="agricultureBody"></tbody>
+              </table>
+            </div>
+            <div class="module-summary" id="agricultureSummary"></div>
+          </section>
+
+          <!-- LIVESTOCK - REDESIGNED -->
+          <section class="page" id="page-livestock">
+            <!-- Header with Stats -->
+            <div class="livestock-header">
+              <div class="livestock-title-section">
+                <h1>🐄 Livestock Records</h1>
+                <p>Track milk production, feed expenses, and animal health</p>
+              </div>
+              <div class="livestock-stats-grid">
+                <div class="livestock-stat-card">
+                  <div class="stat-icon">🥛</div>
+                  <div class="stat-info">
+                    <div class="stat-label">Today's Milk</div>
+                    <div class="stat-value" id="livestockTodayMilk">0 L</div>
+                  </div>
+                </div>
+                <div class="livestock-stat-card">
+                  <div class="stat-icon">📈</div>
+                  <div class="stat-info">
+                    <div class="stat-label">This Month Milk</div>
+                    <div class="stat-value" id="livestockMonthMilk">0 L</div>
+                  </div>
+                </div>
+                <div class="livestock-stat-card">
+                  <div class="stat-icon">💰</div>
+                  <div class="stat-info">
+                    <div class="stat-label">Milk Income</div>
+                    <div class="stat-value" id="livestockMilkIncome">₹0</div>
+                  </div>
+                </div>
+                <div class="livestock-stat-card">
+                  <div class="stat-icon">💸</div>
+                  <div class="stat-info">
+                    <div class="stat-label">Feed Expenses</div>
+                    <div class="stat-value" id="livestockFeedExpense">₹0</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Action Buttons -->
+            <!-- Quick Action Buttons -->
+            <div class="livestock-quick-actions">
+              <button
+                class="quick-action-btn milk"
+                onclick="openLivestockModal('milk')"
+              >
+                🥛 + दुध (Milk)
+              </button>
+              <button
+                class="quick-action-btn dana"
+                onclick="openLivestockModal('dana')"
+              >
+                🌾 + दाना (Grain)
+              </button>
+              <button
+                class="quick-action-btn chokkar"
+                onclick="openLivestockModal('chokkar')"
+              >
+                🌽 + चोकर (Feed)
+              </button>
+              <button
+                class="quick-action-btn makai"
+                onclick="openLivestockModal('makai')"
+              >
+                🌽 + मकै (Corn)
+              </button>
+              <button
+                class="quick-action-btn medicine"
+                onclick="openLivestockModal('medicine')"
+              >
+                💊 + औषधि (Medicine)
+              </button>
+              <button
+                class="quick-action-btn vet"
+                onclick="openLivestockModal('vet')"
+              >
+                🩺 + पशु चिकित्सक (Vet)
+              </button>
+            </div>
+
+            <!-- Milk Rate Settings Bar -->
+            <div class="milk-rate-bar">
+              <span class="rate-label">🥛 दुध दर (Milk Rate):</span>
+              <span class="rate-value" id="displayMilkRate">₹60</span>
+              <span class="rate-unit">per liter</span>
+              <button class="rate-edit-btn" onclick="openMilkRateSettings()">
+                ✏️ Edit
+              </button>
+              <span class="rate-hint"
+                >Last SNF/Lacto test:
+                <span id="lastTestDate">Not set</span></span
+              >
+            </div>
+
+            <!-- Milk Production Chart -->
+            <div class="livestock-chart-card">
+              <div class="chart-header">
+                <h3>📊 Milk Production (Last 7 Days)</h3>
+                <div class="chart-controls">
+                  <button
+                    class="chart-period-btn active"
+                    data-days="7"
+                    onclick="loadMilkChart(7)"
+                  >
+                    7 Days
+                  </button>
+                  <button
+                    class="chart-period-btn"
+                    data-days="15"
+                    onclick="loadMilkChart(15)"
+                  >
+                    15 Days
+                  </button>
+                  <button
+                    class="chart-period-btn"
+                    data-days="30"
+                    onclick="loadMilkChart(30)"
+                  >
+                    30 Days
+                  </button>
+                </div>
+              </div>
+              <canvas
+                id="livestockMilkChart"
+                style="max-height: 250px; width: 100%"
+              ></canvas>
+            </div>
+
+            <!-- Animal Performance Cards -->
+            <div class="animal-performance">
+              <h3>🏆 Animal Performance (This Month)</h3>
+              <div class="animal-cards" id="animalPerformanceCards">
+                <div class="animal-card-placeholder">
+                  Loading animal data...
+                </div>
+              </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="livestock-filters">
+              <div class="filter-row">
+                <div class="filter-input-group">
+                  <span class="filter-icon">📅</span>
+                  <select id="lsBSYear" onchange="renderLivestockTable()">
+                    <option value="">All Years</option>
+                  </select>
+                </div>
+                <div class="filter-input-group">
+                  <span class="filter-icon">🗓️</span>
+                  <select id="lsBSMonth" onchange="renderLivestockTable()">
+                    <option value="">All Months</option>
+                    <option value="1">बैशाख</option>
+                    <option value="2">जेठ</option>
+                    <option value="3">असार</option>
+                    <option value="4">श्रावण</option>
+                    <option value="5">भाद्र</option>
+                    <option value="6">आश्विन</option>
+                    <option value="7">कार्तिक</option>
+                    <option value="8">मंसिर</option>
+                    <option value="9">पुष</option>
+                    <option value="10">माघ</option>
+                    <option value="11">फाल्गुन</option>
+                    <option value="12">चैत्र</option>
+                  </select>
+                </div>
+                <div class="filter-input-group">
+                  <span class="filter-icon">🏷️</span>
+                  <select id="lsTypeFilter" onchange="renderLivestockTable()">
+                    <option value="">All Types</option>
+                    <option value="Milk Production">🥛 Milk Production</option>
+                    <option value="Milk Sale">💰 Milk Sale</option>
+                    <option value="दाना">🌾 दाना (Grain)</option>
+                    <option value="चोकर">🌽 चोकर (Feed)</option>
+                    <option value="मकै">🌽 मकै (Corn)</option>
+                    <option value="औषधि">💊 औषधि (Medicine)</option>
+                    <option value="पशु चिकित्सक">🩺 पशु चिकित्सक (Vet)</option>
+                  </select>
+                </div>
+                <div class="filter-input-group">
+                  <span class="filter-icon">🐄</span>
+                  <select id="lsAnimalFilter" onchange="renderLivestockTable()">
+                    <option value="">All Animals</option>
+                    <option value="Red Cow">🔴 Red Cow</option>
+                    <option value="Black Cow">⚫ Black Cow</option>
+                    <option value="Buffalo">🐃 Buffalo</option>
+                    <option value="Chicken">🐔 Chicken</option>
+                  </select>
+                </div>
+                <div class="filter-input-group search-group">
+                  <span class="filter-icon">🔍</span>
+                  <input
+                    type="text"
+                    id="lsSearch"
+                    placeholder="Search notes..."
+                    oninput="renderLivestockTable()"
+                  />
+                </div>
+                <button
+                  class="filter-clear-btn"
+                  onclick="clearLivestockFilters()"
+                >
+                  Clear All
+                </button>
+              </div>
+            </div>
+
+            <!-- Records Table -->
+            <div class="livestock-table-container">
+              <div class="table-header-actions">
+                <div class="records-count" id="livestockRecordsCount">
+                  0 records
+                </div>
+                <div class="table-actions">
+                  <button
+                    class="action-btn"
+                    onclick="exportCSV('livestock')"
+                    title="Export CSV"
+                  >
+                    📥 CSV
+                  </button>
+                  <button
+                    class="action-btn"
+                    onclick="printModuleReport('livestock')"
+                    title="Print Report"
+                  >
+                    🖨️ Print
+                  </button>
+                </div>
+              </div>
+              <div class="table-wrapper">
+                <table class="livestock-table">
+                  <thead>
+                    <tr>
+                      <th>Date (BS)</th>
+                      <th>Animal</th>
+                      <th>Type</th>
+                      <th>Morning (L)</th>
+                      <th>Evening (L)</th>
+                      <th>Total Qty</th>
+                      <th>Amount (₹)</th>
+                      <th>Notes</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="livestockBody"></tbody>
+                </table>
+              </div>
+              <div
+                id="livestockEmptyState"
+                class="livestock-empty-state"
+                style="display: none"
+              >
+                <div class="empty-illustration">🐄</div>
+                <div class="empty-title">No livestock records yet</div>
+                <div class="empty-text">
+                  Click one of the quick action buttons above to start tracking
+                </div>
+              </div>
+            </div>
+
+            <!-- Summary Bar -->
+            <div class="livestock-summary-bar">
+              <div class="summary-item">
+                <span class="summary-label">🥛 Total Milk</span>
+                <span class="summary-value" id="livestockTotalMilk">0 L</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">💰 Milk Sale Income</span>
+                <span class="summary-value" id="livestockTotalSale">₹0</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">🌾 Total Feed Cost</span>
+                <span class="summary-value" id="livestockTotalFeed">₹0</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">💊 Medicine + Vet</span>
+                <span class="summary-value" id="livestockTotalMedical">₹0</span>
+              </div>
+              <div class="summary-item">
+                <span class="summary-label">📋 Total Records</span>
+                <span class="summary-value" id="livestockTotalRecords">0</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- LABOUR -->
+          <section class="page" id="page-labour">
+            <div class="page-header">
+              <h1>👷 Labour Records</h1>
+              <div style="display: flex; gap: 10px">
+                <button class="btn-primary" onclick="openModal('labour')">
+                  + Add Record</button
+                ><button class="btn-outline" onclick="exportCSV('labour')">
+                  📥 CSV</button
+                ><button
+                  class="btn-outline"
+                  onclick="printModuleReport('labour')"
+                >
+                  🖨️ Print
+                </button>
+              </div>
+            </div>
+            <div class="labour-analytics">
+              <div class="chart-card">
+                <h3>Labour Cost Trend (6 Months)</h3>
+                <canvas id="labourTrendChart"></canvas>
+              </div>
+              <div class="chart-card">
+                <h3>Task-wise Wage Breakdown</h3>
+                <canvas id="labourTaskChart"></canvas>
+              </div>
+            </div>
+            <div class="filter-bar" style="margin-top: 20px">
+              <select id="labBSYear" onchange="renderTable('labour')"></select
+              ><select id="labBSMonth" onchange="renderTable('labour')">
+                <option value="">All Months</option>
+                <option value="1">बैशाख</option>
+                <option value="2">जेठ</option>
+                <option value="3">असार</option>
+                <option value="4">श्रावण</option>
+                <option value="5">भाद्र</option>
+                <option value="6">आश्विन</option>
+                <option value="7">कार्तिक</option>
+                <option value="8">मंसिर</option>
+                <option value="9">पुष</option>
+                <option value="10">माघ</option>
+                <option value="11">फाल्गुन</option>
+                <option value="12">चैत्र</option></select
+              ><select id="labGenderFilter" onchange="renderTable('labour')">
+                <option value="">All Workers</option>
+                <option>Male</option>
+                <option>Female</option></select
+              ><select id="labTaskFilter" onchange="renderTable('labour')">
+                <option value="">All Tasks</option>
+                <option>Grass Cutting</option>
+                <option>Ploughing</option>
+                <option>Harvesting</option>
+                <option>Planting</option>
+                <option>Weeding</option>
+                <option>Other</option></select
+              ><button class="btn-sm btn-outline" onclick="exportCSV('labour')">
+                ⬇ CSV
+              </button>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>BS Date</th>
+                    <th>Worker</th>
+                    <th>Gender</th>
+                    <th>Task</th>
+                    <th>Hours</th>
+                    <th>Days</th>
+                    <th>Wage/Day (₹)</th>
+                    <th>Total (₹)</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="labourBody"></tbody>
+              </table>
+            </div>
+            <div class="module-summary" id="labourSummary"></div>
+          </section>
+
+          <!-- VEHICLE -->
+          <section class="page" id="page-vehicle">
+            <div class="page-header-stats">
+              <div class="page-title">
+                <h1>🚜 Vehicle Expenses</h1>
+                <p>Track fuel, maintenance, and repair costs</p>
+              </div>
+              <div class="header-stats">
+                <div class="header-stat-item">
+                  <div class="header-stat-label">This Month</div>
+                  <div class="header-stat-value" id="vehicleThisMonth">₹0</div>
+                </div>
+                <div class="header-stat-item">
+                  <div class="header-stat-label">This Year</div>
+                  <div class="header-stat-value" id="vehicleThisYear">₹0</div>
+                </div>
+              </div>
+            </div>
+            <div class="filter-bar-modern">
+              <div class="filter-group">
+                <label>📅 Year</label
+                ><select
+                  id="vehBSYear"
+                  onchange="renderVehicleTable()"
+                ></select>
+              </div>
+              <div class="filter-group">
+                <label>🗓️ Month</label
+                ><select id="vehBSMonth" onchange="renderVehicleTable()">
+                  <option value="">All Months</option>
+                  <option value="1">बैशाख</option>
+                  <option value="2">जेठ</option>
+                  <option value="3">असार</option>
+                  <option value="4">श्रावण</option>
+                  <option value="5">भाद्र</option>
+                  <option value="6">आश्विन</option>
+                  <option value="7">कार्तिक</option>
+                  <option value="8">मंसिर</option>
+                  <option value="9">पुष</option>
+                  <option value="10">माघ</option>
+                  <option value="11">फाल्गुन</option>
+                  <option value="12">चैत्र</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label>🏷️ Category</label
+                ><select id="vehCatFilter" onchange="renderVehicleTable()">
+                  <option value="">All Categories</option>
+                  <option value="Fuel">⛽ Fuel</option>
+                  <option value="Maintenance">🔧 Maintenance</option>
+                  <option value="Repair">🔨 Repair</option>
+                  <option value="Insurance">📄 Insurance</option>
+                  <option value="Other">📦 Other</option>
+                </select>
+              </div>
+              <div class="filter-group search-group">
+                <label>🔍 Search</label
+                ><input
+                  type="text"
+                  id="vehSearch"
+                  placeholder="Search notes..."
+                  oninput="renderVehicleTable()"
+                />
+              </div>
+              <div class="filter-actions">
+                <button class="btn-primary" onclick="openModal('vehicle')">
+                  + Add Expense</button
+                ><button class="btn-outline" onclick="exportCSV('vehicle')">
+                  📥 CSV</button
+                ><button
+                  class="btn-outline"
+                  onclick="printModuleReport('vehicle')"
+                >
+                  🖨️ Print
+                </button>
+              </div>
+            </div>
+            <div class="vehicle-filter-chips">
+              <button
+                class="vehicle-chip active"
+                data-vehicle=""
+                onclick="filterByVehicle('')"
+              >
+                🚗 All Vehicles</button
+              ><button
+                class="vehicle-chip"
+                data-vehicle="Tractor"
+                onclick="filterByVehicle('Tractor')"
+              >
+                🚜 Tractor</button
+              ><button
+                class="vehicle-chip"
+                data-vehicle="Bike"
+                onclick="filterByVehicle('Bike')"
+              >
+                🏍️ Bike</button
+              ><button
+                class="vehicle-chip"
+                data-vehicle="Scooter"
+                onclick="filterByVehicle('Scooter')"
+              >
+                🛵 Scooter</button
+              ><button
+                class="vehicle-chip"
+                data-vehicle="Other"
+                onclick="filterByVehicle('Other')"
+              >
+                🚗 Other
+              </button>
+            </div>
+            <div class="table-container">
+              <table class="vehicle-table">
+                <thead>
+                  <tr>
+                    <th>Date (BS)</th>
+                    <th>Vehicle</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                    ｜｜DSML｜｜
+                  </tr>
+                </thead>
+                <tbody id="vehicleBody"></tbody>
+              </table>
+            </div>
+            <div id="vehicleEmpty" class="empty-state" style="display: none">
+              <div class="empty-icon">🚗</div>
+              <div class="empty-title">No vehicle expenses yet</div>
+              <div class="empty-text">
+                Click "Add Expense" to track fuel, maintenance, and repair costs
+              </div>
+            </div>
+            <div class="vehicle-summary-cards">
+              <div class="summary-card">
+                <div class="summary-label">🚜 Tractor</div>
+                <div class="summary-value" id="tractorTotal">₹0</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-label">🏍️ Bike</div>
+                <div class="summary-value" id="bikeTotal">₹0</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-label">🛵 Scooter</div>
+                <div class="summary-value" id="scooterTotal">₹0</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-label">📋 Total Records</div>
+                <div class="summary-value" id="vehicleRecordCount">0</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- MEDICAL -->
+          <section class="page" id="page-medical">
+            <div class="page-header-stats">
+              <div class="page-title">
+                <h1>🏥 Medical Records</h1>
+                <p>Track health expenses, doctor visits, and medicines</p>
+              </div>
+              <div class="header-stats">
+                <div class="header-stat-item">
+                  <div class="header-stat-label">This Month</div>
+                  <div class="header-stat-value" id="medicalThisMonth">₹0</div>
+                </div>
+                <div class="header-stat-item">
+                  <div class="header-stat-label">This Year</div>
+                  <div class="header-stat-value" id="medicalThisYear">₹0</div>
+                </div>
+              </div>
+            </div>
+            <div class="filter-bar-modern">
+              <div class="filter-group">
+                <label>📅 Year</label
+                ><select
+                  id="medBSYear"
+                  onchange="renderMedicalTable()"
+                ></select>
+              </div>
+              <div class="filter-group">
+                <label>🗓️ Month</label
+                ><select id="medBSMonth" onchange="renderMedicalTable()">
+                  <option value="">All Months</option>
+                  <option value="1">बैशाख</option>
+                  <option value="2">जेठ</option>
+                  <option value="3">असार</option>
+                  <option value="4">श्रावण</option>
+                  <option value="5">भाद्र</option>
+                  <option value="6">आश्विन</option>
+                  <option value="7">कार्तिक</option>
+                  <option value="8">मंसिर</option>
+                  <option value="9">पुष</option>
+                  <option value="10">माघ</option>
+                  <option value="11">फाल्गुन</option>
+                  <option value="12">चैत्र</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label>👤 Member</label
+                ><select id="medMemberFilter" onchange="renderMedicalTable()">
+                  <option value="">All Members</option>
+                </select>
+              </div>
+              <div class="filter-group">
+                <label>🏷️ Type</label
+                ><select id="medTypeFilter" onchange="renderMedicalTable()">
+                  <option value="">All Types</option>
+                  <option>Doctor Visit</option>
+                  <option>Medicine</option>
+                  <option>Lab Test</option>
+                  <option>Hospital</option>
+                  <option>Surgery</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="filter-group search-group">
+                <label>🔍 Search</label
+                ><input
+                  type="text"
+                  id="medSearch"
+                  placeholder="Search notes or doctor..."
+                  oninput="renderMedicalTable()"
+                />
+              </div>
+              <div class="filter-actions">
+                <button class="btn-primary" onclick="openModal('medical')">
+                  + Add Record</button
+                ><button class="btn-outline" onclick="exportCSV('medical')">
+                  📥 CSV</button
+                ><button
+                  class="btn-outline"
+                  onclick="printModuleReport('medical')"
+                >
+                  🖨️ Print
+                </button>
+              </div>
+            </div>
+            <div class="medical-stats-grid">
+              <div class="medical-stat-card total">
+                <div class="stat-icon">💰</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="medicalTotalExpense">₹0</div>
+                  <div class="stat-label">Total Expenses</div>
+                </div>
+              </div>
+              <div class="medical-stat-card visits">
+                <div class="stat-icon">👨‍⚕️</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="doctorVisitsCount">0</div>
+                  <div class="stat-label">Doctor Visits</div>
+                </div>
+              </div>
+              <div class="medical-stat-card medicine">
+                <div class="stat-icon">💊</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="medicineExpense">₹0</div>
+                  <div class="stat-label">Medicine Cost</div>
+                </div>
+              </div>
+              <div class="medical-stat-card top-member">
+                <div class="stat-icon">👤</div>
+                <div class="stat-info">
+                  <div class="stat-value" id="topMedicalMember">—</div>
+                  <div class="stat-label">Most Visits</div>
+                </div>
+              </div>
+            </div>
+            <div class="table-container">
+              <table class="medical-table">
+                <thead>
+                  <tr>
+                    <th>Date (BS)</th>
+                    <th>Member</th>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Doctor/Hospital</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="medicalBody"></tbody>
+              </table>
+            </div>
+            <div id="medicalEmpty" class="empty-state" style="display: none">
+              <div class="empty-icon">🏥</div>
+              <div class="empty-title">No medical records yet</div>
+              <div class="empty-text">
+                Click "Add Record" to track health expenses
+              </div>
+            </div>
+            <div class="medical-summary-cards">
+              <div class="summary-card">
+                <div class="summary-label">👨‍⚕️ Doctor Visits</div>
+                <div class="summary-value" id="doctorVisitsTotal">0</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-label">💊 Medicine</div>
+                <div class="summary-value" id="medicineTotal">₹0</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-label">🏥 Hospital</div>
+                <div class="summary-value" id="hospitalTotal">₹0</div>
+              </div>
+              <div class="summary-card">
+                <div class="summary-label">📋 Total Records</div>
+                <div class="summary-value" id="medicalRecordCount">0</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- FAMILY -->
+          <section class="page" id="page-family">
+            <div class="page-header">
+              <h1>👨‍👩‍👧‍👦 Family Members</h1>
+              <button class="btn-primary" onclick="openModal('family')">
+                + Add Member
+              </button>
+            </div>
+            <div class="family-grid" id="familyGrid"></div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Add Record</h2>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer">
+        <button class="btn-outline" onclick="closeModal()">Cancel</button
+        ><button class="btn-primary" onclick="saveRecord()">Save Record</button>
+      </div>
+    </div>
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
