@@ -357,25 +357,14 @@
       "notes": "Hydraulic repair"
     },
     {
-      "id": "moweoshdmqhw",
+      "id": "moycxuzb2vpe",
       "bsY": 2083,
       "bsM": 1,
-      "bsD": 26,
-      "ad": "2026-05-07",
-      "vehicle": "Scooter",
-      "category": "Fuel",
-      "amount": 1000,
-      "notes": ""
-    },
-    {
-      "id": "mowl9z52d2sy",
-      "bsY": 2083,
-      "bsM": 1,
-      "bsD": 26,
-      "ad": "2026-05-07",
-      "vehicle": "Tractor",
-      "category": "Fuel",
-      "amount": 10000,
+      "bsD": 27,
+      "ad": "2026-05-08",
+      "vehicle": "Bike",
+      "category": "Maintenance",
+      "amount": 3000,
       "notes": ""
     }
   ],
@@ -477,5 +466,5 @@
       "name": "vision"
     }
   ],
-  "lastUpdated": "2026-05-09T12:56:02.348Z"
+  "lastUpdated": "2026-05-09T13:06:32.124Z"
 }
