@@ -6986,61 +6986,70 @@ window.navigate = function (page) {
 };
 
 // ====================================================
-//  PREVENT ACCIDENTAL NAVIGATION WHILE SCROLLING
+//  FIX: SEPARATE SCROLL FROM TAP ON MOBILE
 // ====================================================
 
 document.addEventListener("DOMContentLoaded", function () {
-  let touchStartY = 0;
-  let touchEndY = 0;
-  let isScrolling = false;
+  console.log("Setting up mobile-friendly navigation...");
+
+  let touchTimer = null;
+  let startY = 0;
+  let startX = 0;
+  let didScroll = false;
 
   const navItems = document.querySelectorAll(".nav-item");
-
-  function handleTouchStart(e) {
-    touchStartY = e.touches[0].clientY;
-    isScrolling = false;
-  }
-
-  function handleTouchMove(e) {
-    touchEndY = e.touches[0].clientY;
-    const deltaY = Math.abs(touchEndY - touchStartY);
-
-    // If user moved finger more than 10px, it's scrolling, not tapping
-    if (deltaY > 10) {
-      isScrolling = true;
-    }
-  }
-
-  function handleTouchEnd(e, page) {
-    // Only navigate if user didn't scroll
-    if (!isScrolling) {
-      e.preventDefault();
-      e.stopPropagation();
-      console.log("Valid tap detected, navigating to:", page);
-      if (page) navigate(page);
-    } else {
-      console.log("Scrolling detected, ignoring tap");
-    }
-
-    // Reset
-    isScrolling = false;
-    touchStartY = 0;
-    touchEndY = 0;
-  }
 
   navItems.forEach((item) => {
     const page = item.getAttribute("data-page");
 
-    item.addEventListener("touchstart", handleTouchStart, { passive: true });
-    item.addEventListener("touchmove", handleTouchMove, { passive: true });
-    item.addEventListener("touchend", (e) => handleTouchEnd(e, page));
+    // Touch start - record position
+    item.addEventListener("touchstart", function (e) {
+      startY = e.touches[0].clientY;
+      startX = e.touches[0].clientX;
+      didScroll = false;
 
-    // Keep click for mouse users
-    item.addEventListener("click", (e) => {
+      // Clear any pending navigation
+      if (touchTimer) clearTimeout(touchTimer);
+    });
+
+    // Touch move - detect scrolling
+    item.addEventListener("touchmove", function (e) {
+      const currentY = e.touches[0].clientY;
+      const currentX = e.touches[0].clientX;
+      const deltaY = Math.abs(currentY - startY);
+      const deltaX = Math.abs(currentX - startX);
+
+      // If moved more than 10px in any direction, user is scrolling
+      if (deltaY > 10 || deltaX > 5) {
+        didScroll = true;
+      }
+    });
+
+    // Touch end - only navigate if no scroll occurred
+    item.addEventListener("touchend", function (e) {
+      e.preventDefault();
+
+      if (!didScroll) {
+        // Small delay to ensure it's a tap, not a scroll
+        touchTimer = setTimeout(function () {
+          console.log("Tap detected on:", page);
+          if (page) navigate(page);
+        }, 50);
+      } else {
+        console.log("Scroll detected, not navigating");
+      }
+
+      // Reset
+      startY = 0;
+      startX = 0;
+    });
+
+    // Keep click for desktop
+    item.addEventListener("click", function (e) {
       e.preventDefault();
       if (page) navigate(page);
     });
   });
 
-  console.log("✅ Fixed touch-scroll conflict on sidebar");
+  console.log("✅ Mobile navigation ready - scroll vs tap fixed");
 });
