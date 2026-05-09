@@ -6647,6 +6647,52 @@ window.doRegisterModern = doRegisterModern;
     initMinimalLoginTabs();
   });
 
+  // ====================================================
+  //  MOBILE HAMBURGER MENU FIX
+  // ====================================================
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const hamburger = document.getElementById("hamburgerBtn");
+    const sidebar = document.getElementById("sidebar");
+    const backdrop = document.getElementById("sidebarBackdrop");
+    const sidebarClose = document.getElementById("sidebarClose");
+
+    function openSidebar() {
+      sidebar.classList.add("open");
+      if (backdrop) backdrop.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove("open");
+      if (backdrop) backdrop.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    if (hamburger) {
+      hamburger.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openSidebar();
+      });
+    }
+
+    if (sidebarClose) {
+      sidebarClose.addEventListener("click", closeSidebar);
+    }
+
+    if (backdrop) {
+      backdrop.addEventListener("click", closeSidebar);
+    }
+
+    // Close sidebar when a nav item is clicked
+    document.querySelectorAll(".nav-item").forEach((item) => {
+      item.addEventListener("click", closeSidebar);
+    });
+
+    console.log("Mobile menu initialized");
+  });
+
   // Make functions global
   window.togglePasswordMinimal = togglePasswordMinimal;
   window.doLoginMinimal = doLoginMinimal;
