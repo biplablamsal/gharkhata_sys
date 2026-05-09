@@ -391,6 +391,17 @@
       "category": "Fuel",
       "amount": 10000,
       "notes": ""
+    },
+    {
+      "id": "moycgno1rpwl",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 27,
+      "ad": "2026-05-08",
+      "vehicle": "Bike",
+      "category": "Maintenance",
+      "amount": 1500,
+      "notes": ""
     }
   ],
   "medical": [
@@ -491,5 +502,5 @@
       "name": "vision"
     }
   ],
-  "lastUpdated": "2026-05-09T12:52:01.276Z"
+  "lastUpdated": "2026-05-09T12:53:21.861Z"
 }
