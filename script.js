@@ -6166,7 +6166,6 @@ window.doRegisterModern = doRegisterModern;
   // ============================================================
 
   // Override the old doLogin to work with modern form
-  const originalDoLogin = window.doLogin;
   window.doLogin = function () {
     // Try to get values from modern form first
     let user = document.getElementById("loginUserModern")?.value;
@@ -6202,7 +6201,6 @@ window.doRegisterModern = doRegisterModern;
   };
 
   // Override doRegister for modern form
-  const originalDoRegister = window.doRegister;
   window.doRegister = function () {
     // Get values from modern form
     let name = document.getElementById("regNameModern")?.value;
