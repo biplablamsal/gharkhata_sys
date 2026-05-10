@@ -2752,14 +2752,14 @@ function clearVehicleFilters() {
 
   // Reset vehicle filter
   currentVehicleFilter = "";
-  const chips = document.querySelectorAll(".vehicle-chip-mobile");
-  if (chips.length) {
-    chips.forEach((chip) => {
-      chip.classList.remove("active");
-      if (chip.getAttribute("data-vehicle") === "")
-        chip.classList.add("active");
-    });
-  }
+
+  // Update active state - set "All" as active
+  document.querySelectorAll(".vehicle-chip-mobile").forEach((chip) => {
+    chip.classList.remove("active");
+    if (chip.getAttribute("data-vehicle") === "") {
+      chip.classList.add("active");
+    }
+  });
 
   renderVehicle();
 }
@@ -2827,12 +2827,16 @@ function renderVehicleTable() {
 
 function filterByVehicle(vehicle) {
   currentVehicleFilter = vehicle;
-  document.querySelectorAll(".vehicle-chip").forEach((chip) => {
+
+  // Update active state on chips
+  document.querySelectorAll(".vehicle-chip-mobile").forEach((chip) => {
     chip.classList.remove("active");
-    if (chip.getAttribute("data-vehicle") === vehicle)
+    if (chip.getAttribute("data-vehicle") === vehicle) {
       chip.classList.add("active");
+    }
   });
-  renderVehicleTable();
+
+  renderVehicle();
 }
 
 function updateVehicleSummary(data) {
