@@ -399,9 +399,14 @@ function doRegister() {
   const name = document.getElementById("regName").value.trim();
   const user = document.getElementById("regUser").value.trim();
   const pass = document.getElementById("regPass").value;
+  const terms = document.getElementById("termsCheckbox")?.checked;
   const err = document.getElementById("regError");
   if (!name || !user || !pass) {
     err.textContent = "All fields are required.";
+    return;
+  }
+  if (!terms) {
+    err.textContent = "Please agree to the Terms & Conditions.";
     return;
   }
   if (pass.length < 3) {
@@ -433,42 +438,7 @@ function doLogout() {
   if (loginUser) loginUser.value = "";
   if (loginPass) loginPass.value = "";
   if (loginError) loginError.textContent = "";
-  showLogin();
-}
-
-function showRegister() {
-  const loginForm =
-    document.getElementById("loginForm") ||
-    document.getElementById("loginFormModern");
-  const registerForm =
-    document.getElementById("registerForm") ||
-    document.getElementById("registerFormModern");
-
-  if (loginForm) loginForm.style.display = "none";
-  if (registerForm) registerForm.style.display = "block";
-}
-function showLogin() {
-  const loginForm =
-    document.getElementById("loginForm") ||
-    document.getElementById("loginFormModern");
-  const registerForm =
-    document.getElementById("registerForm") ||
-    document.getElementById("registerFormModern");
-
-  if (registerForm) registerForm.style.display = "none";
-  if (loginForm) loginForm.style.display = "block";
-}
-
-function togglePw(id, btn) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  if (el.type === "password") {
-    el.type = "text";
-    btn.textContent = "🙈";
-  } else {
-    el.type = "password";
-    btn.textContent = "👁";
-  }
+  closeRegisterModal();
 }
 
 function migrateHouseholdLegacyData() {
@@ -5867,120 +5837,6 @@ function calculateTotalMilk() {
 
 // ============================================================
 //  MODERN LOGIN - TAB SWITCHING (ADD THIS)
-// ============================================================
-
-function initModernLoginTabs() {
-  const tabs = document.querySelectorAll(".login-modern-tab");
-  if (tabs.length === 0) return;
-
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", function () {
-      const tabName = this.getAttribute("data-tab");
-
-      tabs.forEach((t) => t.classList.remove("active"));
-      this.classList.add("active");
-
-      const loginPanel = document.getElementById("loginPanel");
-      const registerPanel = document.getElementById("registerPanel");
-
-      if (tabName === "login") {
-        if (loginPanel) loginPanel.classList.add("active");
-        if (registerPanel) registerPanel.classList.remove("active");
-      } else {
-        if (loginPanel) loginPanel.classList.remove("active");
-        if (registerPanel) registerPanel.classList.add("active");
-      }
-    });
-  });
-}
-
-// Password toggle for modern form
-function togglePasswordModern(fieldId, btn) {
-  const field = document.getElementById(fieldId);
-  if (field.type === "password") {
-    field.type = "text";
-    btn.textContent = "🙈";
-  } else {
-    field.type = "password";
-    btn.textContent = "👁";
-  }
-}
-
-// Modern Login - uses your existing doLogin function
-function doLoginModern() {
-  // Get values from modern form
-  const user = document.getElementById("loginUserModern").value.trim();
-  const pass = document.getElementById("loginPassModern").value;
-  const err = document.getElementById("loginErrorModern");
-
-  if (!user || !pass) {
-    err.textContent = "Please enter username and password.";
-    return;
-  }
-
-  // Reuse your existing login logic
-  const users = loadUsers();
-  const found = users.find((u) => u.username === user && u.password === pass);
-
-  if (!found) {
-    err.textContent = "Incorrect username or password.";
-    return;
-  }
-
-  localStorage.setItem(
-    KEYS.session,
-    JSON.stringify({ username: found.username, name: found.name }),
-  );
-  err.textContent = "";
-  startApp(found);
-}
-
-// Modern Register - uses your existing doRegister logic
-function doRegisterModern() {
-  const name = document.getElementById("regNameModern").value.trim();
-  const user = document.getElementById("regUserModern").value.trim();
-  const pass = document.getElementById("regPassModern").value;
-  const terms = document.getElementById("termsCheckboxModern")?.checked;
-  const err = document.getElementById("regErrorModern");
-
-  if (!name || !user || !pass) {
-    err.textContent = "All fields are required.";
-    return;
-  }
-
-  if (!terms) {
-    err.textContent = "Please agree to the Terms & Conditions.";
-    return;
-  }
-
-  if (pass.length < 3) {
-    err.textContent = "Password must be at least 3 characters.";
-    return;
-  }
-
-  // Reuse your existing register logic
-  const users = loadUsers();
-  if (users.find((u) => u.username === user)) {
-    err.textContent = "Username already taken.";
-    return;
-  }
-
-  users.push({ username: user, password: pass, name });
-  saveUsers(users);
-  localStorage.setItem(KEYS.session, JSON.stringify({ username: user, name }));
-  err.textContent = "";
-  startApp({ username: user, name });
-}
-
-// Initialize tabs when page loads
-document.addEventListener("DOMContentLoaded", function () {
-  initModernLoginTabs();
-});
-
-// Make functions global
-window.togglePasswordModern = togglePasswordModern;
-window.doLoginModern = doLoginModern;
-window.doRegisterModern = doRegisterModern;
 // Boot
 (function boot() {
   let users = loadUsers();
@@ -6113,149 +5969,6 @@ window.doRegisterModern = doRegisterModern;
   // ============================================================
   //  MODERN LOGIN - TAB SWITCHING & TERMS
   // ============================================================
-
-  // Tab switching for modern login
-  function initModernLoginTabs() {
-    const tabs = document.querySelectorAll(".login-tab");
-    if (tabs.length === 0) return;
-
-    tabs.forEach((tab) => {
-      tab.addEventListener("click", function () {
-        const tabName = this.getAttribute("data-tab");
-
-        // Update tab active states
-        tabs.forEach((t) => t.classList.remove("active"));
-        this.classList.add("active");
-
-        // Show/hide panels
-        const loginPanel = document.getElementById("loginFormModern");
-        const registerPanel = document.getElementById("registerFormModern");
-
-        if (tabName === "login") {
-          if (loginPanel) loginPanel.classList.add("active");
-          if (registerPanel) registerPanel.classList.remove("active");
-        } else {
-          if (loginPanel) loginPanel.classList.remove("active");
-          if (registerPanel) registerPanel.classList.add("active");
-        }
-      });
-    });
-  }
-
-  // Register with terms checkbox
-  function doRegisterWithTerms() {
-    const termsCheckbox = document.getElementById("termsCheckbox");
-    if (!termsCheckbox || !termsCheckbox.checked) {
-      const errEl = document.getElementById("regError");
-      if (errEl) errEl.textContent = "Please agree to the Terms & Conditions.";
-      return;
-    }
-    // Call the existing doRegister function
-    doRegister();
-  }
-
-  // Initialize when DOM is ready
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initModernLoginTabs);
-  } else {
-    initModernLoginTabs();
-  }
-
-  // ============================================================
-  //  FIX MODERN LOGIN - OVERRIDE FUNCTIONS
-  // ============================================================
-
-  // Override the old doLogin to work with modern form
-  window.doLogin = function () {
-    // Try to get values from modern form first
-    let user = document.getElementById("loginUserModern")?.value;
-    let pass = document.getElementById("loginPassModern")?.value;
-
-    // Fallback to old form
-    if (!user) user = document.getElementById("loginUser")?.value;
-    if (!pass) pass = document.getElementById("loginPass")?.value;
-
-    const err =
-      document.getElementById("loginErrorModern") ||
-      document.getElementById("loginError");
-
-    if (!user || !pass) {
-      if (err) err.textContent = "Please enter username and password.";
-      return;
-    }
-
-    const users = loadUsers();
-    const found = users.find((u) => u.username === user && u.password === pass);
-
-    if (!found) {
-      if (err) err.textContent = "Incorrect username or password.";
-      return;
-    }
-
-    localStorage.setItem(
-      KEYS.session,
-      JSON.stringify({ username: found.username, name: found.name }),
-    );
-    if (err) err.textContent = "";
-    startApp(found);
-  };
-
-  // Override doRegister for modern form
-  window.doRegister = function () {
-    // Get values from modern form
-    let name = document.getElementById("regNameModern")?.value;
-    let user = document.getElementById("regUserModern")?.value;
-    let pass = document.getElementById("regPassModern")?.value;
-
-    // Fallback to old form
-    if (!name) name = document.getElementById("regName")?.value;
-    if (!user) user = document.getElementById("regUser")?.value;
-    if (!pass) pass = document.getElementById("regPass")?.value;
-
-    const err =
-      document.getElementById("regErrorModern") ||
-      document.getElementById("regError");
-
-    if (!name || !user || !pass) {
-      if (err) err.textContent = "All fields are required.";
-      return;
-    }
-    if (pass.length < 3) {
-      if (err) err.textContent = "Password must be at least 3 characters.";
-      return;
-    }
-
-    const users = loadUsers();
-    if (users.find((u) => u.username === user)) {
-      if (err) err.textContent = "Username already taken.";
-      return;
-    }
-
-    users.push({ username: user, password: pass, name });
-    saveUsers(users);
-    localStorage.setItem(
-      KEYS.session,
-      JSON.stringify({ username: user, name }),
-    );
-    if (err) err.textContent = "";
-    startApp({ username: user, name });
-  };
-
-  // Make sure old login screen is hidden
-  function hideOldLoginScreen() {
-    const oldLoginForm = document.getElementById("loginForm");
-    const oldRegisterForm = document.getElementById("registerForm");
-    if (oldLoginForm) oldLoginForm.style.display = "none";
-    if (oldRegisterForm) oldRegisterForm.style.display = "none";
-  }
-
-  // Call this when page loads
-  document.addEventListener("DOMContentLoaded", function () {
-    hideOldLoginScreen();
-    initModernLoginTabs();
-  });
-
-  console.log("Modern login fixes applied - use admin / 1234");
 
   // Make the new function global
 
@@ -6435,73 +6148,6 @@ window.doRegisterModern = doRegisterModern;
     }, 50);
   }
   // =====================================================
-  //  MINIMAL LOGIN FUNCTIONS
-  // =====================================================
-
-  function initMinimalLoginTabs() {
-    const tabs = document.querySelectorAll(".form-tab");
-    if (tabs.length === 0) return;
-
-    tabs.forEach((tab) => {
-      tab.addEventListener("click", function () {
-        const tabName = this.getAttribute("data-tab");
-
-        tabs.forEach((t) => t.classList.remove("active"));
-        this.classList.add("active");
-
-        const loginPanel = document.getElementById("loginFormMinimal");
-        const registerPanel = document.getElementById("registerFormMinimal");
-
-        if (tabName === "login") {
-          if (loginPanel) loginPanel.classList.add("active");
-          if (registerPanel) registerPanel.classList.remove("active");
-        } else {
-          if (loginPanel) loginPanel.classList.remove("active");
-          if (registerPanel) registerPanel.classList.add("active");
-        }
-      });
-    });
-  }
-
-  function togglePasswordMinimal(fieldId, btn) {
-    const field = document.getElementById(fieldId);
-    if (field.type === "password") {
-      field.type = "text";
-      btn.textContent = "🙈";
-    } else {
-      field.type = "password";
-      btn.textContent = "👁";
-    }
-  }
-
-  function doLoginMinimal() {
-    const user = document.getElementById("loginUserMinimal").value.trim();
-    const pass = document.getElementById("loginPassMinimal").value;
-    const err = document.getElementById("loginErrorMinimal");
-
-    if (!user || !pass) {
-      err.textContent = "Please enter username and password.";
-      return;
-    }
-
-    const users = loadUsers();
-    const found = users.find((u) => u.username === user && u.password === pass);
-
-    if (!found) {
-      err.textContent = "Incorrect username or password.";
-      return;
-    }
-
-    localStorage.setItem(
-      KEYS.session,
-      JSON.stringify({ username: found.username, name: found.name }),
-    );
-    err.textContent = "";
-    startApp(found);
-  }
-  // =====================================================
-  //  NEW LOGIN FUNCTIONS
-  // =====================================================
 
   function togglePasswordField() {
     const passField = document.getElementById("loginPass");
@@ -6528,74 +6174,9 @@ window.doRegisterModern = doRegisterModern;
     document.getElementById("termsCheckbox").checked = false;
   }
 
-  // Override doRegister to work with modal
-  window.doRegister = function () {
-    const name = document.getElementById("regName").value.trim();
-    const user = document.getElementById("regUser").value.trim();
-    const pass = document.getElementById("regPass").value;
-    const terms = document.getElementById("termsCheckbox").checked;
-    const err = document.getElementById("regError");
-
-    if (!name || !user || !pass) {
-      err.textContent = "All fields are required.";
-      return;
-    }
-
-    if (!terms) {
-      err.textContent = "Please agree to the Terms & Conditions.";
-      return;
-    }
-
-    if (pass.length < 3) {
-      err.textContent = "Password must be at least 3 characters.";
-      return;
-    }
-
-    const users = loadUsers();
-    if (users.find((u) => u.username === user)) {
-      err.textContent = "Username already taken.";
-      return;
-    }
-
-    users.push({ username: user, password: pass, name });
-    saveUsers(users);
-    localStorage.setItem(
-      KEYS.session,
-      JSON.stringify({ username: user, name }),
-    );
-    err.textContent = "";
-    closeRegisterModal();
-    startApp({ username: user, name });
-  };
-
-  // Make sure doLogin uses the new form
-  window.doLogin = function () {
-    const user = document.getElementById("loginUser").value.trim();
-    const pass = document.getElementById("loginPass").value;
-    const err = document.getElementById("loginError");
-
-    if (!user || !pass) {
-      if (err) err.textContent = "Please enter username and password.";
-      else alert("Please enter username and password.");
-      return;
-    }
-
-    const users = loadUsers();
-    const found = users.find((u) => u.username === user && u.password === pass);
-
-    if (!found) {
-      if (err) err.textContent = "Incorrect username or password.";
-      else alert("Incorrect username or password.");
-      return;
-    }
-
-    localStorage.setItem(
-      KEYS.session,
-      JSON.stringify({ username: found.username, name: found.name }),
-    );
-    if (err) err.textContent = "";
-    startApp(found);
-  };
+  window.showRegisterForm = showRegisterForm;
+  window.closeRegisterModal = closeRegisterModal;
+  window.togglePasswordField = togglePasswordField;
 
   // Close modal when clicking outside
   document.addEventListener("click", function (e) {
@@ -6604,49 +6185,6 @@ window.doRegisterModern = doRegisterModern;
       closeRegisterModal();
     }
   });
-  function doRegisterMinimal() {
-    const name = document.getElementById("regNameMinimal").value.trim();
-    const user = document.getElementById("regUserMinimal").value.trim();
-    const pass = document.getElementById("regPassMinimal").value;
-    const terms = document.getElementById("termsMinimal").checked;
-    const err = document.getElementById("regErrorMinimal");
-
-    if (!name || !user || !pass) {
-      err.textContent = "All fields are required.";
-      return;
-    }
-
-    if (!terms) {
-      err.textContent = "Please agree to the Terms & Conditions.";
-      return;
-    }
-
-    if (pass.length < 3) {
-      err.textContent = "Password must be at least 3 characters.";
-      return;
-    }
-
-    const users = loadUsers();
-    if (users.find((u) => u.username === user)) {
-      err.textContent = "Username already taken.";
-      return;
-    }
-
-    users.push({ username: user, password: pass, name });
-    saveUsers(users);
-    localStorage.setItem(
-      KEYS.session,
-      JSON.stringify({ username: user, name }),
-    );
-    err.textContent = "";
-    startApp({ username: user, name });
-  }
-
-  // Initialize
-  document.addEventListener("DOMContentLoaded", function () {
-    initMinimalLoginTabs();
-  });
-
   // ====================================================
   //  MOBILE HAMBURGER MENU FIX FOR TOUCH DEVICES
   // ====================================================
@@ -6727,9 +6265,6 @@ window.doRegisterModern = doRegisterModern;
   });
 
   // Make functions global
-  window.togglePasswordMinimal = togglePasswordMinimal;
-  window.doLoginMinimal = doLoginMinimal;
-  window.doRegisterMinimal = doRegisterMinimal;
   window.navigate = navigate;
   // Make functions global
   window.selectSource = selectSource;
@@ -6740,8 +6275,6 @@ window.doRegisterModern = doRegisterModern;
 
   // Override the original renderIncome to use new function
   window.renderIncome = renderIncomeTable;
-
-  window.doRegisterWithTerms = doRegisterWithTerms;
 })();
 
 // ============================================================
@@ -6866,190 +6399,4 @@ document.addEventListener("DOMContentLoaded", function () {
   if (syncBtn) syncBtn.onclick = syncToCloud;
 
   console.log("✅ Cloud sync buttons ready!");
-});
-
-// ====================================================
-//  MOBILE NAVIGATION FIX - Touch Events
-// ====================================================
-
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("Fixing mobile navigation...");
-
-  // Get all navigation items
-  const navItems = document.querySelectorAll(".nav-item");
-
-  function handleNavigation(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const page = this.getAttribute("data-page");
-    console.log("Navigating to:", page);
-
-    if (page) {
-      navigate(page);
-      // Close sidebar on mobile after navigation
-      const sidebar = document.getElementById("sidebar");
-      const backdrop = document.getElementById("sidebarBackdrop");
-      if (sidebar && window.innerWidth <= 820) {
-        sidebar.classList.remove("open");
-        if (backdrop) backdrop.classList.remove("open");
-        document.body.style.overflow = "";
-      }
-    }
-  }
-
-  // Add both click and touchstart events for mobile
-  navItems.forEach((item) => {
-    // Remove any existing listeners to avoid duplicates
-    item.removeEventListener("click", handleNavigation);
-    item.removeEventListener("touchstart", handleNavigation);
-
-    // Add both events
-    item.addEventListener("click", handleNavigation);
-    item.addEventListener("touchstart", handleNavigation, { passive: false });
-
-    // Make sure cursor is pointer on mobile
-    item.style.cursor = "pointer";
-  });
-
-  console.log(
-    "✅ Mobile navigation fixed. Found",
-    navItems.length,
-    "nav items",
-  );
-});
-
-// Also fix the navigate function to work on mobile
-const originalNavigate = navigate;
-window.navigate = function (page) {
-  console.log("Navigate function called for page:", page);
-
-  const pageEl = document.getElementById("page-" + page);
-  if (!pageEl) {
-    console.warn(`Page not found: page-${page}`);
-    return;
-  }
-
-  // Hide all pages
-  document.querySelectorAll(".page").forEach((p) => {
-    p.classList.remove("active");
-  });
-
-  // Show selected page
-  pageEl.classList.add("active");
-
-  // Update active nav state
-  document.querySelectorAll(".nav-item").forEach((n) => {
-    if (n.getAttribute("data-page") === page) {
-      n.classList.add("active");
-    } else {
-      n.classList.remove("active");
-    }
-  });
-
-  // Update title
-  const titles = {
-    dashboard: "Dashboard",
-    household: "Household Expenses",
-    income: "Income Records",
-    agriculture: "Agriculture Records",
-    livestock: "Livestock Records",
-    labour: "Labour Records",
-    vehicle: "Vehicle Expenses",
-    medical: "Medical Records",
-    family: "Family Members",
-  };
-
-  const titleEl = document.getElementById("topbarTitle");
-  if (titleEl) titleEl.textContent = titles[page] || page;
-
-  // Close sidebar on mobile
-  if (window.innerWidth <= 820) {
-    const sidebar = document.getElementById("sidebar");
-    const backdrop = document.getElementById("sidebarBackdrop");
-    if (sidebar) sidebar.classList.remove("open");
-    if (backdrop) backdrop.classList.remove("open");
-  }
-
-  // Load page content
-  if (page === "dashboard") {
-    if (typeof renderDashboard === "function") renderDashboard();
-  } else if (page === "family") {
-    if (typeof renderFamily === "function") renderFamily();
-  } else {
-    if (typeof renderTable === "function") renderTable(page);
-    if (page === "labour" && typeof renderLabourCharts === "function")
-      renderLabourCharts();
-  }
-
-  console.log("✅ Navigated to", page);
-};
-
-// ====================================================
-//  FIX: SEPARATE SCROLL FROM TAP ON MOBILE
-// ====================================================
-
-document.addEventListener("DOMContentLoaded", function () {
-  console.log("Setting up mobile-friendly navigation...");
-
-  let touchTimer = null;
-  let startY = 0;
-  let startX = 0;
-  let didScroll = false;
-
-  const navItems = document.querySelectorAll(".nav-item");
-
-  navItems.forEach((item) => {
-    const page = item.getAttribute("data-page");
-
-    // Touch start - record position
-    item.addEventListener("touchstart", function (e) {
-      startY = e.touches[0].clientY;
-      startX = e.touches[0].clientX;
-      didScroll = false;
-
-      // Clear any pending navigation
-      if (touchTimer) clearTimeout(touchTimer);
-    });
-
-    // Touch move - detect scrolling
-    item.addEventListener("touchmove", function (e) {
-      const currentY = e.touches[0].clientY;
-      const currentX = e.touches[0].clientX;
-      const deltaY = Math.abs(currentY - startY);
-      const deltaX = Math.abs(currentX - startX);
-
-      // If moved more than 10px in any direction, user is scrolling
-      if (deltaY > 10 || deltaX > 5) {
-        didScroll = true;
-      }
-    });
-
-    // Touch end - only navigate if no scroll occurred
-    item.addEventListener("touchend", function (e) {
-      e.preventDefault();
-
-      if (!didScroll) {
-        // Small delay to ensure it's a tap, not a scroll
-        touchTimer = setTimeout(function () {
-          console.log("Tap detected on:", page);
-          if (page) navigate(page);
-        }, 50);
-      } else {
-        console.log("Scroll detected, not navigating");
-      }
-
-      // Reset
-      startY = 0;
-      startX = 0;
-    });
-
-    // Keep click for desktop
-    item.addEventListener("click", function (e) {
-      e.preventDefault();
-      if (page) navigate(page);
-    });
-  });
-
-  console.log("✅ Mobile navigation ready - scroll vs tap fixed");
 });
