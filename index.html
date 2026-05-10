@@ -1494,35 +1494,83 @@
           </section>
 
           <!-- VEHICLE -->
+          <!-- VEHICLE - REDESIGNED -->
           <section class="page" id="page-vehicle">
-            <div class="page-header-stats">
-              <div class="page-title">
+            <!-- Header with Stats -->
+            <div class="vehicle-header">
+              <div class="vehicle-title-section">
                 <h1>🚜 Vehicle Expenses</h1>
                 <p>Track fuel, maintenance, and repair costs</p>
               </div>
-              <div class="header-stats">
-                <div class="header-stat-item">
-                  <div class="header-stat-label">This Month</div>
-                  <div class="header-stat-value" id="vehicleThisMonth">₹0</div>
+              <div class="vehicle-stats-compact">
+                <div class="compact-stat">
+                  <span class="compact-label">This Month</span>
+                  <span class="compact-value" id="vehicleThisMonth">₹0</span>
                 </div>
-                <div class="header-stat-item">
-                  <div class="header-stat-label">This Year</div>
-                  <div class="header-stat-value" id="vehicleThisYear">₹0</div>
+                <div class="compact-stat">
+                  <span class="compact-label">This Year</span>
+                  <span class="compact-value" id="vehicleThisYear">₹0</span>
                 </div>
               </div>
             </div>
-            <!-- Household Filters - Mobile Optimized -->
+
+            <!-- Quick Add Button -->
+            <button class="quick-add-btn" onclick="openModal('vehicle')">
+              <span class="quick-add-icon">+</span>
+              <span class="quick-add-text">Add Expense</span>
+            </button>
+
+            <!-- Vehicle Type Chips - Horizontal Scroll -->
+            <div class="vehicle-chips-scroll">
+              <button
+                class="vehicle-chip-mobile active"
+                data-vehicle=""
+                onclick="filterByVehicle('')"
+              >
+                🚗 All
+              </button>
+              <button
+                class="vehicle-chip-mobile"
+                data-vehicle="Tractor"
+                onclick="filterByVehicle('Tractor')"
+              >
+                🚜 Tractor
+              </button>
+              <button
+                class="vehicle-chip-mobile"
+                data-vehicle="Bike"
+                onclick="filterByVehicle('Bike')"
+              >
+                🏍️ Bike
+              </button>
+              <button
+                class="vehicle-chip-mobile"
+                data-vehicle="Scooter"
+                onclick="filterByVehicle('Scooter')"
+              >
+                🛵 Scooter
+              </button>
+              <button
+                class="vehicle-chip-mobile"
+                data-vehicle="Other"
+                onclick="filterByVehicle('Other')"
+              >
+                🚗 Other
+              </button>
+            </div>
+
+            <!-- Filters - Compact 2 Row -->
             <div class="filter-bar-mobile">
               <div class="filter-row">
                 <div class="filter-chip">
                   <span>📅</span>
-                  <select id="hhBSYear" onchange="renderHouseholdTable()">
+                  <select id="vehBSYear" onchange="renderVehicleTable()">
                     <option value="">Year</option>
                   </select>
                 </div>
                 <div class="filter-chip">
                   <span>🗓️</span>
-                  <select id="hhBSMonth" onchange="renderHouseholdTable()">
+                  <select id="vehBSMonth" onchange="renderVehicleTable()">
                     <option value="">Month</option>
                     <option value="1">बैशाख</option>
                     <option value="2">जेठ</option>
@@ -1538,110 +1586,92 @@
                     <option value="12">चैत्र</option>
                   </select>
                 </div>
-                <button class="clear-pill" onclick="clearHouseholdFilters()">
+                <button class="clear-pill" onclick="clearVehicleFilters()">
                   Clear
                 </button>
               </div>
-
               <div class="filter-row">
                 <div class="filter-chip">
                   <span>🏷️</span>
-                  <select id="hhCatFilter" onchange="renderHouseholdTable()">
+                  <select id="vehCatFilter" onchange="renderVehicleTable()">
                     <option value="">Category</option>
-                    <option>Grains &amp; Cereals</option>
-                    <option>Vegetables</option>
-                    <option>Dairy Products</option>
-                    <option>Meat &amp; Protein</option>
-                    <option>Household Essentials</option>
-                    <option>Other</option>
-                    <option>Mixed bill</option>
+                    <option value="Fuel">⛽ Fuel</option>
+                    <option value="Maintenance">🔧 Maintenance</option>
+                    <option value="Repair">🔨 Repair</option>
+                    <option value="Insurance">📄 Insurance</option>
+                    <option value="Other">📦 Other</option>
                   </select>
                 </div>
-              </div>
-
-              <div class="filter-row full">
                 <div class="filter-chip search-chip">
                   <span>🔍</span>
                   <input
                     type="text"
-                    id="hhSearch"
-                    placeholder="Search items or notes..."
-                    oninput="renderHouseholdTable()"
+                    id="vehSearch"
+                    placeholder="Search..."
+                    oninput="renderVehicleTable()"
                   />
                 </div>
               </div>
             </div>
-            <div class="vehicle-filter-chips">
-              <button
-                class="vehicle-chip active"
-                data-vehicle=""
-                onclick="filterByVehicle('')"
-              >
-                🚗 All Vehicles</button
-              ><button
-                class="vehicle-chip"
-                data-vehicle="Tractor"
-                onclick="filterByVehicle('Tractor')"
-              >
-                🚜 Tractor</button
-              ><button
-                class="vehicle-chip"
-                data-vehicle="Bike"
-                onclick="filterByVehicle('Bike')"
-              >
-                🏍️ Bike</button
-              ><button
-                class="vehicle-chip"
-                data-vehicle="Scooter"
-                onclick="filterByVehicle('Scooter')"
-              >
-                🛵 Scooter</button
-              ><button
-                class="vehicle-chip"
-                data-vehicle="Other"
-                onclick="filterByVehicle('Other')"
-              >
-                🚗 Other
-              </button>
-            </div>
-            <div class="table-container">
-              <table class="vehicle-table">
-                <thead>
-                  <tr>
-                    <th>Date (BS)</th>
-                    <th>Vehicle</th>
-                    <th>Category</th>
-                    <th>Amount</th>
-                    <th>Notes</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="vehicleBody"></tbody>
-              </table>
-            </div>
-            <div id="vehicleEmpty" class="empty-state" style="display: none">
-              <div class="empty-icon">🚗</div>
-              <div class="empty-title">No vehicle expenses yet</div>
-              <div class="empty-text">
-                Click "Add Expense" to track fuel, maintenance, and repair costs
+
+            <!-- Summary Cards - Compact -->
+            <div class="vehicle-summary-compact">
+              <div class="summary-chip">
+                <span>🚜 Tractor</span>
+                <strong id="tractorTotal">₹0</strong>
+              </div>
+              <div class="summary-chip">
+                <span>🏍️ Bike</span>
+                <strong id="bikeTotal">₹0</strong>
+              </div>
+              <div class="summary-chip">
+                <span>🛵 Scooter</span>
+                <strong id="scooterTotal">₹0</strong>
               </div>
             </div>
-            <div class="vehicle-summary-cards">
-              <div class="summary-card">
-                <div class="summary-label">🚜 Tractor</div>
-                <div class="summary-value" id="tractorTotal">₹0</div>
+
+            <!-- Records Table -->
+            <div class="vehicle-table-container">
+              <div class="table-header-actions">
+                <span class="records-count" id="vehicleRecordCount"
+                  >0 records</span
+                >
+                <div class="table-actions">
+                  <button class="action-btn" onclick="exportCSV('vehicle')">
+                    📥 CSV
+                  </button>
+                  <button
+                    class="action-btn"
+                    onclick="printModuleReport('vehicle')"
+                  >
+                    🖨️ Print
+                  </button>
+                </div>
               </div>
-              <div class="summary-card">
-                <div class="summary-label">🏍️ Bike</div>
-                <div class="summary-value" id="bikeTotal">₹0</div>
+              <div class="table-wrapper">
+                <table class="vehicle-table-modern">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Vehicle</th>
+                      <th>Category</th>
+                      <th>Amount</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="vehicleBody"></tbody>
+                </table>
               </div>
-              <div class="summary-card">
-                <div class="summary-label">🛵 Scooter</div>
-                <div class="summary-value" id="scooterTotal">₹0</div>
-              </div>
-              <div class="summary-card">
-                <div class="summary-label">📋 Total Records</div>
-                <div class="summary-value" id="vehicleRecordCount">0</div>
+              <div
+                id="vehicleEmpty"
+                class="empty-state-modern"
+                style="display: none"
+              >
+                <div class="empty-icon">🚗</div>
+                <div class="empty-title">No vehicle expenses</div>
+                <div class="empty-text">
+                  Tap + to add fuel, maintenance, or repair
+                </div>
               </div>
             </div>
           </section>

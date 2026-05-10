@@ -2446,34 +2446,126 @@ function renderLabourCharts() {
 }
 
 function renderVehicle() {
-  const { year, month } = getYMFilter("veh");
-  let data = filterBS(loadData("vehicle"), year, month);
-  const veh = document.getElementById("vehTypeFilter")?.value || "",
-    cat = document.getElementById("vehCatFilter")?.value || "";
-  if (veh) data = data.filter((r) => r.vehicle === veh);
-  if (cat) data = data.filter((r) => r.category === cat);
+  const year = document.getElementById("vehBSYear")?.value || "";
+  const month = document.getElementById("vehBSMonth")?.value || "";
+  const category = document.getElementById("vehCatFilter")?.value || "";
+  const search = (
+    document.getElementById("vehSearch")?.value || ""
+  ).toLowerCase();
+  const activeVehicle = currentVehicleFilter || "";
+
+  let data = loadData("vehicle");
+
+  if (year) data = data.filter((r) => r.bsY == year);
+  if (month) data = data.filter((r) => r.bsM == month);
+  if (category) data = data.filter((r) => r.category === category);
+  if (activeVehicle) data = data.filter((r) => r.vehicle === activeVehicle);
+  if (search)
+    data = data.filter((r) => (r.notes || "").toLowerCase().includes(search));
+
   data = sortByDate(data);
-  const vIcon = (v) =>
-    ({ Tractor: "🚜", Bike: "🏍️", Scooter: "🛵" })[v] || "🚗";
-  const cBadge = (c) =>
-    ({
-      Fuel: "badge-warning",
-      Maintenance: "badge-info",
-      Repair: "badge-expense",
-      Insurance: "badge-purple",
-    })[c] || "badge-info";
-  document.getElementById("vehicleBody").innerHTML = data.length
-    ? data
-        .map(
-          (r) =>
-            `<tr><td class="mono">${bsDisplay(r)}</td><td>${vIcon(r.vehicle)} ${r.vehicle}</td><td><span class="badge ${cBadge(r.category)}">${r.category}</span></td><td class="mono">₹${fmt(r.amount)}</td><td>${r.notes || "—"}</td><td>${editBtn("vehicle", r)} ${delBtn("vehicle", r.id)}</td></tr>`,
-        )
-        .join("")
-    : emptyRow(6);
-  const total = data.reduce((s, r) => s + r.amount, 0);
-  document.getElementById("vehicleSummary").innerHTML =
-    `<span class="sum-item">Total: <strong>₹${fmt(total)}</strong></span>${["Tractor", "Bike", "Scooter"].map((v) => `<span class="sum-item">${vIcon(v)} ${v}: <strong>₹${fmt(data.filter((r) => r.vehicle === v).reduce((s, r) => s + r.amount, 0))}</strong></span>`).join("")}<span class="sum-item">Records: <strong>${data.length}</strong></span>`;
+
+  const tbody = document.getElementById("vehicleBody");
+  const emptyDiv = document.getElementById("vehicleEmpty");
+  const recordsCount = document.getElementById("vehicleRecordCount");
+
+  // Update summary totals
+  const tractorTotal = data
+    .filter((r) => r.vehicle === "Tractor")
+    .reduce((s, r) => s + r.amount, 0);
+  const bikeTotal = data
+    .filter((r) => r.vehicle === "Bike")
+    .reduce((s, r) => s + r.amount, 0);
+  const scooterTotal = data
+    .filter((r) => r.vehicle === "Scooter")
+    .reduce((s, r) => s + r.amount, 0);
+
+  const tractorEl = document.getElementById("tractorTotal");
+  const bikeEl = document.getElementById("bikeTotal");
+  const scooterEl = document.getElementById("scooterTotal");
+  if (tractorEl) tractorEl.innerHTML = "₹" + fmt(tractorTotal);
+  if (bikeEl) bikeEl.innerHTML = "₹" + fmt(bikeTotal);
+  if (scooterEl) scooterEl.innerHTML = "₹" + fmt(scooterTotal);
+  if (recordsCount) recordsCount.textContent = `${data.length} record(s)`;
+
+  // Update this month/year stats
+  const now = todayBS();
+  const allVehicleData = loadData("vehicle");
+  const thisMonth = allVehicleData
+    .filter((r) => r.bsY === now.y && r.bsM === now.m)
+    .reduce((s, r) => s + r.amount, 0);
+  const thisYear = allVehicleData
+    .filter((r) => r.bsY === now.y)
+    .reduce((s, r) => s + r.amount, 0);
+
+  const thisMonthEl = document.getElementById("vehicleThisMonth");
+  const thisYearEl = document.getElementById("vehicleThisYear");
+  if (thisMonthEl) thisMonthEl.innerHTML = "₹" + fmt(thisMonth);
+  if (thisYearEl) thisYearEl.innerHTML = "₹" + fmt(thisYear);
+
+  if (!data.length) {
+    if (tbody) tbody.innerHTML = "";
+    if (emptyDiv) emptyDiv.style.display = "block";
+    return;
+  }
+
+  if (emptyDiv) emptyDiv.style.display = "none";
+
+  if (tbody) {
+    tbody.innerHTML = data
+      .map((r) => {
+        const vehicleClass =
+          r.vehicle === "Tractor"
+            ? "tractor"
+            : r.vehicle === "Bike"
+              ? "bike"
+              : "scooter";
+        const categoryClass = (r.category || "").toLowerCase();
+
+        return `
+        <tr data-id="${r.id}">
+          <td class="mono">${bsDisplay(r)}</td>
+          <td><span class="vehicle-badge-modern ${vehicleClass}">${r.vehicle === "Tractor" ? "🚜" : r.vehicle === "Bike" ? "🏍️" : "🛵"} ${r.vehicle}</span></td>
+          <td><span class="category-badge-modern ${categoryClass}">${r.category || "—"}</span></td>
+          <td class="amount-cell">₹${fmt(r.amount)}</td>
+          <td class="action-cell">
+            <button class="action-icon-small edit" onclick='openModal("vehicle", ${JSON.stringify(r).replace(/'/g, "&#39;")})' title="Edit">✏️</button>
+            <button class="action-icon-small delete" onclick="deleteRecord('vehicle','${r.id}')" title="Delete">🗑️</button>
+          </td>
+        </tr>
+      `;
+      })
+      .join("");
+  }
 }
+
+function clearVehicleFilters() {
+  const yearEl = document.getElementById("vehBSYear");
+  const monthEl = document.getElementById("vehBSMonth");
+  const catEl = document.getElementById("vehCatFilter");
+  const searchEl = document.getElementById("vehSearch");
+
+  if (yearEl) yearEl.value = "";
+  if (monthEl) monthEl.value = "";
+  if (catEl) catEl.value = "";
+  if (searchEl) searchEl.value = "";
+
+  // Reset vehicle filter
+  currentVehicleFilter = "";
+  const chips = document.querySelectorAll(".vehicle-chip-mobile");
+  if (chips.length) {
+    chips.forEach((chip) => {
+      chip.classList.remove("active");
+      if (chip.getAttribute("data-vehicle") === "")
+        chip.classList.add("active");
+    });
+  }
+
+  renderVehicle();
+}
+
+// Make sure it's global
+window.clearVehicleFilters = clearVehicleFilters;
 
 function renderVehicleTable() {
   const year = document.getElementById("vehBSYear")?.value || "",

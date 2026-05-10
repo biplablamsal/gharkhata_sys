@@ -5641,3 +5641,286 @@ button {
     min-height: 50px;
   }
 }
+/* =====================================================
+   VEHICLE SECTION - REDESIGNED (Mobile First)
+   ===================================================== */
+
+/* Header with compact stats */
+.vehicle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.vehicle-title-section h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-1);
+  margin-bottom: 4px;
+}
+
+.vehicle-title-section p {
+  font-size: 0.75rem;
+  color: var(--text-3);
+}
+
+.vehicle-stats-compact {
+  display: flex;
+  gap: 12px;
+  background: var(--surface);
+  padding: 8px 16px;
+  border-radius: 40px;
+  border: 1px solid var(--border);
+}
+
+.compact-stat {
+  text-align: center;
+}
+
+.compact-label {
+  font-size: 0.6rem;
+  color: var(--text-3);
+  text-transform: uppercase;
+  display: block;
+}
+
+.compact-value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* Horizontal scroll chips for vehicles */
+.vehicle-chips-scroll {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 8px 0 16px 0;
+  margin-bottom: 8px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+.vehicle-chips-scroll::-webkit-scrollbar {
+  height: 3px;
+}
+
+.vehicle-chip-mobile {
+  flex-shrink: 0;
+  padding: 10px 18px;
+  background: var(--bg);
+  border: 1px solid var(--border-2);
+  border-radius: 40px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.vehicle-chip-mobile:active {
+  transform: scale(0.96);
+}
+
+.vehicle-chip-mobile.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* Compact summary chips */
+.vehicle-summary-compact {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.summary-chip {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.summary-chip span {
+  color: var(--text-3);
+}
+
+.summary-chip strong {
+  color: var(--red);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.85rem;
+}
+
+/* Modern vehicle table */
+.vehicle-table-container {
+  background: var(--surface);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.vehicle-table-modern {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.vehicle-table-modern th {
+  padding: 14px 12px;
+  text-align: left;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--border);
+}
+
+.vehicle-table-modern td {
+  padding: 14px 12px;
+  font-size: 0.85rem;
+  color: var(--text-2);
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.vehicle-table-modern tr:last-child td {
+  border-bottom: none;
+}
+
+.vehicle-table-modern tr:hover td {
+  background: var(--bg);
+}
+
+/* Vehicle badges in table */
+.vehicle-badge-modern {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.vehicle-badge-modern.tractor {
+  background: #e8f4fd;
+  color: #1a6fa8;
+}
+
+.vehicle-badge-modern.bike {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.vehicle-badge-modern.scooter {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+.category-badge-modern {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.65rem;
+  font-weight: 600;
+}
+
+.category-badge-modern.fuel {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.category-badge-modern.maintenance {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+.category-badge-modern.repair {
+  background: #fdecea;
+  color: #c0392b;
+}
+
+/* Amount column */
+.amount-cell {
+  font-weight: 700;
+  color: var(--red);
+  font-family: "JetBrains Mono", monospace;
+  white-space: nowrap;
+}
+
+/* Action buttons in table */
+.action-cell {
+  white-space: nowrap;
+}
+
+.action-icon-small {
+  background: none;
+  border: none;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.action-icon-small.edit {
+  color: var(--blue);
+}
+
+.action-icon-small.delete {
+  color: var(--red);
+}
+
+.action-icon-small.edit:active {
+  background: var(--blue-light);
+}
+
+.action-icon-small.delete:active {
+  background: var(--red-light);
+}
+
+/* Responsive */
+@media (max-width: 550px) {
+  .vehicle-title-section h1 {
+    font-size: 1.2rem;
+  }
+
+  .vehicle-stats-compact {
+    padding: 6px 12px;
+  }
+
+  .compact-value {
+    font-size: 0.85rem;
+  }
+
+  .vehicle-chip-mobile {
+    padding: 8px 14px;
+    font-size: 0.75rem;
+  }
+
+  .summary-chip {
+    padding: 6px 10px;
+  }
+
+  .summary-chip strong {
+    font-size: 0.75rem;
+  }
+
+  .vehicle-table-modern th,
+  .vehicle-table-modern td {
+    padding: 10px 8px;
+    font-size: 0.75rem;
+  }
+}
