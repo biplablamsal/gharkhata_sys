@@ -6458,3 +6458,82 @@ document.addEventListener("DOMContentLoaded", function () {
 
   console.log("✅ Cloud sync buttons ready!");
 });
+
+// ====================================================
+//  FIX SIDEBAR SCROLLING (Prevents click while scrolling)
+// ====================================================
+
+(function fixSidebarScrolling() {
+  let touchStartY = 0;
+  let touchMoved = false;
+  let touchStartTime = 0;
+  const SCROLL_THRESHOLD = 10; // pixels to move before considering as scroll
+  const TIME_THRESHOLD = 200; // milliseconds for tap detection
+
+  const navItems = document.querySelectorAll(".nav-item");
+
+  function handleTouchStart(e) {
+    touchStartY = e.touches[0].clientY;
+    touchMoved = false;
+    touchStartTime = Date.now();
+
+    // Clear any existing timeout
+    if (this._clickTimeout) {
+      clearTimeout(this._clickTimeout);
+    }
+  }
+
+  function handleTouchMove(e) {
+    const touchCurrentY = e.touches[0].clientY;
+    const deltaY = Math.abs(touchCurrentY - touchStartY);
+
+    if (deltaY > SCROLL_THRESHOLD) {
+      touchMoved = true;
+    }
+  }
+
+  function handleTouchEnd(e) {
+    const touchEndTime = Date.now();
+    const duration = touchEndTime - touchStartTime;
+
+    // Only allow click if NOT moved and within time threshold
+    if (!touchMoved && duration < TIME_THRESHOLD) {
+      // It's a tap - let the click happen
+      return true;
+    } else {
+      // It was a scroll - prevent click
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    }
+  }
+
+  // Apply to all nav items
+  navItems.forEach((item) => {
+    item.removeEventListener("touchstart", handleTouchStart);
+    item.removeEventListener("touchmove", handleTouchMove);
+    item.removeEventListener("touchend", handleTouchEnd);
+
+    item.addEventListener("touchstart", handleTouchStart, { passive: true });
+    item.addEventListener("touchmove", handleTouchMove, { passive: true });
+    item.addEventListener("touchend", handleTouchEnd);
+  });
+
+  // Fix sidebar close button
+  const sidebarClose = document.getElementById("sidebarClose");
+  if (sidebarClose) {
+    sidebarClose.removeEventListener("touchstart", handleTouchStart);
+    sidebarClose.removeEventListener("touchmove", handleTouchMove);
+    sidebarClose.removeEventListener("touchend", handleTouchEnd);
+
+    sidebarClose.addEventListener("touchstart", handleTouchStart, {
+      passive: true,
+    });
+    sidebarClose.addEventListener("touchmove", handleTouchMove, {
+      passive: true,
+    });
+    sidebarClose.addEventListener("touchend", handleTouchEnd);
+  }
+
+  console.log("✅ Sidebar scrolling fix applied");
+})();
