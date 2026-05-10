@@ -1096,7 +1096,65 @@ function buildForm(module, r) {
     const billRows = householdItemsForForm(r)
       .map((row, idx) => renderHouseholdBillRowHtml(String(idx), row))
       .join("");
-    return `${bsDatePicker(bsY, bsM, bsD)}<div class="form-row full"><div class="form-group"><label>📋 Bill Items (add each item from receipt)</label><p style="font-size:0.7rem;color:var(--text-3);margin:0 0 8px 0;">Fill quantity and rate for each item - total auto-calculates below</p><div id="householdBillRows">${billRows}</div><button type="button" class="btn-outline btn-sm" style="margin-top:10px;width:100%" onclick="householdBillAddRow()">+ Add another item</button></div></div><div class="form-row full"><div class="form-group" style="background:var(--green-light);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--green);margin-top:8px"><label style="font-size:0.85rem;color:var(--green);font-weight:700">💰 TOTAL BILL AMOUNT (₹)</label><input type="number" id="f_h_billTotal" value="0" min="0" step="0.01" readonly style="background:white;font-weight:700;font-size:1.3rem;padding:12px;text-align:center;color:var(--green);border:1px solid var(--green)" /></div></div><div class="form-row full"><div class="form-group"><label>📝 Notes (optional)</label><textarea id="f_notes" placeholder="Any additional notes..." style="min-height:50px">${fv(r, "notes")}</textarea></div></div>`;
+    return `<div class="form-row three date-picker-large">
+    <div class="form-group">
+        <label>📅 Year / वर्ष</label>
+        <select id="f_bsy" class="large-select" onchange="updateDayOptions()">
+            ${(() => {
+              const curY = currentBSYear();
+              let opts = "";
+              for (let y = curY + 2; y >= 2070; y--) {
+                opts += `<option value="${y}" ${y === (bsY || curY) ? "selected" : ""}>${y}</option>`;
+              }
+              return opts;
+            })()}
+        </select>
+    </div>
+    <div class="form-group">
+        <label>🗓️ Month / महिना</label>
+        <select id="f_bsm" class="large-select" onchange="updateDayOptions()">
+            ${BS_MONTH_NAMES_NP.map((name, i) => {
+              const monthNum = i + 1;
+              return `<option value="${monthNum}" ${monthNum === (bsM || todayBS().m) ? "selected" : ""}>${name}</option>`;
+            }).join("")}
+        </select>
+    </div>
+    <div class="form-group">
+        <label>📆 Day / गते</label>
+        <select id="f_bsd" class="large-select">
+            ${(() => {
+              const days =
+                BS_DATA[bsY || currentBSYear()]?.[(bsM || todayBS().m) - 1] ||
+                30;
+              let opts = "";
+              for (let d = 1; d <= days; d++) {
+                opts += `<option value="${d}" ${d === (bsD || todayBS().d) ? "selected" : ""}>${d}</option>`;
+              }
+              return opts;
+            })()}
+        </select>
+    </div>
+</div>
+<div class="form-row full">
+    <div class="form-group">
+        <label>📋 Bill Items (add each item from receipt)</label>
+        <p style="font-size:0.7rem;color:var(--text-3);margin:0 0 8px 0;">Fill quantity and rate for each item - total auto-calculates below</p>
+        <div id="householdBillRows">${billRows}</div>
+        <button type="button" class="btn-outline btn-sm" style="margin-top:10px;width:100%" onclick="householdBillAddRow()">+ Add another item</button>
+    </div>
+</div>
+<div class="form-row full">
+    <div class="form-group" style="background:var(--green-light);padding:12px;border-radius:var(--radius-sm);border:1px solid var(--green);margin-top:8px">
+        <label style="font-size:0.85rem;color:var(--green);font-weight:700">💰 TOTAL BILL AMOUNT (₹)</label>
+        <input type="number" id="f_h_billTotal" value="0" min="0" step="0.01" readonly style="background:white;font-weight:700;font-size:1.3rem;padding:12px;text-align:center;color:var(--green);border:1px solid var(--green)" />
+    </div>
+</div>
+<div class="form-row full">
+    <div class="form-group">
+        <label>📝 Notes (optional)</label>
+        <textarea id="f_notes" placeholder="Any additional notes..." style="min-height:50px">${fv(r, "notes")}</textarea>
+    </div>
+</div>`;
   }
 
   if (module === "income") {

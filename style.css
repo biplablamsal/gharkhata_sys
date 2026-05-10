@@ -5565,3 +5565,79 @@ button {
     gap: 12px;
   }
 }
+/* =====================================================
+   LARGE DATE PICKER FOR HOUSEHOLD FORM (Mobile Optimized)
+   ===================================================== */
+
+.date-picker-large {
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.date-picker-large .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.date-picker-large .form-group label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: left;
+}
+
+.large-select {
+  width: 100%;
+  padding: 14px 12px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Sora", sans-serif;
+  border: 2px solid var(--border-2);
+  border-radius: 14px;
+  background: var(--bg);
+  color: var(--text-1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+  min-height: 54px;
+}
+
+.large-select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(181, 101, 29, 0.15);
+}
+
+/* Touch optimization for mobile */
+@media (max-width: 768px) {
+  .date-picker-large {
+    gap: 10px;
+  }
+
+  .large-select {
+    padding: 16px 8px;
+    font-size: 15px;
+    min-height: 54px;
+  }
+
+  .date-picker-large .form-group label {
+    font-size: 0.65rem;
+  }
+}
+
+/* Make sure three columns stay on one line even on mobile */
+@media (max-width: 550px) {
+  .form-row.three {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+  }
+
+  .large-select {
+    padding: 12px 4px;
+    font-size: 13px;
+    min-height: 50px;
+  }
+}
