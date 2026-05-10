@@ -1467,9 +1467,209 @@ function buildForm(module, r) {
       initTotal = initDays * initWage;
     return `<div class="labour-form-container"><div class="form-card"><div class="form-card-title">📅 Date Information</div>${bsDatePicker(bsY, bsM, bsD)}<div class="date-shortcuts"><button type="button" class="date-shortcut" onclick="setLabourDate('today')">Today</button><button type="button" class="date-shortcut" onclick="setLabourDate('yesterday')">Yesterday</button></div></div><div class="form-card"><div class="form-card-title">👤 Gender</div><div class="gender-options"><div class="gender-option ${fv(r, "gender", "Male") === "Male" ? "selected-male" : ""}" onclick="selectLabourGender('Male')"><span class="gender-icon">👨</span><span class="gender-name">Male</span><span class="gender-check">✓</span></div><div class="gender-option ${fv(r, "gender") === "Female" ? "selected-female" : ""}" onclick="selectLabourGender('Female')"><span class="gender-icon">👩</span><span class="gender-name">Female</span><span class="gender-check">✓</span></div></div><input type="hidden" id="f_gender" value="${fv(r, "gender", "Male")}" /></div><div class="form-card"><div class="form-card-title">👷 Worker Details</div><input type="text" id="f_name" class="worker-input" value="${fv(r, "name")}" placeholder="Full name of worker" /></div><div class="form-card"><div class="form-card-title">🌾 Task Type</div><div class="task-grid"><button type="button" class="task-btn ${fv(r, "task") === "Grass Cutting" ? "active" : ""}" data-task="Grass Cutting" onclick="selectTask('Grass Cutting')">🌿 Grass Cutting</button><button type="button" class="task-btn ${fv(r, "task") === "Ploughing" ? "active" : ""}" data-task="Ploughing" onclick="selectTask('Ploughing')">🚜 Ploughing</button><button type="button" class="task-btn ${fv(r, "task") === "Harvesting" ? "active" : ""}" data-task="Harvesting" onclick="selectTask('Harvesting')">🌾 Harvesting</button><button type="button" class="task-btn ${fv(r, "task") === "Planting" ? "active" : ""}" data-task="Planting" onclick="selectTask('Planting')">🌱 Planting</button><button type="button" class="task-btn ${fv(r, "task") === "Weeding" ? "active" : ""}" data-task="Weeding" onclick="selectTask('Weeding')">🌿 Weeding</button><button type="button" class="task-btn ${fv(r, "task") === "Other" ? "active" : ""}" data-task="Other" onclick="selectTask('Other')">🔧 Other</button></div><input type="hidden" id="f_task" value="${fv(r, "task", "Grass Cutting")}" /></div><div class="form-card"><div class="form-card-title">💰 Payment Calculation</div><div class="payment-row"><div class="payment-field"><label>Days Worked</label><div class="number-input-group"><button type="button" class="num-btn" onclick="adjustDays(-0.5)">−</button><input type="number" id="f_days" value="${initDays}" step="0.5" oninput="calcLabourTotal()" /><button type="button" class="num-btn" onclick="adjustDays(0.5)">+</button></div></div><div class="payment-field"><label>Wage per Day (₹)</label><div class="wage-input-group"><input type="number" id="f_wage" value="${initWage}" step="50" oninput="calcLabourTotal()" /><div class="wage-presets"><span onclick="setWage(300)">300</span><span onclick="setWage(400)">400</span><span onclick="setWage(500)">500</span><span onclick="setWage(600)">600</span></div></div></div></div></div><div class="total-card"><div class="total-label">TOTAL PAYMENT</div><div class="total-amount" id="labourTotalDisplay">₹${initTotal.toLocaleString("en-IN")}</div><input type="hidden" id="f_amount" value="${initTotal.toFixed(2)}" /></div><details class="notes-collapsible"><summary>📝 Add Notes</summary><textarea id="f_notes" placeholder="Any additional information..." rows="2">${fv(r, "notes")}</textarea></details></div>`;
   }
-
   if (module === "vehicle") {
-    return `<div class="vehicle-form-container">${bsDatePicker(bsY, bsM, bsD)}<div class="form-row full"><label class="form-label-main">🚗 Vehicle</label><div class="vehicle-selector"><div class="vehicle-option ${fv(r, "vehicle") === "Tractor" ? "selected" : ""}" onclick="selectVehicle('Tractor')"><span class="vehicle-icon">🚜</span><span class="vehicle-name">Tractor</span></div><div class="vehicle-option ${fv(r, "vehicle") === "Bike" ? "selected" : ""}" onclick="selectVehicle('Bike')"><span class="vehicle-icon">🏍️</span><span class="vehicle-name">Bike</span></div><div class="vehicle-option ${fv(r, "vehicle") === "Scooter" ? "selected" : ""}" onclick="selectVehicle('Scooter')"><span class="vehicle-icon">🛵</span><span class="vehicle-name">Scooter</span></div><div class="vehicle-option ${fv(r, "vehicle") === "Other" ? "selected" : ""}" onclick="selectVehicle('Other')"><span class="vehicle-icon">🚗</span><span class="vehicle-name">Other</span></div></div><input type="hidden" id="f_vehicle" value="${fv(r, "vehicle", "Tractor")}" /></div><div class="form-row full"><label class="form-label-main">📋 Category</label><div class="category-selector"><div class="category-option ${fv(r, "category") === "Fuel" ? "selected-fuel" : ""}" onclick="selectCategory('Fuel')">⛽ Fuel</div><div class="category-option ${fv(r, "category") === "Maintenance" ? "selected-maintenance" : ""}" onclick="selectCategory('Maintenance')">🔧 Maintenance</div><div class="category-option ${fv(r, "category") === "Repair" ? "selected-repair" : ""}" onclick="selectCategory('Repair')">🔨 Repair</div><div class="category-option ${fv(r, "category") === "Insurance" ? "selected-insurance" : ""}" onclick="selectCategory('Insurance')">📄 Insurance</div><div class="category-option ${fv(r, "category") === "Other" ? "selected-other" : ""}" onclick="selectCategory('Other')">📦 Other</div></div><input type="hidden" id="f_category" value="${fv(r, "category", "Fuel")}" /></div><div class="form-row full"><label class="form-label-main">💰 Amount (₹)</label><input type="number" id="f_amount" value="${fv(r, "amount", 0)}" min="0" step="10" placeholder="Enter amount" /><div class="amount-presets"><span onclick="setVehicleAmount(500)">₹500</span><span onclick="setVehicleAmount(1000)">₹1000</span><span onclick="setVehicleAmount(1500)">₹1500</span><span onclick="setVehicleAmount(2000)">₹2000</span><span onclick="setVehicleAmount(3000)">₹3000</span></div></div><div class="form-row full"><label class="form-label-main">📝 Notes</label><textarea id="f_notes" placeholder="e.g., Diesel 20L, Oil change, etc..." style="min-height:60px;">${fv(r, "notes")}</textarea></div></div>`;
+    // ADD these 3 lines at the beginning
+    const bsY = fv(r, "bsY", todayBS().y);
+    const bsM = fv(r, "bsM", todayBS().m);
+    const bsD = fv(r, "bsD", todayBS().d);
+
+    return `
+        <div class="agri-form-container">
+            <!-- Date Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    <span class="section-icon">📅</span>
+                    <span>Date Information</span>
+                </div>
+                <div class="date-picker-grid">
+                    <div class="input-group-modern">
+                        <label>BS Year</label>
+                        <select id="f_bsy" onchange="updateDayOptions()" class="modern-select">
+                            ${(() => {
+                              const curY = currentBSYear();
+                              let opts = "";
+                              for (let y = curY + 2; y >= 2070; y--) {
+                                opts += `<option value="${y}" ${y === (bsY || curY) ? "selected" : ""}>${y}</option>`;
+                              }
+                              return opts;
+                            })()}
+                        </select>
+                    </div>
+                    <div class="input-group-modern">
+                        <label>BS Month</label>
+                        <select id="f_bsm" onchange="updateDayOptions()" class="modern-select">
+                            ${BS_MONTH_NAMES_NP.map((name, i) => {
+                              const monthNum = i + 1;
+                              return `<option value="${monthNum}" ${monthNum === (bsM || todayBS().m) ? "selected" : ""}>${name}</option>`;
+                            }).join("")}
+                        </select>
+                    </div>
+                    <div class="input-group-modern">
+                        <label>BS Day</label>
+                        <select id="f_bsd" class="modern-select">
+                            ${(() => {
+                              const days =
+                                BS_DATA[bsY || currentBSYear()]?.[
+                                  (bsM || todayBS().m) - 1
+                                ] || 30;
+                              let opts = "";
+                              for (let d = 1; d <= days; d++) {
+                                opts += `<option value="${d}" ${d === (bsD || todayBS().d) ? "selected" : ""}>${d}</option>`;
+                              }
+                              return opts;
+                            })()}
+                        </select>
+                    </div>
+                    <div class="input-group-modern">
+                        <label>Quick Date</label>
+                        <div class="quick-date-btns">
+                            <button type="button" class="quick-date-btn" onclick="setTodayDate()">Today</button>
+                            <button type="button" class="quick-date-btn" onclick="setYesterdayDate()">Yesterday</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vehicle Selection -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    <span class="section-icon">🚗</span>
+                    <span>Vehicle</span>
+                </div>
+                <div class="crop-selector-agri">
+                    <div class="crop-chip-agri ${fv(r, "vehicle") === "Tractor" ? "selected" : ""}" data-vehicle="Tractor" onclick="selectVehicleChip('Tractor')">
+                        🚜 Tractor
+                    </div>
+                    <div class="crop-chip-agri ${fv(r, "vehicle") === "Bike" ? "selected" : ""}" data-vehicle="Bike" onclick="selectVehicleChip('Bike')">
+                        🏍️ Bike
+                    </div>
+                    <div class="crop-chip-agri ${fv(r, "vehicle") === "Scooter" ? "selected" : ""}" data-vehicle="Scooter" onclick="selectVehicleChip('Scooter')">
+                        🛵 Scooter
+                    </div>
+                    <div class="crop-chip-agri ${fv(r, "vehicle") === "Other" ? "selected" : ""}" data-vehicle="Other" onclick="selectVehicleChip('Other')">
+                        🚗 Other
+                    </div>
+                </div>
+                <input type="hidden" id="f_vehicle" value="${fv(r, "vehicle", "Tractor")}">
+            </div>
+
+            <!-- Category Selection -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    <span class="section-icon">📋</span>
+                    <span>Expense Category</span>
+                </div>
+                <div class="crop-selector-agri">
+                    <div class="crop-chip-agri ${fv(r, "category") === "Fuel" ? "selected" : ""}" data-category="Fuel" onclick="selectCategoryChip('Fuel')">
+                        ⛽ Fuel
+                    </div>
+                    <div class="crop-chip-agri ${fv(r, "category") === "Maintenance" ? "selected" : ""}" data-category="Maintenance" onclick="selectCategoryChip('Maintenance')">
+                        🔧 Maintenance
+                    </div>
+                    <div class="crop-chip-agri ${fv(r, "category") === "Repair" ? "selected" : ""}" data-category="Repair" onclick="selectCategoryChip('Repair')">
+                        🔨 Repair
+                    </div>
+                    <div class="crop-chip-agri ${fv(r, "category") === "Insurance" ? "selected" : ""}" data-category="Insurance" onclick="selectCategoryChip('Insurance')">
+                        📄 Insurance
+                    </div>
+                    <div class="crop-chip-agri ${fv(r, "category") === "Other" ? "selected" : ""}" data-category="Other" onclick="selectCategoryChip('Other')">
+                        📦 Other
+                    </div>
+                </div>
+                <input type="hidden" id="f_category" value="${fv(r, "category", "Fuel")}">
+            </div>
+
+            <!-- Amount Section - BIG -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    <span class="section-icon">💰</span>
+                    <span>Amount Details</span>
+                </div>
+                
+                <div class="agri-field-group highlight">
+                    <label class="agri-field-label">💰 Amount (₹)</label>
+                    <div class="agri-input-wrapper">
+                        <span class="agri-currency">₹</span>
+                        <input type="number" id="f_amount" class="agri-total-input" value="${fv(r, "amount", 0)}" min="0" step="10" placeholder="Enter amount">
+                    </div>
+                    <div class="agri-field-hint">Enter the expense amount in Rupees</div>
+                </div>
+
+                <!-- Quick Amount Presets -->
+                <div class="agri-presets">
+                    <span class="agri-preset-label">Quick presets:</span>
+                    <button type="button" class="agri-preset-btn" onclick="setVehicleAmountPreset(500)">₹500</button>
+                    <button type="button" class="agri-preset-btn" onclick="setVehicleAmountPreset(1000)">₹1,000</button>
+                    <button type="button" class="agri-preset-btn" onclick="setVehicleAmountPreset(2000)">₹2,000</button>
+                    <button type="button" class="agri-preset-btn" onclick="setVehicleAmountPreset(5000)">₹5,000</button>
+                    <button type="button" class="agri-preset-btn" onclick="setVehicleAmountPreset(10000)">₹10,000</button>
+                </div>
+            </div>
+
+            <!-- Notes Section -->
+            <div class="form-section">
+                <div class="form-section-title">
+                    <span class="section-icon">📝</span>
+                    <span>Notes / Remarks</span>
+                </div>
+                <textarea id="f_notes" class="agri-textarea" placeholder="e.g., Diesel 20L, Oil change, Insurance renewal...">${fv(r, "notes")}</textarea>
+            </div>
+        </div>
+    `;
+  }
+
+  function selectVehicleChip(vehicle) {
+    document.getElementById("f_vehicle").value = vehicle;
+    document.querySelectorAll(".crop-chip-agri").forEach((chip) => {
+      chip.classList.remove("selected");
+      if (chip.getAttribute("data-vehicle") === vehicle) {
+        chip.classList.add("selected");
+      }
+    });
+  }
+
+  function selectCategoryChip(category) {
+    document.getElementById("f_category").value = category;
+    document.querySelectorAll(".crop-chip-agri").forEach((chip) => {
+      chip.classList.remove("selected");
+      if (chip.getAttribute("data-category") === category) {
+        chip.classList.add("selected");
+      }
+    });
+  }
+
+  function setVehicleAmountPreset(amount) {
+    document.getElementById("f_amount").value = amount;
+  }
+
+  // Make sure existing setTodayDate and setYesterdayDate exist
+  function setTodayDate() {
+    const today = new Date();
+    const bs = adToBS(today);
+    const yearEl = document.getElementById("f_bsy");
+    const monthEl = document.getElementById("f_bsm");
+    if (yearEl) yearEl.value = bs.y;
+    if (monthEl) monthEl.value = bs.m;
+    updateDayOptions();
+    setTimeout(() => {
+      const dayEl = document.getElementById("f_bsd");
+      if (dayEl) dayEl.value = bs.d;
+    }, 50);
+  }
+
+  function setYesterdayDate() {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const bs = adToBS(yesterday);
+    const yearEl = document.getElementById("f_bsy");
+    const monthEl = document.getElementById("f_bsm");
+    if (yearEl) yearEl.value = bs.y;
+    if (monthEl) monthEl.value = bs.m;
+    updateDayOptions();
+    setTimeout(() => {
+      const dayEl = document.getElementById("f_bsd");
+      if (dayEl) dayEl.value = bs.d;
+    }, 50);
   }
 
   if (module === "medical") {

@@ -5710,26 +5710,38 @@ button {
 
 .vehicle-chip-mobile {
   flex-shrink: 0;
-  padding: 10px 18px;
+  padding: 14px 24px;
   background: var(--bg);
-  border: 1px solid var(--border-2);
-  border-radius: 40px;
-  font-size: 0.85rem;
-  font-weight: 500;
+  border: 2px solid var(--border-2);
+  border-radius: 60px;
+  font-size: 1.1rem;
+  font-weight: 600;
   color: var(--text-2);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
   white-space: nowrap;
+  min-height: 56px;
+  min-width: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .vehicle-chip-mobile:active {
   transform: scale(0.96);
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
 }
 
 .vehicle-chip-mobile.active {
   background: var(--accent);
   border-color: var(--accent);
   color: white;
+  box-shadow: 0 4px 12px rgba(181, 101, 29, 0.3);
 }
 
 /* Compact summary chips */

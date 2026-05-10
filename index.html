@@ -1502,14 +1502,34 @@
                 <h1>🚜 Vehicle Expenses</h1>
                 <p>Track fuel, maintenance, and repair costs</p>
               </div>
-              <div class="vehicle-stats-compact">
-                <div class="compact-stat">
-                  <span class="compact-label">This Month</span>
-                  <span class="compact-value" id="vehicleThisMonth">₹0</span>
-                </div>
-                <div class="compact-stat">
-                  <span class="compact-label">This Year</span>
-                  <span class="compact-value" id="vehicleThisYear">₹0</span>
+              <div
+                style="
+                  display: flex;
+                  gap: 12px;
+                  align-items: center;
+                  flex-wrap: wrap;
+                "
+              >
+                <button
+                  class="btn-primary"
+                  onclick="openModal('vehicle')"
+                  style="
+                    padding: 10px 20px;
+                    font-size: 0.85rem;
+                    white-space: nowrap;
+                  "
+                >
+                  + Add Expense
+                </button>
+                <div class="vehicle-stats-compact">
+                  <div class="compact-stat">
+                    <span class="compact-label">This Month</span>
+                    <span class="compact-value" id="vehicleThisMonth">₹0</span>
+                  </div>
+                  <div class="compact-stat">
+                    <span class="compact-label">This Year</span>
+                    <span class="compact-value" id="vehicleThisYear">₹0</span>
+                  </div>
                 </div>
               </div>
             </div>
