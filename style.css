@@ -2657,7 +2657,6 @@ body {
   background: var(--accent);
   color: white;
 }
-
 /* ==================== MEDICAL SECTION STYLES ==================== */
 .medical-stats-grid {
   display: grid;
