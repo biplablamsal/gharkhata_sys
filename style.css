@@ -5211,3 +5211,357 @@ button,
   -webkit-user-select: none;
   pointer-events: none;
 }
+
+/* =====================================================
+   CROSS-PLATFORM VIEWPORT FIX (iOS + Android)
+   ===================================================== */
+
+/* Modern browsers with dynamic viewport */
+.app-shell,
+#page-income,
+#page-household,
+#page-agriculture,
+#page-livestock,
+#page-labour,
+#page-vehicle,
+#page-medical,
+.login-screen {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Safari iOS specific fix */
+@supports (-webkit-touch-callout: none) {
+  .app-shell,
+  #page-income,
+  #page-household,
+  #page-agriculture,
+  #page-livestock,
+  #page-labour,
+  #page-vehicle,
+  #page-medical,
+  .login-screen {
+    min-height: -webkit-fill-available;
+  }
+}
+
+html {
+  height: -webkit-fill-available;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+}
+
+/* =====================================================
+   MOBILE-OPTIMIZED FILTER BARS (iOS + Android)
+   ===================================================== */
+
+/* Base filter bar - mobile first */
+.filter-bar-mobile {
+  background: var(--surface);
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filter-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filter-row.full {
+  width: 100%;
+}
+
+/* Filter chip - touch friendly */
+.filter-chip {
+  flex: 1;
+  min-width: 0;
+  background: var(--bg);
+  border: 1px solid var(--border-2);
+  border-radius: 44px;
+  padding: 0 16px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.filter-chip:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(181, 101, 29, 0.15);
+}
+
+.filter-chip select,
+.filter-chip input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  padding: 12px 0;
+  font-size: 14px;
+  font-family: "Sora", sans-serif;
+  color: var(--text-1);
+  outline: none;
+  cursor: pointer;
+}
+
+/* Prevent iOS zoom on input focus */
+.filter-chip input {
+  font-size: 16px;
+}
+
+.filter-chip select {
+  font-size: 14px;
+}
+
+.filter-chip select:focus,
+.filter-chip input:focus {
+  outline: none;
+}
+
+/* Search chip with icon */
+.search-chip span {
+  font-size: 14px;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+/* Clear pill button */
+.clear-pill {
+  background: var(--bg-2);
+  border: 1px solid var(--border-2);
+  border-radius: 44px;
+  padding: 0 20px;
+  min-height: 44px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.clear-pill:hover {
+  background: var(--red-light);
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.clear-pill:active {
+  transform: scale(0.96);
+}
+
+/* =====================================================
+   EMPTY STATE REDESIGN (Touch Friendly)
+   ===================================================== */
+
+.empty-state-modern {
+  text-align: center;
+  padding: 60px 24px;
+  background: var(--surface);
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  margin: 20px 0;
+}
+
+.empty-state-modern .empty-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.6;
+}
+
+.empty-state-modern .empty-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+
+.empty-state-modern .empty-text {
+  font-size: 14px;
+  color: var(--text-3);
+  max-width: 280px;
+  margin: 0 auto;
+}
+
+/* =====================================================
+   TABLE CONTAINER FLEX FIX (Remove white space)
+   ===================================================== */
+
+.page.active {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 120px);
+  min-height: calc(100dvh - 120px);
+}
+
+@supports (-webkit-touch-callout: none) {
+  .page.active {
+    min-height: -webkit-fill-available;
+  }
+}
+
+.income-table-container,
+.livestock-table-container,
+.table-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-wrapper {
+  flex: 1;
+  overflow-x: auto;
+}
+
+/* =====================================================
+   DESKTOP OVERRIDES (≥768px)
+   ===================================================== */
+
+@media (min-width: 768px) {
+  .filter-bar-mobile {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .filter-row {
+    flex: 0 0 auto;
+  }
+
+  .filter-row.full {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .filter-chip {
+    min-width: 130px;
+  }
+
+  .search-chip {
+    min-width: 250px;
+  }
+}
+
+/* =====================================================
+   TOUCH OPTIMIZATIONS (Both Platforms)
+   ===================================================== */
+
+/* Remove tap highlight on mobile */
+.nav-item,
+.vehicle-chip,
+.filter-badge,
+.quick-action-btn,
+.clear-pill,
+.filter-chip select,
+.filter-chip input,
+.btn-primary,
+.btn-outline,
+.action-icon {
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+}
+
+/* Active state feedback for touch */
+.nav-item:active,
+.vehicle-chip:active,
+.clear-pill:active,
+.action-icon:active {
+  transform: scale(0.97);
+  transition: transform 0.05s;
+}
+
+/* Smooth scrolling for iOS */
+.table-wrapper,
+.sidebar-nav {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+}
+
+/* Prevent zoom on select in iOS */
+select,
+input,
+button {
+  font-size: 16px;
+}
+
+@media (max-width: 768px) {
+  select,
+  input,
+  button {
+    font-size: 14px;
+  }
+
+  /* Smaller cards on mobile */
+  .dashboard-stats-grid {
+    gap: 12px;
+  }
+
+  .stat-card {
+    padding: 14px;
+  }
+
+  .stat-value {
+    font-size: 1.2rem;
+  }
+}
+
+/* =====================================================
+   QUICK ADD BUTTON FIX (Bottom positioning)
+   ===================================================== */
+
+.quick-add-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+@media (max-width: 768px) {
+  .quick-add-btn {
+    bottom: 16px;
+    right: 16px;
+    padding: 12px 18px;
+  }
+
+  .quick-add-text {
+    display: inline-block;
+  }
+}
+
+@media (max-width: 480px) {
+  .quick-add-text {
+    display: none;
+  }
+
+  .quick-add-btn {
+    border-radius: 50px;
+    padding: 12px;
+  }
+}
+
+/* Input group for forms - mobile optimized */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  font-size: 16px; /* Prevents iOS zoom */
+  padding: 12px 14px;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    gap: 12px;
+  }
+}

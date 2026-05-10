@@ -866,19 +866,20 @@
               <span class="quick-add-text">Add Income</span>
             </button>
 
-            <!-- Filters Bar -->
-            <div class="income-filters">
+            <!-- Filters Bar - Mobile Optimized -->
+            <div class="filter-bar-mobile">
+              <!-- Row 1: Year + Month + Clear -->
               <div class="filter-row">
-                <div class="filter-input-group">
-                  <span class="filter-icon">📅</span>
+                <div class="filter-chip">
+                  <span>📅</span>
                   <select id="incBSYear" onchange="renderIncomeTable()">
-                    <option value="">All Years</option>
+                    <option value="">Year</option>
                   </select>
                 </div>
-                <div class="filter-input-group">
-                  <span class="filter-icon">🗓️</span>
+                <div class="filter-chip">
+                  <span>🗓️</span>
                   <select id="incBSMonth" onchange="renderIncomeTable()">
-                    <option value="">All Months</option>
+                    <option value="">Month</option>
                     <option value="1">बैशाख</option>
                     <option value="2">जेठ</option>
                     <option value="3">असार</option>
@@ -893,10 +894,17 @@
                     <option value="12">चैत्र</option>
                   </select>
                 </div>
-                <div class="filter-input-group">
-                  <span class="filter-icon">🏷️</span>
+                <button class="clear-pill" onclick="clearIncomeFilters()">
+                  Clear
+                </button>
+              </div>
+
+              <!-- Row 2: Source + Member -->
+              <div class="filter-row">
+                <div class="filter-chip">
+                  <span>🏷️</span>
                   <select id="incSourceFilter" onchange="renderIncomeTable()">
-                    <option value="">All Sources</option>
+                    <option value="">Source</option>
                     <option>Salary</option>
                     <option>Business</option>
                     <option>Agriculture</option>
@@ -907,14 +915,18 @@
                     <option>Other</option>
                   </select>
                 </div>
-                <div class="filter-input-group">
-                  <span class="filter-icon">👤</span>
+                <div class="filter-chip">
+                  <span>👤</span>
                   <select id="incMemberFilter" onchange="renderIncomeTable()">
-                    <option value="">All Members</option>
+                    <option value="">Member</option>
                   </select>
                 </div>
-                <div class="filter-input-group search-group">
-                  <span class="filter-icon">🔍</span>
+              </div>
+
+              <!-- Row 3: Search -->
+              <div class="filter-row full">
+                <div class="filter-chip search-chip">
+                  <span>🔍</span>
                   <input
                     type="text"
                     id="incSearch"
@@ -922,9 +934,6 @@
                     oninput="renderIncomeTable()"
                   />
                 </div>
-                <button class="filter-clear-btn" onclick="clearIncomeFilters()">
-                  Clear All
-                </button>
               </div>
             </div>
 
@@ -968,14 +977,13 @@
               </div>
               <div
                 id="incomeEmptyState"
-                class="income-empty-state"
+                class="empty-state-modern"
                 style="display: none"
               >
-                <div class="empty-illustration">💰</div>
+                <div class="empty-icon">💰</div>
                 <div class="empty-title">No income records yet</div>
                 <div class="empty-text">
-                  Click the <strong>+ Add Income</strong> button to start
-                  tracking your earnings
+                  Tap the + button to add your first income entry
                 </div>
               </div>
             </div>
@@ -1254,19 +1262,19 @@
               </div>
             </div>
 
-            <!-- Filters -->
-            <div class="livestock-filters">
+            <!-- Livestock Filters - Mobile Optimized -->
+            <div class="filter-bar-mobile">
               <div class="filter-row">
-                <div class="filter-input-group">
-                  <span class="filter-icon">📅</span>
+                <div class="filter-chip">
+                  <span>📅</span>
                   <select id="lsBSYear" onchange="renderLivestockTable()">
-                    <option value="">All Years</option>
+                    <option value="">Year</option>
                   </select>
                 </div>
-                <div class="filter-input-group">
-                  <span class="filter-icon">🗓️</span>
+                <div class="filter-chip">
+                  <span>🗓️</span>
                   <select id="lsBSMonth" onchange="renderLivestockTable()">
-                    <option value="">All Months</option>
+                    <option value="">Month</option>
                     <option value="1">बैशाख</option>
                     <option value="2">जेठ</option>
                     <option value="3">असार</option>
@@ -1281,31 +1289,40 @@
                     <option value="12">चैत्र</option>
                   </select>
                 </div>
-                <div class="filter-input-group">
-                  <span class="filter-icon">🏷️</span>
+                <button class="clear-pill" onclick="clearLivestockFilters()">
+                  Clear
+                </button>
+              </div>
+
+              <div class="filter-row">
+                <div class="filter-chip">
+                  <span>🏷️</span>
                   <select id="lsTypeFilter" onchange="renderLivestockTable()">
-                    <option value="">All Types</option>
+                    <option value="">Type</option>
                     <option value="Milk Production">🥛 Milk Production</option>
                     <option value="Milk Sale">💰 Milk Sale</option>
-                    <option value="दाना">🌾 दाना (Grain)</option>
-                    <option value="चोकर">🌽 चोकर (Feed)</option>
-                    <option value="मकै">🌽 मकै (Corn)</option>
-                    <option value="औषधि">💊 औषधि (Medicine)</option>
-                    <option value="पशु चिकित्सक">🩺 पशु चिकित्सक (Vet)</option>
+                    <option value="दाना">🌾 दाना</option>
+                    <option value="चोकर">🌽 चोकर</option>
+                    <option value="मकै">🌽 मकै</option>
+                    <option value="औषधि">💊 औषधि</option>
+                    <option value="पशु चिकित्सक">🩺 पशु चिकित्सक</option>
                   </select>
                 </div>
-                <div class="filter-input-group">
-                  <span class="filter-icon">🐄</span>
+                <div class="filter-chip">
+                  <span>🐄</span>
                   <select id="lsAnimalFilter" onchange="renderLivestockTable()">
-                    <option value="">All Animals</option>
+                    <option value="">Animal</option>
                     <option value="Red Cow">🔴 Red Cow</option>
                     <option value="Black Cow">⚫ Black Cow</option>
                     <option value="Buffalo">🐃 Buffalo</option>
                     <option value="Chicken">🐔 Chicken</option>
                   </select>
                 </div>
-                <div class="filter-input-group search-group">
-                  <span class="filter-icon">🔍</span>
+              </div>
+
+              <div class="filter-row full">
+                <div class="filter-chip search-chip">
+                  <span>🔍</span>
                   <input
                     type="text"
                     id="lsSearch"
@@ -1313,12 +1330,6 @@
                     oninput="renderLivestockTable()"
                   />
                 </div>
-                <button
-                  class="filter-clear-btn"
-                  onclick="clearLivestockFilters()"
-                >
-                  Clear All
-                </button>
               </div>
             </div>
 
@@ -1500,63 +1511,64 @@
                 </div>
               </div>
             </div>
-            <div class="filter-bar-modern">
-              <div class="filter-group">
-                <label>📅 Year</label
-                ><select
-                  id="vehBSYear"
-                  onchange="renderVehicleTable()"
-                ></select>
-              </div>
-              <div class="filter-group">
-                <label>🗓️ Month</label
-                ><select id="vehBSMonth" onchange="renderVehicleTable()">
-                  <option value="">All Months</option>
-                  <option value="1">बैशाख</option>
-                  <option value="2">जेठ</option>
-                  <option value="3">असार</option>
-                  <option value="4">श्रावण</option>
-                  <option value="5">भाद्र</option>
-                  <option value="6">आश्विन</option>
-                  <option value="7">कार्तिक</option>
-                  <option value="8">मंसिर</option>
-                  <option value="9">पुष</option>
-                  <option value="10">माघ</option>
-                  <option value="11">फाल्गुन</option>
-                  <option value="12">चैत्र</option>
-                </select>
-              </div>
-              <div class="filter-group">
-                <label>🏷️ Category</label
-                ><select id="vehCatFilter" onchange="renderVehicleTable()">
-                  <option value="">All Categories</option>
-                  <option value="Fuel">⛽ Fuel</option>
-                  <option value="Maintenance">🔧 Maintenance</option>
-                  <option value="Repair">🔨 Repair</option>
-                  <option value="Insurance">📄 Insurance</option>
-                  <option value="Other">📦 Other</option>
-                </select>
-              </div>
-              <div class="filter-group search-group">
-                <label>🔍 Search</label
-                ><input
-                  type="text"
-                  id="vehSearch"
-                  placeholder="Search notes..."
-                  oninput="renderVehicleTable()"
-                />
-              </div>
-              <div class="filter-actions">
-                <button class="btn-primary" onclick="openModal('vehicle')">
-                  + Add Expense</button
-                ><button class="btn-outline" onclick="exportCSV('vehicle')">
-                  📥 CSV</button
-                ><button
-                  class="btn-outline"
-                  onclick="printModuleReport('vehicle')"
-                >
-                  🖨️ Print
+            <!-- Household Filters - Mobile Optimized -->
+            <div class="filter-bar-mobile">
+              <div class="filter-row">
+                <div class="filter-chip">
+                  <span>📅</span>
+                  <select id="hhBSYear" onchange="renderHouseholdTable()">
+                    <option value="">Year</option>
+                  </select>
+                </div>
+                <div class="filter-chip">
+                  <span>🗓️</span>
+                  <select id="hhBSMonth" onchange="renderHouseholdTable()">
+                    <option value="">Month</option>
+                    <option value="1">बैशाख</option>
+                    <option value="2">जेठ</option>
+                    <option value="3">असार</option>
+                    <option value="4">श्रावण</option>
+                    <option value="5">भाद्र</option>
+                    <option value="6">आश्विन</option>
+                    <option value="7">कार्तिक</option>
+                    <option value="8">मंसिर</option>
+                    <option value="9">पुष</option>
+                    <option value="10">माघ</option>
+                    <option value="11">फाल्गुन</option>
+                    <option value="12">चैत्र</option>
+                  </select>
+                </div>
+                <button class="clear-pill" onclick="clearHouseholdFilters()">
+                  Clear
                 </button>
+              </div>
+
+              <div class="filter-row">
+                <div class="filter-chip">
+                  <span>🏷️</span>
+                  <select id="hhCatFilter" onchange="renderHouseholdTable()">
+                    <option value="">Category</option>
+                    <option>Grains &amp; Cereals</option>
+                    <option>Vegetables</option>
+                    <option>Dairy Products</option>
+                    <option>Meat &amp; Protein</option>
+                    <option>Household Essentials</option>
+                    <option>Other</option>
+                    <option>Mixed bill</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="filter-row full">
+                <div class="filter-chip search-chip">
+                  <span>🔍</span>
+                  <input
+                    type="text"
+                    id="hhSearch"
+                    placeholder="Search items or notes..."
+                    oninput="renderHouseholdTable()"
+                  />
+                </div>
               </div>
             </div>
             <div class="vehicle-filter-chips">
