@@ -96,6 +96,25 @@
         }
       ],
       "notes": "Festival shopping"
+    },
+    {
+      "id": "mp0ry35onnwt",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 29,
+      "ad": "2026-05-10",
+      "items": [
+        {
+          "itemType": "Grains & Cereals",
+          "itemName": "Chhoila",
+          "quantity": 120,
+          "rate": 120,
+          "lineTotal": 14400
+        }
+      ],
+      "amount": 14400,
+      "category": "Grains & Cereals",
+      "notes": ""
     }
   ],
   "income": [
@@ -620,5 +639,5 @@
       "name": "vision"
     }
   ],
-  "lastUpdated": "2026-05-11T05:37:18.619Z"
+  "lastUpdated": "2026-05-11T05:41:58.727Z"
 }
