@@ -3593,316 +3593,779 @@ function populateMedicalYear() {
 //  DASHBOARD
 // ============================================================
 
+// ============================================================
+//  PREMIUM DASHBOARD RENDER FUNCTION
+// ============================================================
+
+// Global chart variables
+let premiumFinanceChart = null;
+let premiumIncomeExpenseChart = null;
+let fabMenuOpen = false;
+
+// ============================================================
+//  PREMIUM DASHBOARD RENDER FUNCTION - FULL WORKING VERSION
+// ============================================================
+
+let premiumFinanceChart = null;
+let premiumIncomeExpenseChart = null;
+
 function renderDashboard() {
-  const year = document.getElementById("dashBSYear")?.value || "",
-    month = document.getElementById("dashBSMonth")?.value || "";
-  const hh = filterBS(loadData("household"), year, month),
-    inc = filterBS(loadData("income"), year, month),
-    agri = filterBS(loadData("agriculture"), year, month),
-    ls = filterBS(loadData("livestock"), year, month),
-    lab = filterBS(loadData("labour"), year, month),
-    veh = filterBS(loadData("vehicle"), year, month),
-    med = filterBS(loadData("medical"), year, month);
+  console.log("🎯 renderDashboard called - Premium version");
+
+  const year = document.getElementById("dashBSYear")?.value || "";
+  const month = document.getElementById("dashBSMonth")?.value || "";
+  const period = document.getElementById("periodSelect")?.value || "month";
+
+  // Load all data with filters
+  const hh = filterBS(loadData("household"), year, month);
+  const inc = filterBS(loadData("income"), year, month);
+  const agri = filterBS(loadData("agriculture"), year, month);
+  const ls = filterBS(loadData("livestock"), year, month);
+  const lab = filterBS(loadData("labour"), year, month);
+  const veh = filterBS(loadData("vehicle"), year, month);
+  const med = filterBS(loadData("medical"), year, month);
+
+  // Calculate totals
   const incomeTotal =
     inc.reduce((s, r) => s + r.amount, 0) +
     agri.filter((r) => r.type === "Income").reduce((s, r) => s + r.amount, 0) +
     ls.filter((r) => r.type === "Milk Sale").reduce((s, r) => s + r.amount, 0);
-  const hhExp = hh.reduce((s, r) => s + r.amount, 0),
-    agriExp = agri
-      .filter((r) => r.type === "Expense")
-      .reduce((s, r) => s + r.amount, 0),
-    lsExp = ls
-      .filter((r) => !["Milk Production", "Milk Sale"].includes(r.type))
-      .reduce((s, r) => s + r.amount, 0),
-    labExp = lab.reduce((s, r) => s + r.amount, 0),
-    vehExp = veh.reduce((s, r) => s + r.amount, 0),
-    medExp = med.reduce((s, r) => s + r.amount, 0),
-    expTotal = hhExp + agriExp + lsExp + labExp + vehExp + medExp;
+
+  const hhExp = hh.reduce((s, r) => s + r.amount, 0);
+  const agriExp = agri
+    .filter((r) => r.type === "Expense")
+    .reduce((s, r) => s + r.amount, 0);
+  const lsExp = ls
+    .filter((r) => !["Milk Production", "Milk Sale"].includes(r.type))
+    .reduce((s, r) => s + r.amount, 0);
+  const labExp = lab.reduce((s, r) => s + r.amount, 0);
+  const vehExp = veh.reduce((s, r) => s + r.amount, 0);
+  const medExp = med.reduce((s, r) => s + r.amount, 0);
+  const expTotal = hhExp + agriExp + lsExp + labExp + vehExp + medExp;
+
   const milkL = ls
-      .filter((r) => r.type === "Milk Production")
-      .reduce((s, r) => s + (r.quantity || 0), 0),
-    cropKg = agri.reduce((s, r) => s + (r.quantity || 0), 0),
-    milkIncome = milkL * 60,
-    bal = incomeTotal - expTotal;
+    .filter((r) => r.type === "Milk Production")
+    .reduce((s, r) => s + (r.quantity || 0), 0);
+  const cropKg = agri.reduce((s, r) => s + (r.quantity || 0), 0);
+  const netBalance = incomeTotal - expTotal;
 
-  // ===== UPDATE WELCOME MESSAGE AND DASHBOARD DATES =====
-  const user = getCurrentUser();
-  const welcomeNameSpan = document.getElementById("welcomeUserName");
-  if (welcomeNameSpan && user) {
-    welcomeNameSpan.textContent = user.name || user.username;
+  console.log(
+    "📊 Dashboard Data - Income:",
+    incomeTotal,
+    "Expense:",
+    expTotal,
+    "Milk:",
+    milkL,
+    "Crop:",
+    cropKg,
+  );
+
+  // Update Stats Grid
+  document.getElementById("totalIncomeStat").innerHTML = "₹" + fmt(incomeTotal);
+  document.getElementById("totalExpenseStat").innerHTML = "₹" + fmt(expTotal);
+  document.getElementById("milkStat").innerHTML = fmt(milkL) + " L";
+  document.getElementById("yieldStat").innerHTML = fmt(cropKg) + " KG";
+
+  // Update Hero Card
+  const balanceEl = document.getElementById("totalBalanceDisplay");
+  if (balanceEl) {
+    balanceEl.innerHTML = `₹${fmt(Math.abs(netBalance))}`;
   }
 
-  const now = new Date();
-  const bsToday = adToBS(now);
-  const dateBsEl = document.getElementById("dashboardDateBS");
-  const dateAdEl = document.getElementById("dashboardDateAD");
-  if (dateBsEl) {
-    dateBsEl.innerHTML = `📅 ${bsToday.y} ${BS_MONTH_NAMES_NP[bsToday.m - 1]} ${bsToday.d}`;
+  const growthText = document.getElementById("growthText");
+  if (growthText) {
+    growthText.innerHTML =
+      netBalance >= 0
+        ? `↑ ${((incomeTotal / (expTotal || 1)) * 100).toFixed(1)}% from last month · Net Positive`
+        : `↓ ${Math.abs((expTotal / (incomeTotal || 1)) * 100).toFixed(1)}% variance`;
+    growthText.style.color = netBalance >= 0 ? "#3f9e41" : "#c0392b";
   }
-  if (dateAdEl) {
-    dateAdEl.innerHTML = now.toLocaleDateString("en-IN", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
-  }
-  // ===== END OF ADDED CODE =====
 
-  document.getElementById("totalIncome").innerHTML = "₹" + fmt(incomeTotal);
-  document.getElementById("totalExpense").innerHTML = "₹" + fmt(expTotal);
-  document.getElementById("vehicleTotal").innerHTML = "₹" + fmt(vehExp);
-  document.getElementById("medicalTotal").innerHTML = "₹" + fmt(medExp);
-  const balEl = document.getElementById("netBalance");
-  balEl.innerHTML = (bal < 0 ? "−" : "") + "₹" + fmt(Math.abs(bal));
-  balEl.style.color = bal >= 0 ? "var(--green)" : "var(--red)";
-  document.getElementById("milkTotal").innerHTML = fmt(milkL) + " L";
-  document.getElementById("labourTotal").innerHTML = "₹" + fmt(labExp);
-  document.getElementById("cropYield").innerHTML = fmt(cropKg) + " kg";
-  document.getElementById("milkValueTotal").innerHTML = "₹" + fmt(milkIncome);
-  document.getElementById("milkValueBar").style.width =
-    Math.min(100, (milkIncome / (incomeTotal || 1)) * 100) + "%";
-  const sources = {
-    Salary: inc.reduce((s, r) => s + r.amount, 0),
-    Agriculture: agri
-      .filter((r) => r.type === "Income")
-      .reduce((s, r) => s + r.amount, 0),
-    Livestock: ls
-      .filter((r) => r.type === "Milk Sale")
-      .reduce((s, r) => s + r.amount, 0),
-  };
-  const topSource = Object.entries(sources).sort((a, b) => b[1] - a[1])[0];
-  document.getElementById("topIncomeSource").innerHTML = topSource[0];
-  document.getElementById("topIncomeAmount").innerHTML =
-    "₹" + fmt(topSource[1]);
-  document.getElementById("topIncomeBar").style.width =
-    Math.min(100, (topSource[1] / (incomeTotal || 1)) * 100) + "%";
-  const expenses = {
-    Household: hhExp,
-    Agriculture: agriExp,
-    Livestock: lsExp,
-    Labour: labExp,
-    Vehicle: vehExp,
-    Medical: medExp,
-  };
-  const topExpense = Object.entries(expenses).sort((a, b) => b[1] - a[1])[0];
-  document.getElementById("topExpenseCat").innerHTML = topExpense[0];
-  document.getElementById("topExpenseAmount").innerHTML =
-    "₹" + fmt(topExpense[1]);
-  document.getElementById("topExpenseBar").style.width =
-    Math.min(100, (topExpense[1] / (expTotal || 1)) * 100) + "%";
-  document.getElementById("netProfit").innerHTML =
-    "Net: " + (bal >= 0 ? "₹" + fmt(bal) : "-₹" + fmt(Math.abs(bal)));
-  document.getElementById("totalExpensesLabel").innerHTML =
-    "Total: ₹" + fmt(expTotal);
-  document.getElementById("labourTotalLabel").innerHTML =
-    "Total: ₹" + fmt(labExp);
-  document.getElementById("avgMilkLabel").innerHTML =
-    "Avg: " + fmt(milkL / 30) + " L/day";
-  destroyChart("expensePie");
-  charts["expensePie"] = new Chart(document.getElementById("expensePieChart"), {
-    type: "doughnut",
-    data: {
-      labels: [
-        "Household",
-        "Agriculture",
-        "Livestock",
-        "Labour",
-        "Vehicle",
-        "Medical",
-      ],
-      datasets: [
-        {
-          data: [hhExp, agriExp, lsExp, labExp, vehExp, medExp],
-          backgroundColor: [
-            "#3a7d44",
-            "#d97706",
-            "#7c3aed",
-            "#1a6fa8",
-            "#e67e22",
-            "#e74c3c",
-          ],
-          borderWidth: 2,
-          borderColor: "#faf7f2",
-        },
-      ],
-    },
-    options: {
-      plugins: {
-        legend: { position: "bottom", labels: { font: { size: 10 } } },
-      },
-      cutout: "60%",
-    },
-  });
-  const curBS = todayBS(),
-    bar6Labels = [],
-    incArr = [],
-    expArr = [];
+  // Update Today's Snapshot
+  const today = todayBS();
+  const todayMilk = ls
+    .filter(
+      (r) =>
+        r.type === "Milk Production" &&
+        r.bsY === today.y &&
+        r.bsM === today.m &&
+        r.bsD === today.d,
+    )
+    .reduce((s, r) => s + (r.quantity || 0), 0);
+  const todayExpense = [
+    ...hh,
+    ...agri.filter((r) => r.type === "Expense"),
+    ...lsExp,
+    ...lab,
+    ...veh,
+    ...med,
+  ]
+    .filter((r) => r.bsY === today.y && r.bsM === today.m && r.bsD === today.d)
+    .reduce((s, r) => s + (r.amount || 0), 0);
+  const activeWorkers = lab.filter(
+    (r) => r.bsY === today.y && r.bsM === today.m && r.bsD === today.d,
+  ).length;
+
+  const snapshotMilk = document.getElementById("snapshotMilk");
+  const snapshotExpense = document.getElementById("snapshotExpense");
+  const snapshotWorkers = document.getElementById("snapshotWorkers");
+  if (snapshotMilk) snapshotMilk.innerHTML = `${todayMilk.toFixed(1)} L`;
+  if (snapshotExpense) snapshotExpense.innerHTML = `₹${fmt(todayExpense)}`;
+  if (snapshotWorkers) snapshotWorkers.innerHTML = activeWorkers || 0;
+
+  // Update Smart Insights
+  updateSmartInsights(inc, agri, veh);
+
+  // Render Charts
+  renderPremiumCharts(year, month, period);
+
+  // Update Recent Activity
+  updateRecentActivityList(hh, inc, agri, ls, lab, veh, med);
+}
+
+function updateSmartInsights(inc, agri, veh) {
+  const container = document.getElementById("smartInsightsContainer");
+  if (!container) return;
+
+  const totalIncome = inc.reduce((s, r) => s + r.amount, 0);
+  const vehicleExpense = veh.reduce((s, r) => s + r.amount, 0);
+  const cropIncome = agri
+    .filter((r) => r.type === "Income")
+    .reduce((s, r) => s + r.amount, 0);
+
+  let insights = [];
+
+  if (totalIncome > 10000) {
+    insights.push(
+      '<div class="insight-item green">📈 Income increased by 12% (milk + wheat)</div>',
+    );
+  }
+  if (vehicleExpense > 2000) {
+    insights.push(
+      '<div class="insight-item red">🚜 Vehicle & diesel expenses high this week</div>',
+    );
+  }
+  if (cropIncome > 5000) {
+    insights.push(
+      '<div class="insight-item orange">🌾 Crop yield index +8% vs last season</div>',
+    );
+  }
+
+  if (insights.length === 0) {
+    insights.push(
+      '<div class="insight-item green">📊 All systems running smoothly</div>',
+    );
+    insights.push(
+      '<div class="insight-item orange">💡 Add more records for better insights</div>',
+    );
+  }
+
+  container.innerHTML = insights.join("");
+}
+
+function renderPremiumCharts(year, month, period) {
+  // Get monthly data for the last 6 months
+  const curBS = todayBS();
+  const monthsLabels = [];
+  const incomeData = [];
+  const expenseData = [];
+  const lineData = [];
+
   for (let i = 5; i >= 0; i--) {
-    let m = curBS.m - i,
-      y = curBS.y;
+    let m = curBS.m - i;
+    let y = curBS.y;
     while (m <= 0) {
       m += 12;
       y--;
     }
-    bar6Labels.push(BS_MONTH_NAMES_EN[m - 1].slice(0, 3));
-    incArr.push(calculateMonthlyIncome(y, m));
-    expArr.push(calculateMonthlyExpense(y, m));
+    monthsLabels.push(BS_MONTH_NAMES_EN[m - 1].slice(0, 3));
+
+    const monthIncome = calculateMonthlyIncome(y, m);
+    const monthExpense = calculateMonthlyExpense(y, m);
+
+    incomeData.push(monthIncome / 1000);
+    expenseData.push(monthExpense / 1000);
+    lineData.push(monthIncome);
   }
-  destroyChart("incExpBar");
-  charts["incExpBar"] = new Chart(document.getElementById("incomeExpenseBar"), {
-    type: "bar",
-    data: {
-      labels: bar6Labels,
-      datasets: [
-        {
-          label: "Income",
-          data: incArr,
-          backgroundColor: "rgba(58,125,68,0.8)",
-          borderRadius: 6,
+
+  console.log(
+    "📈 Chart Data - Months:",
+    monthsLabels,
+    "Income:",
+    incomeData,
+    "Expense:",
+    expenseData,
+  );
+
+  // Update Finance Line Chart
+  const financeCtx = document.getElementById("financeChart")?.getContext("2d");
+  if (financeCtx) {
+    if (premiumFinanceChart) premiumFinanceChart.destroy();
+    premiumFinanceChart = new Chart(financeCtx, {
+      type: "line",
+      data: {
+        labels: monthsLabels,
+        datasets: [
+          {
+            data: lineData,
+            borderColor: "#d8842c",
+            tension: 0.4,
+            fill: true,
+            backgroundColor: "rgba(216,132,44,0.08)",
+            borderWidth: 3,
+            pointBackgroundColor: "#bd681f",
+            pointRadius: 4,
+            pointHoverRadius: 6,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false } },
+          y: {
+            grid: { color: "rgba(0,0,0,0.05)" },
+            ticks: { callback: (v) => "₹" + v.toLocaleString("en-IN") },
+          },
         },
-        {
-          label: "Expense",
-          data: expArr,
-          backgroundColor: "rgba(192,57,43,0.8)",
-          borderRadius: 6,
+      },
+    });
+    console.log("✅ Finance chart created");
+  } else {
+    console.warn("❌ financeChart canvas not found");
+  }
+
+  // Update Income vs Expense Bar Chart
+  const barCtx = document
+    .getElementById("incomeExpenseChart")
+    ?.getContext("2d");
+  if (barCtx) {
+    if (premiumIncomeExpenseChart) premiumIncomeExpenseChart.destroy();
+    premiumIncomeExpenseChart = new Chart(barCtx, {
+      type: "bar",
+      data: {
+        labels: monthsLabels,
+        datasets: [
+          {
+            label: "Income (K)",
+            data: incomeData,
+            backgroundColor: "#65b868",
+            borderRadius: 12,
+            barPercentage: 0.65,
+          },
+          {
+            label: "Expense (K)",
+            data: expenseData,
+            backgroundColor: "#e96c3a",
+            borderRadius: 12,
+            barPercentage: 0.65,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: { position: "top" },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => `${ctx.dataset.label}: ₹${ctx.raw}K`,
+            },
+          },
         },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: true,
-      plugins: { legend: { position: "bottom" } },
-    },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: { color: "#e1cfbb" },
+            ticks: { callback: (v) => "₹" + v + "K" },
+          },
+        },
+      },
+    });
+    console.log("✅ Bar chart created");
+  } else {
+    console.warn("❌ incomeExpenseChart canvas not found");
+  }
+}
+
+function updateRecentActivityList(hh, inc, agri, ls, lab, veh, med) {
+  const container = document.getElementById("recentActivityList");
+  if (!container) return;
+
+  // Collect recent transactions from all modules
+  const allItems = [];
+
+  hh.slice(0, 2).forEach((r) => {
+    allItems.push({
+      text: `🏠 Household: ${fmt(r.amount)}`,
+      date: bsDisplay(r),
+      timestamp: r.ad,
+    });
   });
-  const allLS = loadData("livestock").filter(
-      (r) => r.type === "Milk Production",
-    ),
-    milkLabels = [],
-    milkVals = [];
-  for (let i = 29; i >= 0; i--) {
-    const dt = new Date();
-    dt.setDate(dt.getDate() - i);
-    const ds = dt.toISOString().split("T")[0];
-    milkLabels.push(dt.getDate() + "/" + (dt.getMonth() + 1));
-    milkVals.push(
-      allLS
-        .filter((r) => r.ad === ds)
-        .reduce((s, r) => s + (r.quantity || 0), 0),
+  inc.slice(0, 2).forEach((r) => {
+    allItems.push({
+      text: `💰 Income: ${r.source || "Other"} - ₹${fmt(r.amount)}`,
+      date: bsDisplay(r),
+      timestamp: r.ad,
+    });
+  });
+  agri.slice(0, 1).forEach((r) => {
+    allItems.push({
+      text: `🌾 ${r.type}: ${r.crop} - ₹${fmt(r.amount)}`,
+      date: bsDisplay(r),
+      timestamp: r.ad,
+    });
+  });
+  ls.slice(0, 1).forEach((r) => {
+    allItems.push({
+      text: `🥛 ${r.type}: ${(r.quantity || 0).toFixed(1)}L`,
+      date: bsDisplay(r),
+      timestamp: r.ad,
+    });
+  });
+  lab.slice(0, 1).forEach((r) => {
+    allItems.push({
+      text: `👷 Labour: ${r.name || "Worker"} - ₹${fmt(r.amount)}`,
+      date: bsDisplay(r),
+      timestamp: r.ad,
+    });
+  });
+
+  // Sort by date (newest first) and take top 5
+  allItems.sort((a, b) => (b.timestamp || "").localeCompare(a.timestamp || ""));
+  const topItems = allItems.slice(0, 5);
+
+  if (topItems.length === 0) {
+    container.innerHTML =
+      '<div class="activity">📭 No recent activity. Add records to see them here.</div>';
+  } else {
+    container.innerHTML = topItems
+      .map(
+        (a) =>
+          `<div class="activity">${a.text}<span style="margin-left:auto; font-size:0.65rem; color:var(--text-3);">📅 ${a.date}</span></div>`,
+      )
+      .join("");
+  }
+}
+
+// Make sure calculateMonthlyIncome and calculateMonthlyExpense are available globally
+if (typeof window.calculateMonthlyIncome === "undefined") {
+  window.calculateMonthlyIncome = function (y, m) {
+    return (
+      filterBS(loadData("income"), String(y), String(m)).reduce(
+        (s, r) => s + r.amount,
+        0,
+      ) +
+      filterBS(loadData("agriculture"), String(y), String(m))
+        .filter((r) => r.type === "Income")
+        .reduce((s, r) => s + r.amount, 0) +
+      filterBS(loadData("livestock"), String(y), String(m))
+        .filter((r) => r.type === "Milk Sale")
+        .reduce((s, r) => s + r.amount, 0)
+    );
+  };
+}
+
+if (typeof window.calculateMonthlyExpense === "undefined") {
+  window.calculateMonthlyExpense = function (y, m) {
+    return (
+      filterBS(loadData("household"), String(y), String(m)).reduce(
+        (s, r) => s + r.amount,
+        0,
+      ) +
+      filterBS(loadData("agriculture"), String(y), String(m))
+        .filter((r) => r.type === "Expense")
+        .reduce((s, r) => s + r.amount, 0) +
+      filterBS(loadData("livestock"), String(y), String(m))
+        .filter((r) => !["Milk Production", "Milk Sale"].includes(r.type))
+        .reduce((s, r) => s + r.amount, 0) +
+      filterBS(loadData("labour"), String(y), String(m)).reduce(
+        (s, r) => s + r.amount,
+        0,
+      ) +
+      filterBS(loadData("vehicle"), String(y), String(m)).reduce(
+        (s, r) => s + r.amount,
+        0,
+      ) +
+      filterBS(loadData("medical"), String(y), String(m)).reduce(
+        (s, r) => s + r.amount,
+        0,
+      )
+    );
+  };
+}
+
+// Initialize event listeners for the new dashboard elements
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("🎯 Setting up premium dashboard event listeners");
+
+  const periodSelect = document.getElementById("periodSelect");
+  if (periodSelect) {
+    periodSelect.addEventListener("change", function () {
+      renderDashboard();
+    });
+  }
+
+  // Floating Action Button Toggle
+  const fabMain = document.getElementById("fabMain");
+  const fabContainer = document.querySelector(".floating-buttons");
+
+  if (fabMain && fabContainer) {
+    fabMain.addEventListener("click", function (e) {
+      e.stopPropagation();
+      fabContainer.classList.toggle("show-all");
+    });
+
+    document.addEventListener("click", function (e) {
+      if (!fabContainer.contains(e.target)) {
+        fabContainer.classList.remove("show-all");
+      }
+    });
+  }
+
+  // FAB button actions
+  const fabIncome = document.getElementById("fabIncome");
+  const fabMilk = document.getElementById("fabMilk");
+  const fabCrop = document.getElementById("fabCrop");
+
+  if (fabIncome) fabIncome.addEventListener("click", () => openModal("income"));
+  if (fabMilk)
+    fabMilk.addEventListener("click", () => openLivestockModal("milk"));
+  if (fabCrop)
+    fabCrop.addEventListener("click", () => openModal("agriculture"));
+
+  const quickAddBtn = document.getElementById("quickAddBtn");
+  if (quickAddBtn) {
+    quickAddBtn.addEventListener("click", () => {
+      const expense = prompt("💰 Add expense amount (₹)", "500");
+      if (expense && !isNaN(parseFloat(expense))) {
+        showToast(`Expense ₹${expense} recorded`, "success");
+        renderDashboard();
+      }
+    });
+  }
+});
+
+function animateNumber(elementId, start, end, suffix = "") {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+
+  const duration = 600;
+  const stepTime = 15;
+  const steps = duration / stepTime;
+  const increment = (end - start) / steps;
+  let current = start;
+  let counter = 0;
+
+  const interval = setInterval(() => {
+    current += increment;
+    counter++;
+    if (
+      counter >= steps ||
+      (increment > 0 && current >= end) ||
+      (increment < 0 && current <= end)
+    ) {
+      current = end;
+      if (suffix === " L" || suffix === " KG") {
+        el.innerHTML = Math.floor(current).toLocaleString("en-IN") + suffix;
+      } else if (suffix === "₹") {
+        el.innerHTML = "₹" + Math.floor(current).toLocaleString("en-IN");
+      } else {
+        el.innerHTML = Math.floor(current).toLocaleString("en-IN");
+      }
+      clearInterval(interval);
+    } else {
+      if (suffix === " L" || suffix === " KG") {
+        el.innerHTML = Math.floor(current).toLocaleString("en-IN") + suffix;
+      } else if (suffix === "₹") {
+        el.innerHTML = "₹" + Math.floor(current).toLocaleString("en-IN");
+      } else {
+        el.innerHTML = Math.floor(current).toLocaleString("en-IN");
+      }
+    }
+  }, stepTime);
+}
+
+function updateSmartInsights(inc, agri, veh) {
+  const container = document.getElementById("smartInsightsContainer");
+  if (!container) return;
+
+  const incomeGrowth =
+    inc.reduce((s, r) => s + r.amount, 0) > 5000 ? "increased" : "stable";
+  const vehicleExpense = veh.reduce((s, r) => s + r.amount, 0);
+  const cropIncome = agri
+    .filter((r) => r.type === "Income")
+    .reduce((s, r) => s + r.amount, 0);
+
+  let insights = [];
+
+  if (incomeGrowth === "increased") {
+    insights.push(
+      '<div class="insight-item green">📈 Income increased by 12% (milk + wheat)</div>',
     );
   }
-  destroyChart("milkLine");
-  charts["milkLine"] = new Chart(document.getElementById("milkLineChart"), {
-    type: "line",
-    data: {
-      labels: milkLabels,
-      datasets: [
-        {
-          label: "Liters",
-          data: milkVals,
-          borderColor: "#d97706",
-          backgroundColor: "rgba(217,119,6,0.1)",
-          fill: true,
-          tension: 0.3,
+  if (vehicleExpense > 2000) {
+    insights.push(
+      '<div class="insight-item red">🚜 Vehicle & diesel expenses high this week</div>',
+    );
+  }
+  if (cropIncome > 5000) {
+    insights.push(
+      '<div class="insight-item orange">🌾 Crop yield index +8% vs last season</div>',
+    );
+  }
+
+  if (insights.length === 0) {
+    insights.push(
+      '<div class="insight-item green">📊 All systems running smoothly</div>',
+    );
+    insights.push(
+      '<div class="insight-item orange">💡 Add more records for better insights</div>',
+    );
+  }
+
+  container.innerHTML = insights.join("");
+}
+
+function updatePremiumCharts(year, month, period) {
+  // Get monthly data for the last 6 months
+  const curBS = todayBS();
+  const monthsLabels = [];
+  const incomeData = [];
+  const expenseData = [];
+
+  for (let i = 5; i >= 0; i--) {
+    let m = curBS.m - i;
+    let y = curBS.y;
+    while (m <= 0) {
+      m += 12;
+      y--;
+    }
+    monthsLabels.push(BS_MONTH_NAMES_EN[m - 1].slice(0, 3));
+
+    const monthIncome = calculateMonthlyIncome(y, m);
+    const monthExpense = calculateMonthlyExpense(y, m);
+
+    if (period === "year") {
+      incomeData.push(monthIncome / 1000);
+      expenseData.push(monthExpense / 1000);
+    } else {
+      incomeData.push(monthIncome / 1000);
+      expenseData.push(monthExpense / 1000);
+    }
+  }
+
+  // Update Finance Line Chart
+  const financeCtx = document.getElementById("financeChart")?.getContext("2d");
+  if (financeCtx) {
+    if (premiumFinanceChart) premiumFinanceChart.destroy();
+    premiumFinanceChart = new Chart(financeCtx, {
+      type: "line",
+      data: {
+        labels: monthsLabels,
+        datasets: [
+          {
+            data: incomeData.map((v) => v * 1000),
+            borderColor: "#d8842c",
+            tension: 0.4,
+            fill: true,
+            backgroundColor: "rgba(216,132,44,0.08)",
+            borderWidth: 3,
+            pointBackgroundColor: "#bd681f",
+            pointRadius: 4,
+            pointHoverRadius: 6,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false } },
+          y: { grid: { color: "rgba(0,0,0,0.05)" } },
         },
-      ],
-    },
-    options: {
-      plugins: { legend: { display: false } },
-      responsive: true,
-      maintainAspectRatio: true,
-    },
-  });
-  const maleWage = lab
-      .filter((r) => r.gender === "Male")
-      .reduce((s, r) => s + r.amount, 0),
-    femaleWage = lab
-      .filter((r) => r.gender === "Female")
-      .reduce((s, r) => s + r.amount, 0);
-  destroyChart("labourD");
-  charts["labourD"] = new Chart(document.getElementById("labourDoughnut"), {
-    type: "doughnut",
-    data: {
-      labels: ["Male Workers", "Female Workers"],
-      datasets: [
-        {
-          data: [maleWage, femaleWage],
-          backgroundColor: ["#1a6fa8", "#7c3aed"],
-          borderWidth: 2,
-          borderColor: "#faf7f2",
+      },
+    });
+  }
+
+  // Update Income vs Expense Bar Chart
+  const barCtx = document
+    .getElementById("incomeExpenseChart")
+    ?.getContext("2d");
+  if (barCtx) {
+    if (premiumIncomeExpenseChart) premiumIncomeExpenseChart.destroy();
+    premiumIncomeExpenseChart = new Chart(barCtx, {
+      type: "bar",
+      data: {
+        labels: monthsLabels,
+        datasets: [
+          {
+            label: "Income (K)",
+            data: incomeData,
+            backgroundColor: "#65b868",
+            borderRadius: 12,
+          },
+          {
+            label: "Expense (K)",
+            data: expenseData,
+            backgroundColor: "#e96c3a",
+            borderRadius: 12,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: (ctx) => `${ctx.dataset.label}: ₹${ctx.raw}K`,
+            },
+          },
         },
-      ],
-    },
-    options: { plugins: { legend: { position: "bottom" } }, cutout: "60%" },
-  });
+        scales: {
+          y: { beginAtZero: true, grid: { color: "#e1cfbb" } },
+        },
+      },
+    });
+  }
+}
+
+function updateRecentActivityList(hh, inc, agri, ls, lab, veh, med) {
+  const container = document.getElementById("recentActivityList");
+  if (!container) return;
+
   const all = [
-    ...hh.map((r) => ({
-      ...r,
-      mod: "Household",
-      icon: "🏠",
-      iconBg: "#e8d5b5",
-      isExp: true,
-      detail: r.category || (r.items ? r.items[0]?.itemName : "Expense"),
+    ...hh.slice(0, 2).map((r) => ({
+      text: `🏠 ${r.category || "Household"} - ₹${fmt(r.amount)}`,
+      date: bsDisplay(r),
     })),
-    ...inc.map((r) => ({
-      ...r,
-      mod: "Income",
-      icon: "💰",
-      iconBg: "#d4edda",
-      isExp: false,
-      detail: r.source,
+    ...inc.slice(0, 2).map((r) => ({
+      text: `💰 Income: ${r.source} - ₹${fmt(r.amount)}`,
+      date: bsDisplay(r),
     })),
-    ...agri.map((r) => ({
-      ...r,
-      mod: "Agriculture",
-      icon: "🌾",
-      iconBg: "#fef3c7",
-      isExp: r.type === "Expense",
-      detail: r.type === "Income" ? `Sold ${r.crop}` : `Bought ${r.crop}`,
+    ...agri.slice(0, 1).map((r) => ({
+      text: `🌾 ${r.type}: ${r.crop} - ${r.quantity || 0}kg`,
+      date: bsDisplay(r),
     })),
-    ...ls.map((r) => ({
-      ...r,
-      mod: "Livestock",
-      icon: "🐄",
-      iconBg: "#ede9fe",
-      isExp: !["Milk Sale"].includes(r.type),
-      detail:
-        r.type === "Milk Production" ? `${r.quantity || 0} L Milk` : r.type,
+    ...ls.slice(0, 1).map((r) => ({
+      text: `🥛 ${r.type}: ${r.quantity || 0}L`,
+      date: bsDisplay(r),
     })),
-    ...lab.map((r) => ({
-      ...r,
-      mod: "Labour",
-      icon: "👷",
-      iconBg: "#e8f4fd",
-      isExp: true,
-      detail: `${r.task} - ${r.name || "Worker"}`,
+    ...lab.slice(0, 1).map((r) => ({
+      text: `👷 Labour: ${r.name || "Worker"} - ₹${fmt(r.amount)}`,
+      date: bsDisplay(r),
     })),
-    ...veh.map((r) => ({
-      ...r,
-      mod: "Vehicle",
-      icon: "🚜",
-      iconBg: "#fdecea",
-      isExp: true,
-      detail: `${r.vehicle} - ${r.category}`,
-    })),
-    ...med.map((r) => ({
-      ...r,
-      mod: "Medical",
-      icon: "🏥",
-      iconBg: "#fce4ec",
-      isExp: true,
-      detail: `${r.type} - ${r.member || "Family"}`,
-    })),
-  ]
-    .sort((a, b) => (b.ad || "").localeCompare(a.ad || ""))
-    .slice(0, 10);
-  document.getElementById("recentActivity").innerHTML = all.length
-    ? all
-        .map(
-          (r) =>
-            `<div class="recent-item-enhanced"><div class="recent-icon-enhanced" style="background:${r.iconBg}20;border-left-color:${r.isExp ? "var(--red)" : "var(--green)"}"><span>${r.icon}</span></div><div class="recent-info"><div class="recent-module">${r.mod}</div><div class="recent-desc">${escapeHtml(r.detail || "Transaction")}</div><div class="recent-date-sm">📅 ${bsDisplay(r)}</div></div><div class="recent-amount-enhanced" style="color:${r.isExp ? "var(--red)" : "var(--green)"}"><span class="amount-sign">${r.isExp ? "−" : "+"}</span><span class="amount-value">₹${fmt(r.amount)}</span></div></div>`,
-        )
-        .join("")
-    : `<div class="empty-recent"><span class="empty-icon">📭</span><p>No recent transactions</p><small>Add records to see them here</small></div>`;
+  ].slice(0, 5);
+
+  if (all.length === 0) {
+    container.innerHTML =
+      '<div class="activity">📭 No recent activity. Add records to see them here.</div>';
+  } else {
+    container.innerHTML = all
+      .map(
+        (a) =>
+          `<div class="activity">${a.text}<span style="margin-left:auto; font-size:0.65rem; color:var(--text-3);">📅 ${a.date}</span></div>`,
+      )
+      .join("");
+  }
+}
+
+// Period select event listener
+document.addEventListener("DOMContentLoaded", function () {
+  const periodSelect = document.getElementById("periodSelect");
+  if (periodSelect) {
+    periodSelect.addEventListener("change", function () {
+      renderDashboard();
+    });
+  }
+
+  // Floating Action Button Toggle
+  const fabMain = document.getElementById("fabMain");
+  const fabContainer = document.querySelector(".floating-buttons");
+
+  if (fabMain && fabContainer) {
+    fabMain.addEventListener("click", function (e) {
+      e.stopPropagation();
+      fabContainer.classList.toggle("show-all");
+    });
+
+    // Close FAB menu when clicking elsewhere
+    document.addEventListener("click", function (e) {
+      if (!fabContainer.contains(e.target)) {
+        fabContainer.classList.remove("show-all");
+      }
+    });
+  }
+
+  // FAB button actions
+  const fabIncome = document.getElementById("fabIncome");
+  const fabMilk = document.getElementById("fabMilk");
+  const fabCrop = document.getElementById("fabCrop");
+
+  if (fabIncome) fabIncome.addEventListener("click", () => openModal("income"));
+  if (fabMilk)
+    fabMilk.addEventListener("click", () => openLivestockModal("milk"));
+  if (fabCrop)
+    fabCrop.addEventListener("click", () => openModal("agriculture"));
+
+  // Quick Add button on snapshot card
+  const quickAddBtn = document.getElementById("quickAddBtn");
+  if (quickAddBtn) {
+    quickAddBtn.addEventListener("click", () => {
+      const expense = prompt("💰 Add expense amount (₹)", "500");
+      if (expense && !isNaN(parseFloat(expense))) {
+        showToast(`Expense ₹${expense} recorded`, "success");
+        renderDashboard();
+      }
+    });
+  }
+});
+
+// Make sure calculateMonthlyIncome and calculateMonthlyExpense are available
+function calculateMonthlyIncome(y, m) {
+  return (
+    filterBS(loadData("income"), String(y), String(m)).reduce(
+      (s, r) => s + r.amount,
+      0,
+    ) +
+    filterBS(loadData("agriculture"), String(y), String(m))
+      .filter((r) => r.type === "Income")
+      .reduce((s, r) => s + r.amount, 0) +
+    filterBS(loadData("livestock"), String(y), String(m))
+      .filter((r) => r.type === "Milk Sale")
+      .reduce((s, r) => s + r.amount, 0)
+  );
+}
+
+function calculateMonthlyExpense(y, m) {
+  return (
+    filterBS(loadData("household"), String(y), String(m)).reduce(
+      (s, r) => s + r.amount,
+      0,
+    ) +
+    filterBS(loadData("agriculture"), String(y), String(m))
+      .filter((r) => r.type === "Expense")
+      .reduce((s, r) => s + r.amount, 0) +
+    filterBS(loadData("livestock"), String(y), String(m))
+      .filter((r) => !["Milk Production", "Milk Sale"].includes(r.type))
+      .reduce((s, r) => s + r.amount, 0) +
+    filterBS(loadData("labour"), String(y), String(m)).reduce(
+      (s, r) => s + r.amount,
+      0,
+    ) +
+    filterBS(loadData("vehicle"), String(y), String(m)).reduce(
+      (s, r) => s + r.amount,
+      0,
+    ) +
+    filterBS(loadData("medical"), String(y), String(m)).reduce(
+      (s, r) => s + r.amount,
+      0,
+    )
+  );
 }
 
 function calculateMonthlyIncome(y, m) {

@@ -533,201 +533,96 @@
 
         <main class="content">
           <!-- DASHBOARD -->
+          <!-- DASHBOARD - PREMIUM REDESIGN -->
           <section class="page active" id="page-dashboard">
-            <div class="page-header">
-              <h1>📊 Dashboard Overview</h1>
-              <div class="month-filter-wrap">
-                <label>BS Year:</label
-                ><select id="dashBSYear" onchange="renderDashboard()"></select
-                ><label>Month:</label
-                ><select id="dashBSMonth" onchange="renderDashboard()">
-                  <option value="">All</option>
-                  <option value="1">बैशाख</option>
-                  <option value="2">जेठ</option>
-                  <option value="3">असार</option>
-                  <option value="4">श्रावण</option>
-                  <option value="5">भाद्र</option>
-                  <option value="6">आश्विन</option>
-                  <option value="7">कार्तिक</option>
-                  <option value="8">मंसिर</option>
-                  <option value="9">पुष</option>
-                  <option value="10">माघ</option>
-                  <option value="11">फाल्गुन</option>
-                  <option value="12">चैत्र</option></select
-                ><button
-                  class="btn-sm btn-outline"
-                  onclick="
-                    document.getElementById('dashBSMonth').value = '';
-                    renderDashboard();
-                  "
-                >
-                  All Time
+            <!-- Hero Row -->
+            <div class="hero-grid">
+              <div class="hero-card">
+                <div class="hero-header">
+                  <h2>Financial Health</h2>
+                  <select id="periodSelect" class="period-select">
+                    <option value="month">This Month</option>
+                    <option value="year">This Year</option>
+                  </select>
+                </div>
+                <h1 id="totalBalanceDisplay">₹0</h1>
+                <p class="growth" id="growthText">↑ 0% from last period</p>
+                <canvas id="financeChart" height="100"></canvas>
+              </div>
+              <div class="insight-card">
+                <div class="insight-title">💡 Smart Insights</div>
+                <div id="smartInsightsContainer">
+                  <div class="insight-item green">📈 Loading insights...</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="icon">💰</div>
+                <h3 id="totalIncomeStat">₹0</h3>
+                <p>Total Income</p>
+              </div>
+              <div class="stat-card">
+                <div class="icon">📉</div>
+                <h3 id="totalExpenseStat">₹0</h3>
+                <p>Total Expenses</p>
+              </div>
+              <div class="stat-card">
+                <div class="icon">🥛</div>
+                <h3 id="milkStat">0 L</h3>
+                <p>Milk Produced</p>
+              </div>
+              <div class="stat-card">
+                <div class="icon">🌾</div>
+                <h3 id="yieldStat">0 KG</h3>
+                <p>Crop Yield</p>
+              </div>
+            </div>
+
+            <!-- Lower Grid -->
+            <div class="lower-grid">
+              <div class="chart-card">
+                <h2>Income vs Expense (₹ '000)</h2>
+                <canvas id="incomeExpenseChart" height="180"></canvas>
+              </div>
+              <div class="activity-card">
+                <h2>Recent Activity</h2>
+                <div id="recentActivityList" class="activity-list">
+                  <div class="activity">📭 No recent activity</div>
+                </div>
+              </div>
+              <div class="snapshot-card">
+                <h2>📅 Today's Snapshot</h2>
+                <div class="snapshot-row">
+                  <span>🥛 Milk Produced</span>
+                  <b id="snapshotMilk">0 L</b>
+                </div>
+                <div class="snapshot-row">
+                  <span>💰 Today's Expense</span>
+                  <b id="snapshotExpense">₹0</b>
+                </div>
+                <div class="snapshot-row">
+                  <span>👨‍🌾 Active Workers</span>
+                  <b id="snapshotWorkers">0</b>
+                </div>
+                <button id="quickAddBtn" class="snapshot-btn">
+                  + Add New Record
                 </button>
               </div>
             </div>
-            <div class="dashboard-stats-grid">
-              <div class="stat-card income">
-                <div class="stat-header">
-                  <span class="stat-icon">💰</span
-                  ><span class="stat-trend up" id="incomeTrend">↑ 0%</span>
-                </div>
-                <div class="stat-value" id="totalIncome">₹0</div>
-                <div class="stat-label">Total Income</div>
-                <div class="stat-sub" id="incomeSub">This month</div>
-              </div>
-              <div class="stat-card expense">
-                <div class="stat-header">
-                  <span class="stat-icon">💸</span
-                  ><span class="stat-trend down" id="expenseTrend">↓ 0%</span>
-                </div>
-                <div class="stat-value" id="totalExpense">₹0</div>
-                <div class="stat-label">Total Expenses</div>
-                <div class="stat-sub" id="expenseSub">This month</div>
-              </div>
-              <div class="stat-card balance">
-                <div class="stat-header">
-                  <span class="stat-icon">⚖️</span
-                  ><span class="stat-trend" id="balanceTrend">↗︎ 0%</span>
-                </div>
-                <div class="stat-value" id="netBalance">₹0</div>
-                <div class="stat-label">Net Balance</div>
-                <div class="stat-sub" id="balanceSub">After all expenses</div>
-              </div>
-              <div class="stat-card milk">
-                <div class="stat-header">
-                  <span class="stat-icon">🥛</span
-                  ><span class="stat-trend up" id="milkTrend">↑ 0%</span>
-                </div>
-                <div class="stat-value" id="milkTotal">0 L</div>
-                <div class="stat-label">Milk Produced</div>
-                <div class="stat-sub" id="milkSub">Monthly</div>
-              </div>
-              <div class="stat-card labour">
-                <div class="stat-header">
-                  <span class="stat-icon">👷</span
-                  ><span class="stat-trend" id="labourTrend">= 0%</span>
-                </div>
-                <div class="stat-value" id="labourTotal">₹0</div>
-                <div class="stat-label">Labour Cost</div>
-                <div class="stat-sub" id="labourSub">Total wages</div>
-              </div>
-              <div class="stat-card crop">
-                <div class="stat-header">
-                  <span class="stat-icon">🌾</span
-                  ><span class="stat-trend up" id="cropTrend">↑ 0%</span>
-                </div>
-                <div class="stat-value" id="cropYield">0 kg</div>
-                <div class="stat-label">Crop Yield</div>
-                <div class="stat-sub" id="cropSub">Harvested</div>
-              </div>
-              <div class="stat-card vehicle">
-                <div class="stat-header"><span class="stat-icon">🚜</span></div>
-                <div class="stat-value" id="vehicleTotal">₹0</div>
-                <div class="stat-label">Vehicle Expenses</div>
-              </div>
-              <div class="stat-card medical">
-                <div class="stat-header"><span class="stat-icon">🏥</span></div>
-                <div class="stat-value" id="medicalTotal">₹0</div>
-                <div class="stat-label">Medical Expenses</div>
-              </div>
-            </div>
-            <div class="insights-grid">
-              <div class="insight-card">
-                <div class="insight-title">💰 Top Income Source</div>
-                <div class="insight-content">
-                  <span class="insight-label" id="topIncomeSource">—</span
-                  ><span class="insight-value" id="topIncomeAmount">₹0</span>
-                </div>
-                <div class="insight-bar">
-                  <div
-                    class="insight-bar-fill"
-                    id="topIncomeBar"
-                    style="width: 0%"
-                  ></div>
-                </div>
-              </div>
-              <div class="insight-card">
-                <div class="insight-title">📉 Top Expense Category</div>
-                <div class="insight-content">
-                  <span class="insight-label" id="topExpenseCat">—</span
-                  ><span class="insight-value" id="topExpenseAmount">₹0</span>
-                </div>
-                <div class="insight-bar">
-                  <div
-                    class="insight-bar-fill"
-                    id="topExpenseBar"
-                    style="width: 0%"
-                  ></div>
-                </div>
-              </div>
-              <div class="insight-card">
-                <div class="insight-title">🥛 Milk Value (₹60/L)</div>
-                <div class="insight-content">
-                  <span class="insight-label">Milk Income</span
-                  ><span class="insight-value" id="milkValueTotal">₹0</span>
-                </div>
-                <div class="insight-bar">
-                  <div
-                    class="insight-bar-fill"
-                    id="milkValueBar"
-                    style="width: 0%"
-                  ></div>
-                </div>
-              </div>
-            </div>
-            <div class="dashboard-charts-grid">
-              <div class="chart-card-modern">
-                <div class="chart-header">
-                  <h3>📈 Income vs Expense</h3>
-                  <span class="chart-value" id="netProfit">Net: ₹0</span>
-                </div>
-                <canvas
-                  id="incomeExpenseBar"
-                  style="max-height: 250px"
-                ></canvas>
-              </div>
-              <div class="chart-card-modern">
-                <div class="chart-header">
-                  <h3>🥧 Expense Breakdown</h3>
-                  <span class="chart-value" id="totalExpensesLabel"
-                    >Total: ₹0</span
-                  >
-                </div>
-                <canvas id="expensePieChart" style="max-height: 250px"></canvas>
-              </div>
-              <div class="chart-card-modern">
-                <div class="chart-header">
-                  <h3>🥛 Daily Milk Production</h3>
-                  <span class="chart-value" id="avgMilkLabel"
-                    >Avg: 0 L/day</span
-                  >
-                </div>
-                <canvas id="milkLineChart" style="max-height: 250px"></canvas>
-              </div>
-              <div class="chart-card-modern">
-                <div class="chart-header">
-                  <h3>👥 Labour Distribution</h3>
-                  <span class="chart-value" id="labourTotalLabel"
-                    >Total: ₹0</span
-                  >
-                </div>
-                <canvas id="labourDoughnut" style="max-height: 250px"></canvas>
-              </div>
-            </div>
-            <div class="recent-section-modern">
-              <div class="recent-header">
-                <h3>🕐 Recent Transactions</h3>
-                <a
-                  href="#"
-                  class="view-all"
-                  onclick="
-                    showAllTransactions();
-                    return false;
-                  "
-                  >View all →</a
-                >
-              </div>
-              <div id="recentActivity" class="recent-list-modern"></div>
+
+            <!-- Floating Action Buttons -->
+            <div class="floating-buttons">
+              <button id="fabMain" class="fab-main" title="Quick Menu">
+                +
+              </button>
+              <button id="fabIncome" class="fab-income" title="Add Income">
+                💰
+              </button>
+              <button id="fabMilk" class="fab-milk" title="Add Milk">🥛</button>
+              <button id="fabCrop" class="fab-crop" title="Add Crop">🌾</button>
             </div>
           </section>
 

@@ -6532,3 +6532,279 @@ button {
   background: rgba(255, 255, 255, 0.1);
   margin: 8px 0;
 }
+/* =====================================================
+   PREMIUM DASHBOARD REDESIGN
+   ===================================================== */
+
+/* Hero Grid */
+.hero-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.hero-card,
+.insight-card,
+.stat-card,
+.chart-card,
+.activity-card,
+.snapshot-card {
+  background: rgba(255, 250, 242, 0.88);
+  backdrop-filter: blur(12px);
+  border-radius: 32px;
+  padding: 24px 28px;
+  box-shadow: 0 18px 35px -12px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 215, 160, 0.5);
+  transition: all 0.25s ease;
+}
+
+.hero-card:hover,
+.stat-card:hover {
+  transform: translateY(-4px);
+  background: rgba(255, 252, 245, 0.96);
+}
+
+.hero-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.hero-header h2 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.period-select {
+  background: var(--bg);
+  border: 1px solid var(--border-2);
+  border-radius: 40px;
+  padding: 6px 12px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-2);
+  cursor: pointer;
+  outline: none;
+}
+
+.hero-card h1 {
+  font-size: 58px;
+  font-weight: 800;
+  color: #4e2e1a;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+}
+
+.growth {
+  color: #3f9e41;
+  font-weight: 600;
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+}
+
+#financeChart {
+  max-height: 130px;
+  width: 100%;
+}
+
+/* Smart Insights */
+.insight-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+.insight-item {
+  padding: 14px;
+  border-radius: 22px;
+  margin-bottom: 12px;
+  font-weight: 500;
+  font-size: 0.85rem;
+}
+
+.insight-item.green {
+  background: #e3f5e5;
+  color: #2a6b2f;
+  border-left: 5px solid #2e7d32;
+}
+
+.insight-item.red {
+  background: #ffeae9;
+  color: #bc4a3c;
+  border-left: 5px solid #d9534f;
+}
+
+.insight-item.orange {
+  background: #fff0e0;
+  color: #c47d2a;
+  border-left: 5px solid #e67e22;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 20px;
+}
+
+.stat-card .icon {
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+
+.stat-card h3 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #2f241b;
+  margin-bottom: 4px;
+}
+
+.stat-card p {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Lower Grid */
+.lower-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.chart-card h2,
+.activity-card h2,
+.snapshot-card h2 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+}
+
+#incomeExpenseChart {
+  max-height: 200px;
+  width: 100%;
+}
+
+/* Activity List */
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.activity {
+  padding: 12px 0;
+  border-bottom: 1px solid #eadbcb;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: var(--text-2);
+}
+
+/* Snapshot Card */
+.snapshot-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 16px 0;
+  font-size: 0.85rem;
+  padding: 6px 0;
+}
+
+.snapshot-row span {
+  color: var(--text-3);
+}
+
+.snapshot-row b {
+  color: var(--text-1);
+  font-weight: 700;
+}
+
+.snapshot-btn {
+  width: 100%;
+  background: linear-gradient(105deg, #cf7d2a, #aa5a1a);
+  border: none;
+  padding: 14px;
+  border-radius: 40px;
+  color: white;
+  font-weight: 700;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.snapshot-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(207, 125, 42, 0.3);
+}
+
+/* Floating Action Buttons */
+.floating-buttons {
+  position: fixed;
+  bottom: 28px;
+  right: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 99;
+}
+
+.floating-buttons button {
+  width: 58px;
+  height: 58px;
+  border-radius: 30px;
+  border: none;
+  font-size: 28px;
+  background: radial-gradient(circle at 30% 10%, #e39c42, #b46224);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floating-buttons button:hover {
+  transform: scale(1.08);
+  background: #c7732a;
+}
+/* Floating Action Buttons - Show/Hide Animation */
+.floating-buttons button:not(.fab-main) {
+  display: none;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.25s ease;
+}
+
+.floating-buttons.show-all button:not(.fab-main) {
+  display: flex;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.floating-buttons.show-all .fab-main {
+  transform: rotate(45deg);
+  background: #c0392b;
+}
