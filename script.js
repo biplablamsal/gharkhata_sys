@@ -1492,23 +1492,25 @@ function buildForm(module, r) {
     return `<div class="labour-form-container"><div class="form-card"><div class="form-card-title">📅 Date Information</div>${bsDatePicker(bsY, bsM, bsD)}<div class="date-shortcuts"><button type="button" class="date-shortcut" onclick="setLabourDate('today')">Today</button><button type="button" class="date-shortcut" onclick="setLabourDate('yesterday')">Yesterday</button></div></div><div class="form-card"><div class="form-card-title">👤 Gender</div><div class="gender-options"><div class="gender-option ${fv(r, "gender", "Male") === "Male" ? "selected-male" : ""}" onclick="selectLabourGender('Male')"><span class="gender-icon">👨</span><span class="gender-name">Male</span><span class="gender-check">✓</span></div><div class="gender-option ${fv(r, "gender") === "Female" ? "selected-female" : ""}" onclick="selectLabourGender('Female')"><span class="gender-icon">👩</span><span class="gender-name">Female</span><span class="gender-check">✓</span></div></div><input type="hidden" id="f_gender" value="${fv(r, "gender", "Male")}" /></div><div class="form-card"><div class="form-card-title">👷 Worker Details</div><input type="text" id="f_name" class="worker-input" value="${fv(r, "name")}" placeholder="Full name of worker" /></div><div class="form-card"><div class="form-card-title">🌾 Task Type</div><div class="task-grid"><button type="button" class="task-btn ${fv(r, "task") === "Grass Cutting" ? "active" : ""}" data-task="Grass Cutting" onclick="selectTask('Grass Cutting')">🌿 Grass Cutting</button><button type="button" class="task-btn ${fv(r, "task") === "Ploughing" ? "active" : ""}" data-task="Ploughing" onclick="selectTask('Ploughing')">🚜 Ploughing</button><button type="button" class="task-btn ${fv(r, "task") === "Harvesting" ? "active" : ""}" data-task="Harvesting" onclick="selectTask('Harvesting')">🌾 Harvesting</button><button type="button" class="task-btn ${fv(r, "task") === "Planting" ? "active" : ""}" data-task="Planting" onclick="selectTask('Planting')">🌱 Planting</button><button type="button" class="task-btn ${fv(r, "task") === "Weeding" ? "active" : ""}" data-task="Weeding" onclick="selectTask('Weeding')">🌿 Weeding</button><button type="button" class="task-btn ${fv(r, "task") === "Other" ? "active" : ""}" data-task="Other" onclick="selectTask('Other')">🔧 Other</button></div><input type="hidden" id="f_task" value="${fv(r, "task", "Grass Cutting")}" /></div><div class="form-card"><div class="form-card-title">💰 Payment Calculation</div><div class="payment-row"><div class="payment-field"><label>Days Worked</label><div class="number-input-group"><button type="button" class="num-btn" onclick="adjustDays(-0.5)">−</button><input type="number" id="f_days" value="${initDays}" step="0.5" oninput="calcLabourTotal()" /><button type="button" class="num-btn" onclick="adjustDays(0.5)">+</button></div></div><div class="payment-field"><label>Wage per Day (₹)</label><div class="wage-input-group"><input type="number" id="f_wage" value="${initWage}" step="50" oninput="calcLabourTotal()" /><div class="wage-presets"><span onclick="setWage(300)">300</span><span onclick="setWage(400)">400</span><span onclick="setWage(500)">500</span><span onclick="setWage(600)">600</span></div></div></div></div></div><div class="total-card"><div class="total-label">TOTAL PAYMENT</div><div class="total-amount" id="labourTotalDisplay">₹${initTotal.toLocaleString("en-IN")}</div><input type="hidden" id="f_amount" value="${initTotal.toFixed(2)}" /></div><details class="notes-collapsible"><summary>📝 Add Notes</summary><textarea id="f_notes" placeholder="Any additional information..." rows="2">${fv(r, "notes")}</textarea></details></div>`;
   }
   if (module === "vehicle") {
-    // ADD these 3 lines at the beginning
     const bsY = fv(r, "bsY", todayBS().y);
     const bsM = fv(r, "bsM", todayBS().m);
     const bsD = fv(r, "bsD", todayBS().d);
+    const selectedVehicle = fv(r, "vehicle", "Tractor");
+    const selectedCategory = fv(r, "category", "Fuel");
+    const amountValue = fv(r, "amount", 0);
 
     return `
-        <div class="agri-form-container">
+        <div style="display: flex; flex-direction: column; gap: 20px;">
             <!-- Date Section -->
-            <div class="form-section">
-                <div class="form-section-title">
-                    <span class="section-icon">📅</span>
-                    <span>Date Information</span>
+            <div class="form-section" style="background: var(--bg); border-radius: 16px; padding: 20px; border: 1px solid var(--border);">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--accent);">
+                    <span>📅</span>
+                    <span style="font-weight: 600;">Date Information</span>
                 </div>
-                <div class="date-picker-grid">
-                    <div class="input-group-modern">
-                        <label>BS Year</label>
-                        <select id="f_bsy" onchange="updateDayOptions()" class="modern-select">
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+                    <div>
+                        <label style="font-size: 0.7rem; font-weight: 600;">BS Year</label>
+                        <select id="f_bsy" onchange="updateDayOptions()" class="modern-select" style="width: 100%; padding: 12px;">
                             ${(() => {
                               const curY = currentBSYear();
                               let opts = "";
@@ -1519,18 +1521,18 @@ function buildForm(module, r) {
                             })()}
                         </select>
                     </div>
-                    <div class="input-group-modern">
-                        <label>BS Month</label>
-                        <select id="f_bsm" onchange="updateDayOptions()" class="modern-select">
+                    <div>
+                        <label style="font-size: 0.7rem; font-weight: 600;">BS Month</label>
+                        <select id="f_bsm" onchange="updateDayOptions()" class="modern-select" style="width: 100%; padding: 12px;">
                             ${BS_MONTH_NAMES_NP.map((name, i) => {
                               const monthNum = i + 1;
                               return `<option value="${monthNum}" ${monthNum === (bsM || todayBS().m) ? "selected" : ""}>${name}</option>`;
                             }).join("")}
                         </select>
                     </div>
-                    <div class="input-group-modern">
-                        <label>BS Day</label>
-                        <select id="f_bsd" class="modern-select">
+                    <div>
+                        <label style="font-size: 0.7rem; font-weight: 600;">BS Day</label>
+                        <select id="f_bsd" class="modern-select" style="width: 100%; padding: 12px;">
                             ${(() => {
                               const days =
                                 BS_DATA[bsY || currentBSYear()]?.[
@@ -1544,99 +1546,93 @@ function buildForm(module, r) {
                             })()}
                         </select>
                     </div>
-                    <div class="input-group-modern">
-                        <label>Quick Date</label>
-                        <div class="quick-date-btns">
-                            <button type="button" class="quick-date-btn" onclick="setTodayDate()">Today</button>
-                            <button type="button" class="quick-date-btn" onclick="setYesterdayDate()">Yesterday</button>
+                    <div>
+                        <label style="font-size: 0.7rem; font-weight: 600;">Quick Date</label>
+                        <div style="display: flex; gap: 8px;">
+                            <button type="button" class="quick-date-btn" onclick="setTodayDate()" style="flex:1; padding: 10px;">Today</button>
+                            <button type="button" class="quick-date-btn" onclick="setYesterdayDate()" style="flex:1; padding: 10px;">Yesterday</button>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Vehicle Selection -->
-            <div class="form-section">
-                <div class="form-section-title">
-                    <span class="section-icon">🚗</span>
-                    <span>Vehicle</span>
+            <div class="form-section" style="background: var(--bg); border-radius: 16px; padding: 20px; border: 1px solid var(--border);">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--accent);">
+                    <span>🚜</span>
+                    <span style="font-weight: 600;">Select Vehicle</span>
                 </div>
-                <div class="crop-selector-agri">
-                    <div class="crop-chip-agri ${fv(r, "vehicle") === "Tractor" ? "selected" : ""}" data-vehicle="Tractor" onclick="selectVehicleChip('Tractor')">
+                <div class="vehicle-selector-modern">
+                    <div class="vehicle-option-modern ${selectedVehicle === "Tractor" ? "selected" : ""}" data-vehicle="Tractor" onclick="selectModernVehicle('Tractor')">
                         🚜 Tractor
                     </div>
-                    <div class="crop-chip-agri ${fv(r, "vehicle") === "Bike" ? "selected" : ""}" data-vehicle="Bike" onclick="selectVehicleChip('Bike')">
+                    <div class="vehicle-option-modern ${selectedVehicle === "Bike" ? "selected" : ""}" data-vehicle="Bike" onclick="selectModernVehicle('Bike')">
                         🏍️ Bike
                     </div>
-                    <div class="crop-chip-agri ${fv(r, "vehicle") === "Scooter" ? "selected" : ""}" data-vehicle="Scooter" onclick="selectVehicleChip('Scooter')">
+                    <div class="vehicle-option-modern ${selectedVehicle === "Scooter" ? "selected" : ""}" data-vehicle="Scooter" onclick="selectModernVehicle('Scooter')">
                         🛵 Scooter
                     </div>
-                    <div class="crop-chip-agri ${fv(r, "vehicle") === "Other" ? "selected" : ""}" data-vehicle="Other" onclick="selectVehicleChip('Other')">
+                    <div class="vehicle-option-modern ${selectedVehicle === "Other" ? "selected" : ""}" data-vehicle="Other" onclick="selectModernVehicle('Other')">
                         🚗 Other
                     </div>
                 </div>
-                <input type="hidden" id="f_vehicle" value="${fv(r, "vehicle", "Tractor")}">
+                <input type="hidden" id="f_vehicle" value="${selectedVehicle}">
             </div>
 
             <!-- Category Selection -->
-            <div class="form-section">
-                <div class="form-section-title">
-                    <span class="section-icon">📋</span>
-                    <span>Expense Category</span>
+            <div class="form-section" style="background: var(--bg); border-radius: 16px; padding: 20px; border: 1px solid var(--border);">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--accent);">
+                    <span>📋</span>
+                    <span style="font-weight: 600;">Expense Category</span>
                 </div>
-                <div class="crop-selector-agri">
-                    <div class="crop-chip-agri ${fv(r, "category") === "Fuel" ? "selected" : ""}" data-category="Fuel" onclick="selectCategoryChip('Fuel')">
+                <div class="category-selector-modern">
+                    <div class="category-option-modern ${selectedCategory === "Fuel" ? "selected" : ""}" data-category="Fuel" onclick="selectModernCategory('Fuel')">
                         ⛽ Fuel
                     </div>
-                    <div class="crop-chip-agri ${fv(r, "category") === "Maintenance" ? "selected" : ""}" data-category="Maintenance" onclick="selectCategoryChip('Maintenance')">
+                    <div class="category-option-modern ${selectedCategory === "Maintenance" ? "selected" : ""}" data-category="Maintenance" onclick="selectModernCategory('Maintenance')">
                         🔧 Maintenance
                     </div>
-                    <div class="crop-chip-agri ${fv(r, "category") === "Repair" ? "selected" : ""}" data-category="Repair" onclick="selectCategoryChip('Repair')">
+                    <div class="category-option-modern ${selectedCategory === "Repair" ? "selected" : ""}" data-category="Repair" onclick="selectModernCategory('Repair')">
                         🔨 Repair
                     </div>
-                    <div class="crop-chip-agri ${fv(r, "category") === "Insurance" ? "selected" : ""}" data-category="Insurance" onclick="selectCategoryChip('Insurance')">
+                    <div class="category-option-modern ${selectedCategory === "Insurance" ? "selected" : ""}" data-category="Insurance" onclick="selectModernCategory('Insurance')">
                         📄 Insurance
                     </div>
-                    <div class="crop-chip-agri ${fv(r, "category") === "Other" ? "selected" : ""}" data-category="Other" onclick="selectCategoryChip('Other')">
+                    <div class="category-option-modern ${selectedCategory === "Other" ? "selected" : ""}" data-category="Other" onclick="selectModernCategory('Other')">
                         📦 Other
                     </div>
                 </div>
-                <input type="hidden" id="f_category" value="${fv(r, "category", "Fuel")}">
+                <input type="hidden" id="f_category" value="${selectedCategory}">
             </div>
 
-            <!-- Amount Section - BIG -->
-            <div class="form-section">
-                <div class="form-section-title">
-                    <span class="section-icon">💰</span>
-                    <span>Amount Details</span>
+            <!-- Amount Section -->
+            <div class="form-section" style="background: var(--bg); border-radius: 16px; padding: 20px; border: 1px solid var(--border);">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--accent);">
+                    <span>💰</span>
+                    <span style="font-weight: 600;">Expense Amount (₹)</span>
                 </div>
                 
-                <div class="agri-field-group highlight">
-                    <label class="agri-field-label">💰 Amount (₹)</label>
-                    <div class="agri-input-wrapper">
-                        <span class="agri-currency">₹</span>
-                        <input type="number" id="f_amount" class="agri-total-input" value="${fv(r, "amount", 0)}" min="0" step="10" placeholder="Enter amount">
-                    </div>
-                    <div class="agri-field-hint">Enter the expense amount in Rupees</div>
+                <div style="margin-bottom: 20px;">
+                    <input type="number" id="f_amount" class="amount-large-input" value="${amountValue}" min="0" step="10" placeholder="0" oninput="formatLargeAmount(this)">
+                    <div style="font-size: 0.7rem; color: var(--text-3); margin-top: 6px; text-align: center;">Enter the exact expense amount in Rupees</div>
                 </div>
 
-                <!-- Quick Amount Presets -->
-                <div class="agri-presets">
-                    <span class="agri-preset-label">Quick presets:</span>
-                    <button type="button" class="agri-preset-btn" onclick="setVehicleAmountPreset(500)">₹500</button>
-                    <button type="button" class="agri-preset-btn" onclick="setVehicleAmountPreset(1000)">₹1,000</button>
-                    <button type="button" class="agri-preset-btn" onclick="setVehicleAmountPreset(2000)">₹2,000</button>
-                    <button type="button" class="agri-preset-btn" onclick="setVehicleAmountPreset(5000)">₹5,000</button>
-                    <button type="button" class="agri-preset-btn" onclick="setVehicleAmountPreset(10000)">₹10,000</button>
+                <div class="amount-presets-modern">
+                    <button type="button" class="preset-amount-btn" onclick="setVehicleAmountPreset(500)">₹500</button>
+                    <button type="button" class="preset-amount-btn" onclick="setVehicleAmountPreset(1000)">₹1,000</button>
+                    <button type="button" class="preset-amount-btn" onclick="setVehicleAmountPreset(2000)">₹2,000</button>
+                    <button type="button" class="preset-amount-btn" onclick="setVehicleAmountPreset(5000)">₹5,000</button>
+                    <button type="button" class="preset-amount-btn" onclick="setVehicleAmountPreset(10000)">₹10,000</button>
                 </div>
             </div>
 
             <!-- Notes Section -->
-            <div class="form-section">
-                <div class="form-section-title">
-                    <span class="section-icon">📝</span>
-                    <span>Notes / Remarks</span>
+            <div class="form-section" style="background: var(--bg); border-radius: 16px; padding: 20px; border: 1px solid var(--border);">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--accent);">
+                    <span>📝</span>
+                    <span style="font-weight: 600;">Notes / Remarks</span>
                 </div>
-                <textarea id="f_notes" class="agri-textarea" placeholder="e.g., Diesel 20L, Oil change, Insurance renewal...">${fv(r, "notes")}</textarea>
+                <textarea id="f_notes" style="width: 100%; padding: 14px; border: 1px solid #d9cfbc; border-radius: 12px; font-family: inherit; resize: vertical; min-height: 80px;" placeholder="e.g., Diesel 20L, Oil change, Insurance renewal...">${fv(r, "notes")}</textarea>
             </div>
         </div>
     `;
@@ -1652,6 +1648,10 @@ function buildForm(module, r) {
     });
   }
 
+  // Override the original setVehicleAmount to work with new UI
+  if (typeof window.setVehicleAmount !== "undefined") {
+    window.setVehicleAmount = setVehicleAmountPreset;
+  }
   function selectCategoryChip(category) {
     document.getElementById("f_category").value = category;
     document.querySelectorAll(".crop-chip-agri").forEach((chip) => {
@@ -1706,6 +1706,63 @@ function buildForm(module, r) {
 
   return "<p>Unknown module</p>";
 }
+
+// ============================================================
+//  VEHICLE FORM TOGGLE FUNCTIONS (GLOBAL)
+// ============================================================
+
+function selectModernVehicle(vehicle) {
+  console.log("selectModernVehicle called:", vehicle);
+  const input = document.getElementById("f_vehicle");
+  if (input) input.value = vehicle;
+
+  document.querySelectorAll(".vehicle-option-modern").forEach((opt) => {
+    opt.classList.remove("selected");
+    if (opt.getAttribute("data-vehicle") === vehicle) {
+      opt.classList.add("selected");
+    }
+  });
+}
+
+function selectModernCategory(category) {
+  console.log("selectModernCategory called:", category);
+  const input = document.getElementById("f_category");
+  if (input) input.value = category;
+
+  document.querySelectorAll(".category-option-modern").forEach((opt) => {
+    opt.classList.remove("selected");
+    if (opt.getAttribute("data-category") === category) {
+      opt.classList.add("selected");
+    }
+  });
+}
+
+function setVehicleAmountPreset(amount) {
+  console.log("setVehicleAmountPreset called:", amount);
+  const field = document.getElementById("f_amount");
+  if (field) {
+    field.value = amount;
+    field.style.backgroundColor = "#eaf7ed";
+    setTimeout(() => {
+      if (field) field.style.backgroundColor = "";
+    }, 200);
+  }
+  if (typeof showToast === "function") {
+    showToast(`₹${amount.toLocaleString("en-IN")} added`, "success");
+  }
+}
+
+function formatLargeAmount(input) {
+  let val = parseFloat(input.value);
+  if (isNaN(val)) val = 0;
+  input.value = val;
+}
+
+// Make sure they're globally available
+window.selectModernVehicle = selectModernVehicle;
+window.selectModernCategory = selectModernCategory;
+window.setVehicleAmountPreset = setVehicleAmountPreset;
+window.formatLargeAmount = formatLargeAmount;
 
 // ============================================================
 //  AGRICULTURE FORM - AUTO-CALCULATION FUNCTIONS (ADD THIS)
@@ -6898,3 +6955,9 @@ function renderListView() {
   else if (currentPage === "vehicle") renderVehicle();
   else if (currentPage === "medical") renderMedical();
 }
+
+// Make vehicle form functions global
+window.selectModernVehicle = selectModernVehicle;
+window.selectModernCategory = selectModernCategory;
+window.setVehicleAmountPreset = setVehicleAmountPreset;
+window.formatLargeAmount = formatLargeAmount;

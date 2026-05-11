@@ -5955,3 +5955,284 @@ button {
   display: block !important;
   opacity: 1 !important;
 }
+/* =====================================================
+   VEHICLE FORM - WORKING TOGGLE BUTTONS (NO VARIABLES)
+   ===================================================== */
+
+.vehicle-selector-modern,
+.category-selector-modern {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.vehicle-option-modern,
+.category-option-modern {
+  flex: 1;
+  min-width: 85px;
+  padding: 14px 12px;
+  text-align: center;
+  background: #ffffff;
+  border: 2px solid #d9cfbc;
+  border-radius: 60px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #5c4f38;
+}
+
+.vehicle-option-modern:hover,
+.category-option-modern:hover {
+  transform: translateY(-2px);
+  background: #f0ebe0;
+}
+
+/* Vehicle selected colors */
+.vehicle-option-modern.selected[data-vehicle="Tractor"] {
+  background: #e8f4fd;
+  border-color: #1a6fa8;
+  color: #1a6fa8;
+}
+
+.vehicle-option-modern.selected[data-vehicle="Bike"] {
+  background: #fef3c7;
+  border-color: #d97706;
+  color: #d97706;
+}
+
+.vehicle-option-modern.selected[data-vehicle="Scooter"] {
+  background: #ede9fe;
+  border-color: #7c3aed;
+  color: #7c3aed;
+}
+
+.vehicle-option-modern.selected[data-vehicle="Other"] {
+  background: #fdecea;
+  border-color: #c0392b;
+  color: #c0392b;
+}
+
+/* Category selected colors */
+.category-option-modern.selected[data-category="Fuel"] {
+  background: #fef3c7;
+  border-color: #d97706;
+  color: #d97706;
+}
+
+.category-option-modern.selected[data-category="Maintenance"] {
+  background: #ede9fe;
+  border-color: #7c3aed;
+  color: #7c3aed;
+}
+
+.category-option-modern.selected[data-category="Repair"] {
+  background: #fdecea;
+  border-color: #c0392b;
+  color: #c0392b;
+}
+
+.category-option-modern.selected[data-category="Insurance"] {
+  background: #eaf7ed;
+  border-color: #3a7d44;
+  color: #3a7d44;
+}
+
+.category-option-modern.selected[data-category="Other"] {
+  background: #f0ebe0;
+  border-color: #8c7d65;
+  color: #5c4f38;
+}
+
+/* Amount presets */
+.amount-presets-modern {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+  justify-content: center;
+}
+
+.preset-amount-btn {
+  padding: 10px 18px;
+  background: #f0ebe0;
+  border: 1px solid #d9cfbc;
+  border-radius: 60px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #5c4f38;
+}
+
+.preset-amount-btn:hover {
+  background: #c67a2e;
+  color: white;
+  border-color: #c67a2e;
+}
+
+/* Large amount input */
+.amount-large-input {
+  width: 100%;
+  padding: 18px 20px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  border: 2px solid #d9cfbc;
+  border-radius: 60px;
+  background: #ffffff;
+  font-family: "JetBrains Mono", monospace;
+  color: #c67a2e;
+}
+
+.amount-large-input:focus {
+  outline: none;
+  border-color: #c67a2e;
+  box-shadow: 0 0 0 3px rgba(198, 122, 46, 0.2);
+}
+/* =====================================================
+   VEHICLE FORM - WORKING TOGGLE BUTTONS
+   ===================================================== */
+
+.vehicle-selector-modern,
+.category-selector-modern {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.vehicle-option-modern,
+.category-option-modern {
+  flex: 1;
+  min-width: 85px;
+  padding: 14px 12px;
+  text-align: center;
+  background: #ffffff;
+  border: 2px solid #d9cfbc;
+  border-radius: 60px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #5c4f38;
+}
+
+.vehicle-option-modern:hover,
+.category-option-modern:hover {
+  transform: translateY(-2px);
+  background: #f0ebe0;
+}
+
+/* Vehicle selected colors */
+.vehicle-option-modern.selected[data-vehicle="Tractor"] {
+  background: #e8f4fd !important;
+  border-color: #1a6fa8 !important;
+  color: #1a6fa8 !important;
+}
+
+.vehicle-option-modern.selected[data-vehicle="Bike"] {
+  background: #fef3c7 !important;
+  border-color: #d97706 !important;
+  color: #d97706 !important;
+}
+
+.vehicle-option-modern.selected[data-vehicle="Scooter"] {
+  background: #ede9fe !important;
+  border-color: #7c3aed !important;
+  color: #7c3aed !important;
+}
+
+.vehicle-option-modern.selected[data-vehicle="Other"] {
+  background: #fdecea !important;
+  border-color: #c0392b !important;
+  color: #c0392b !important;
+}
+
+/* Category selected colors */
+.category-option-modern.selected[data-category="Fuel"] {
+  background: #fef3c7 !important;
+  border-color: #d97706 !important;
+  color: #d97706 !important;
+}
+
+.category-option-modern.selected[data-category="Maintenance"] {
+  background: #ede9fe !important;
+  border-color: #7c3aed !important;
+  color: #7c3aed !important;
+}
+
+.category-option-modern.selected[data-category="Repair"] {
+  background: #fdecea !important;
+  border-color: #c0392b !important;
+  color: #c0392b !important;
+}
+
+.category-option-modern.selected[data-category="Insurance"] {
+  background: #eaf7ed !important;
+  border-color: #3a7d44 !important;
+  color: #3a7d44 !important;
+}
+
+.category-option-modern.selected[data-category="Other"] {
+  background: #f0ebe0 !important;
+  border-color: #8c7d65 !important;
+  color: #5c4f38 !important;
+}
+
+/* Amount presets */
+.amount-presets-modern {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+  justify-content: center;
+}
+
+.preset-amount-btn {
+  padding: 10px 18px;
+  background: #f0ebe0;
+  border: 1px solid #d9cfbc;
+  border-radius: 60px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s;
+  color: #5c4f38;
+}
+
+.preset-amount-btn:hover {
+  background: #c67a2e;
+  color: white;
+  transform: translateY(-2px);
+}
+
+.amount-large-input {
+  width: 100%;
+  padding: 18px 20px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  border: 2px solid #d9cfbc;
+  border-radius: 60px;
+  background: white;
+  font-family: "JetBrains Mono", monospace;
+  color: #c67a2e;
+}
+
+.amount-large-input:focus {
+  outline: none;
+  border-color: #c67a2e;
+  box-shadow: 0 0 0 3px rgba(198, 122, 46, 0.2);
+}
