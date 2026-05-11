@@ -324,6 +324,21 @@
       "wage": 600,
       "amount": 60000,
       "notes": ""
+    },
+    {
+      "id": "mp0pxx93usne",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 29,
+      "ad": "2026-05-10",
+      "name": "sitakumari",
+      "gender": "Female",
+      "task": "Weeding",
+      "hours": 0,
+      "days": 123,
+      "wage": 400,
+      "amount": 49200,
+      "notes": ""
     }
   ],
   "vehicle": [
@@ -570,5 +585,5 @@
       "name": "vision"
     }
   ],
-  "lastUpdated": "2026-05-11T04:39:00.287Z"
+  "lastUpdated": "2026-05-11T05:06:22.344Z"
 }
