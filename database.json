@@ -96,6 +96,25 @@
         }
       ],
       "notes": "Festival shopping"
+    },
+    {
+      "id": "mp0ry35onnwt",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 29,
+      "ad": "2026-05-10",
+      "items": [
+        {
+          "itemType": "Grains & Cereals",
+          "itemName": "Chhoila",
+          "quantity": 120,
+          "rate": 120,
+          "lineTotal": 14400
+        }
+      ],
+      "amount": 14400,
+      "category": "Grains & Cereals",
+      "notes": ""
     }
   ],
   "income": [
@@ -309,6 +328,36 @@
       "wage": 420,
       "amount": 1680,
       "notes": "Rice harvest"
+    },
+    {
+      "id": "mp0pheou5dlr",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 29,
+      "ad": "2026-05-10",
+      "name": "jhin jhni",
+      "gender": "Female",
+      "task": "Other",
+      "hours": 0,
+      "days": 100,
+      "wage": 600,
+      "amount": 60000,
+      "notes": ""
+    },
+    {
+      "id": "mp0pxx93usne",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 29,
+      "ad": "2026-05-10",
+      "name": "sitakumari",
+      "gender": "Female",
+      "task": "Weeding",
+      "hours": 0,
+      "days": 123,
+      "wage": 400,
+      "amount": 49200,
+      "notes": ""
     }
   ],
   "vehicle": [
@@ -443,6 +492,17 @@
       "category": "Repair",
       "amount": 543210,
       "notes": "sathi"
+    },
+    {
+      "id": "mp0qqo2e3v6u",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 29,
+      "ad": "2026-05-10",
+      "vehicle": "Bike",
+      "category": "Maintenance",
+      "amount": 70000,
+      "notes": "chasis repair"
     }
   ],
   "medical": [
@@ -481,6 +541,42 @@
       "amount": 1200,
       "doctor": "Pathology Lab",
       "notes": "Blood test"
+    },
+    {
+      "id": "mp0pohduqtt4",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 29,
+      "ad": "2026-05-10",
+      "member": "Hari Sharma",
+      "type": "Lab Test",
+      "amount": 5000,
+      "doctor": "Sunita",
+      "notes": "Blood"
+    },
+    {
+      "id": "mp0qt6znjac0",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 29,
+      "ad": "2026-05-10",
+      "member": "Ram Prasad Sharma",
+      "type": "Doctor Visit",
+      "amount": 12000,
+      "doctor": "",
+      "notes": ""
+    },
+    {
+      "id": "mp0rs2ziig51",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 29,
+      "ad": "2026-05-10",
+      "member": "Gita Sharma",
+      "type": "Doctor Visit",
+      "amount": 50000,
+      "doctor": "ijoibtg",
+      "notes": "test"
     }
   ],
   "family": [
@@ -543,5 +639,5 @@
       "name": "vision"
     }
   ],
-  "lastUpdated": "2026-05-11T04:07:55.784Z"
+  "lastUpdated": "2026-05-11T05:41:58.727Z"
 }
