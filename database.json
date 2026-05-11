@@ -534,6 +534,18 @@
       "amount": 5000,
       "doctor": "Sunita",
       "notes": "Blood"
+    },
+    {
+      "id": "mp0qt6znjac0",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 29,
+      "ad": "2026-05-10",
+      "member": "Ram Prasad Sharma",
+      "type": "Doctor Visit",
+      "amount": 12000,
+      "doctor": "",
+      "notes": ""
     }
   ],
   "family": [
@@ -596,5 +608,5 @@
       "name": "vision"
     }
   ],
-  "lastUpdated": "2026-05-11T05:08:12.991Z"
+  "lastUpdated": "2026-05-11T05:10:10.663Z"
 }
