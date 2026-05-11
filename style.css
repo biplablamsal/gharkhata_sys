@@ -6236,3 +6236,98 @@ button {
   border-color: #c67a2e;
   box-shadow: 0 0 0 3px rgba(198, 122, 46, 0.2);
 }
+
+/* Fix sidebar footer visibility - ALWAYS SHOW BUTTONS */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.sidebar-nav {
+  flex: 0 1 auto;
+  overflow-y: visible;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  background: #1e1a14;
+  position: sticky;
+  bottom: 0;
+  padding: 14px 12px 20px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 10;
+}
+
+/* Make sure buttons are visible */
+.sidebar-footer .btn-export,
+.sidebar-footer .btn-logout {
+  display: block !important;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+/* =====================================================
+   SIDEBAR DROPDOWN FOR DATA TOOLS
+   ===================================================== */
+
+.dropdown-container {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.dropdown-btn {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.75);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-family: "Sora", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdown-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.dropdown-content {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  margin-left: 12px;
+  padding-left: 8px;
+  border-left: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.dropdown-content.show {
+  display: flex;
+}
+
+.dropdown-item {
+  width: 100% !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  margin-bottom: 0 !important;
+  text-align: left;
+  padding: 8px 12px !important;
+  font-size: 0.75rem !important;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Adjust sidebar footer spacing */
+.sidebar-footer {
+  padding-bottom: 20px;
+}

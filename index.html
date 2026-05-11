@@ -448,12 +448,13 @@
           >
         </nav>
         <div class="sidebar-footer">
+          <!-- Cloud sync buttons - ALWAYS VISIBLE -->
           <button
             class="btn-export"
             id="downloadFromCloudBtn"
             style="width: 100%; margin-bottom: 8px; background: #1a6fa8"
           >
-            ☁️ Download from Cloud (GitHub)
+            ☁️ Download from Cloud
           </button>
 
           <button
@@ -461,24 +462,31 @@
             id="syncToCloudBtn"
             style="width: 100%; margin-bottom: 8px; background: #d97706"
           >
-            ☁️ Sync to Cloud (GitHub)
+            ☁️ Sync to Cloud
           </button>
-          <button
-            class="btn-export"
-            id="backupBtn"
-            style="width: 100%; margin-bottom: 8px"
-          >
-            💾 Backup All Data
+
+          <!-- DROPDOWN for Data Tools -->
+          <div class="dropdown-container">
+            <button class="dropdown-btn" id="dataToolsBtn">
+              📦 Data Tools ▼
+            </button>
+            <div class="dropdown-content" id="dataToolsDropdown">
+              <button class="btn-export dropdown-item" id="backupBtn">
+                💾 Backup All Data
+              </button>
+              <button class="btn-export dropdown-item" id="restoreBtn">
+                🔄 Restore from Backup
+              </button>
+              <button class="btn-export dropdown-item" id="exportAllBtn">
+                📥 Export All CSV
+              </button>
+            </div>
+          </div>
+
+          <!-- Logout button at bottom -->
+          <button class="btn-logout" id="logoutBtn" style="margin-top: 8px">
+            🔒 Logout
           </button>
-          <button
-            class="btn-export"
-            id="restoreBtn"
-            style="width: 100%; margin-bottom: 8px"
-          >
-            🔄 Restore from Backup
-          </button>
-          <button class="btn-export" id="exportAllBtn">⬇ Export All CSV</button>
-          <button class="btn-logout" id="logoutBtn">🔒 Logout</button>
         </div>
       </aside>
 

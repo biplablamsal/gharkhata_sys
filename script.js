@@ -6408,14 +6408,108 @@ function calculateTotalMilk() {
     console.log("All buttons connected! Ready to use.");
   });
 
+  // Force connect all buttons when DOM is ready
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("Connecting buttons...");
+
+    // Backup button
+    const backupBtn = document.getElementById("backupBtn");
+    if (backupBtn) {
+      backupBtn.onclick = function (e) {
+        e.preventDefault();
+        backupAllData();
+      };
+      console.log("Backup button connected");
+    }
+
+    // Restore button
+    const restoreBtn = document.getElementById("restoreBtn");
+    if (restoreBtn) {
+      restoreBtn.onclick = function (e) {
+        e.preventDefault();
+        restoreBackup();
+      };
+      console.log("Restore button connected");
+    }
+
+    // Export All button
+    const exportAllBtn = document.getElementById("exportAllBtn");
+    if (exportAllBtn) {
+      exportAllBtn.onclick = function (e) {
+        e.preventDefault();
+        exportAllCSV();
+      };
+      console.log("Export All button connected");
+    }
+
+    // Logout button
+    const logoutBtn = document.getElementById("logoutBtn");
+    if (logoutBtn) {
+      logoutBtn.onclick = function (e) {
+        e.preventDefault();
+        doLogout();
+      };
+      console.log("Logout button connected");
+    }
+
+    // Search button
+    const searchBtn = document.getElementById("globalSearchBtn");
+    if (searchBtn) {
+      searchBtn.onclick = function (e) {
+        e.preventDefault();
+        showGlobalSearch();
+      };
+      console.log("Search button connected");
+    }
+
+    // Fix navigation items
+    const navItems = document.querySelectorAll(".nav-item");
+    navItems.forEach(function (item) {
+      item.onclick = function (e) {
+        e.preventDefault();
+        const page = this.getAttribute("data-page");
+        if (page) navigate(page);
+        closeSidebarMobile();
+      };
+    });
+    console.log("Navigation items connected");
+
+    // Fix print buttons
+    window.printModuleReport = printModuleReport;
+
+    // ========== ADD THIS DROPDOWN CODE HERE ==========
+    // Setup dropdown for Data Tools
+    const dropdownBtn = document.getElementById("dataToolsBtn");
+    const dropdownContent = document.getElementById("dataToolsDropdown");
+
+    if (dropdownBtn && dropdownContent) {
+      dropdownBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        dropdownContent.classList.toggle("show");
+        console.log("Dropdown toggled");
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", function (e) {
+        if (
+          dropdownBtn &&
+          dropdownContent &&
+          !dropdownBtn.contains(e.target) &&
+          !dropdownContent.contains(e.target)
+        ) {
+          dropdownContent.classList.remove("show");
+        }
+      });
+      console.log("Dropdown connected");
+    }
+    // ========== END OF DROPDOWN CODE ==========
+
+    console.log("All buttons connected! Ready to use.");
+  });
+
   // Make sure exportAllCSV is available globally
   window.exportAllCSV = exportAllCSV;
-
-  // ============================================================
-  //  MODERN LOGIN - TAB SWITCHING & TERMS
-  // ============================================================
-
-  // Make the new function global
 
   // ============================================================
   //  IMPROVED INCOME FUNCTIONS
