@@ -473,6 +473,17 @@
       "category": "Repair",
       "amount": 543210,
       "notes": "sathi"
+    },
+    {
+      "id": "mp0qqo2e3v6u",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 29,
+      "ad": "2026-05-10",
+      "vehicle": "Bike",
+      "category": "Maintenance",
+      "amount": 70000,
+      "notes": "chasis repair"
     }
   ],
   "medical": [
@@ -585,5 +596,5 @@
       "name": "vision"
     }
   ],
-  "lastUpdated": "2026-05-11T05:06:22.344Z"
+  "lastUpdated": "2026-05-11T05:08:12.991Z"
 }
