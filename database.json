@@ -421,6 +421,28 @@
       "category": "Insurance",
       "amount": 10000,
       "notes": ""
+    },
+    {
+      "id": "mp0ojo6u11sy",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 28,
+      "ad": "2026-05-09",
+      "vehicle": "Scooter",
+      "category": "Maintenance",
+      "amount": 100000,
+      "notes": "engine machining"
+    },
+    {
+      "id": "mp0okdsgtn3n",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 29,
+      "ad": "2026-05-10",
+      "vehicle": "Scooter",
+      "category": "Repair",
+      "amount": 543210,
+      "notes": "sathi"
     }
   ],
   "medical": [
@@ -521,5 +543,5 @@
       "name": "vision"
     }
   ],
-  "lastUpdated": "2026-05-11T03:50:16.668Z"
+  "lastUpdated": "2026-05-11T04:07:55.784Z"
 }
