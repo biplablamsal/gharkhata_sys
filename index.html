@@ -1580,57 +1580,16 @@
             </div>
 
             <!-- Filters - Compact 2 Row -->
+            <!-- Filters - Compact 2 Row -->
             <div class="filter-bar-mobile">
               <div class="filter-row">
-                <div class="filter-chip">
-                  <span>📅</span>
-                  <select id="vehBSYear" onchange="renderVehicleTable()">
-                    <option value="">Year</option>
-                  </select>
-                </div>
-                <div class="filter-chip">
-                  <span>🗓️</span>
-                  <select id="vehBSMonth" onchange="renderVehicleTable()">
-                    <option value="">Month</option>
-                    <option value="1">बैशाख</option>
-                    <option value="2">जेठ</option>
-                    <option value="3">असार</option>
-                    <option value="4">श्रावण</option>
-                    <option value="5">भाद्र</option>
-                    <option value="6">आश्विन</option>
-                    <option value="7">कार्तिक</option>
-                    <option value="8">मंसिर</option>
-                    <option value="9">पुष</option>
-                    <option value="10">माघ</option>
-                    <option value="11">फाल्गुन</option>
-                    <option value="12">चैत्र</option>
-                  </select>
-                </div>
-                <button class="clear-pill" onclick="clearVehicleFilters()">
-                  Clear
-                </button>
+                <div class="filter-chip">📅 Year select</div>
+                <div class="filter-chip">🗓️ Month select</div>
+                <button class="clear-pill">Clear</button>
               </div>
               <div class="filter-row">
-                <div class="filter-chip">
-                  <span>🏷️</span>
-                  <select id="vehCatFilter" onchange="renderVehicleTable()">
-                    <option value="">Category</option>
-                    <option value="Fuel">⛽ Fuel</option>
-                    <option value="Maintenance">🔧 Maintenance</option>
-                    <option value="Repair">🔨 Repair</option>
-                    <option value="Insurance">📄 Insurance</option>
-                    <option value="Other">📦 Other</option>
-                  </select>
-                </div>
-                <div class="filter-chip search-chip">
-                  <span>🔍</span>
-                  <input
-                    type="text"
-                    id="vehSearch"
-                    placeholder="Search..."
-                    oninput="renderVehicleTable()"
-                  />
-                </div>
+                <div class="filter-chip">🏷️ Category select</div>
+                <div class="filter-chip search-chip">🔍 Search input</div>
               </div>
             </div>
 

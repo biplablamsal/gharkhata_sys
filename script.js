@@ -1,3 +1,14 @@
+// =====================================================
+//  FALLBACK FUNCTIONS (Must be defined early)
+// =====================================================
+
+// Catch any missing render functions
+if (typeof renderListView === "undefined") {
+  window.renderListView = function () {
+    console.warn("renderListView called - redirecting to renderIncomeTable");
+    renderIncomeTable();
+  };
+}
 /* =====================================================
    GharKhata v2 — script.js
    Complete Household Management System
@@ -472,8 +483,21 @@ function updateTopbarDates() {
 }
 
 function closeSidebarMobile() {
-  document.getElementById("sidebar").classList.remove("open");
-  document.getElementById("sidebarBackdrop").classList.remove("open");
+  console.log("closeSidebarMobile called");
+  const sidebar = document.getElementById("sidebar");
+  const backdrop = document.getElementById("sidebarBackdrop");
+  if (sidebar) {
+    sidebar.classList.remove("open");
+    console.log(
+      "Sidebar closed, has class 'open':",
+      sidebar.classList.contains("open"),
+    );
+  }
+  if (backdrop) {
+    backdrop.classList.remove("open");
+  }
+  document.body.style.overflow = "";
+  document.body.style.position = "";
 }
 
 function navigate(page) {
@@ -2004,17 +2028,25 @@ function deleteRecord(module, id) {
 //  TABLE RENDERERS
 // ============================================================
 
+// ============================================================
+//  TABLE RENDERERS
+// ============================================================
+
 function renderTable(module) {
   const map = {
-    household: renderHousehold,
-    income: renderIncome,
-    agriculture: renderAgriculture,
-    livestock: renderLivestock,
+    household: renderHouseholdTable,
+    income: renderIncomeTable,
+    agriculture: renderAgricultureTable,
+    livestock: renderLivestockTable,
     labour: renderLabour,
     vehicle: renderVehicle,
     medical: renderMedical,
   };
-  if (map[module]) map[module]();
+  if (map[module]) {
+    map[module]();
+  } else {
+    console.error("Unknown module in renderTable:", module);
+  }
 }
 
 function renderHousehold() {
@@ -6307,6 +6339,8 @@ function calculateTotalMilk() {
         e.preventDefault();
         const page = this.getAttribute("data-page");
         if (page) navigate(page);
+        // Close sidebar after clicking on mobile
+        closeSidebarMobile();
       };
     });
     console.log("Navigation items connected");
@@ -6833,3 +6867,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
   console.log("✅ Sidebar scrolling fix applied");
 })();
+// Force close sidebar on any menu click (IMPROVED)
+document.addEventListener("DOMContentLoaded", function () {
+  const allNavItems = document.querySelectorAll(".nav-item");
+  allNavItems.forEach(function (item) {
+    item.addEventListener("click", function (e) {
+      // Small delay to ensure navigation happens first, then close sidebar
+      setTimeout(function () {
+        const sidebar = document.getElementById("sidebar");
+        const backdrop = document.getElementById("sidebarBackdrop");
+        if (sidebar) sidebar.classList.remove("open");
+        if (backdrop) backdrop.classList.remove("open");
+        document.body.style.overflow = "";
+        document.body.style.position = "";
+        console.log("Sidebar closed after navigation");
+      }, 100);
+    });
+  });
+});
+
+// Fix missing function - catches any undefined render calls
+function renderListView() {
+  console.warn("renderListView called - check your code");
+  // Default to showing current page
+  if (currentPage === "income") renderIncomeTable();
+  else if (currentPage === "household") renderHouseholdTable();
+  else if (currentPage === "agriculture") renderAgricultureTable();
+  else if (currentPage === "livestock") renderLivestockTable();
+  else if (currentPage === "labour") renderLabour();
+  else if (currentPage === "vehicle") renderVehicle();
+  else if (currentPage === "medical") renderMedical();
+}
