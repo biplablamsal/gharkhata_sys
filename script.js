@@ -7050,8 +7050,13 @@ function renderListView() {
   else if (currentPage === "medical") renderMedical();
 }
 
+
+
 // Make vehicle form functions global
 window.selectModernVehicle = selectModernVehicle;
 window.selectModernCategory = selectModernCategory;
 window.setVehicleAmountPreset = setVehicleAmountPreset;
 window.formatLargeAmount = formatLargeAmount;
+
+
+

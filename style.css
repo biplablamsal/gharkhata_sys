@@ -6269,6 +6269,103 @@ button {
 }
 
 /* =====================================================
+   SIDEBAR DROPDOWN FOR DATA TOOLS - MOBILE FIXED
+   ===================================================== */
+
+.dropdown-container {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.dropdown-btn {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.75);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-family: "Sora", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.dropdown-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+/* Arrow icon rotation */
+.dropdown-btn::after {
+  content: "▼";
+  font-size: 0.7rem;
+  transition: transform 0.2s ease;
+}
+
+.dropdown-btn.open::after {
+  transform: rotate(180deg);
+}
+
+.dropdown-content {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 8px;
+  margin-left: 12px;
+  padding-left: 8px;
+  border-left: 2px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.dropdown-content.show {
+  display: flex;
+}
+
+/* Mobile touch optimization */
+@media (max-width: 820px) {
+  .dropdown-btn {
+    padding: 12px 14px;
+    min-height: 48px;
+    font-size: 0.85rem;
+  }
+
+  .dropdown-content {
+    margin-left: 8px;
+  }
+
+  .dropdown-item {
+    padding: 10px 12px !important;
+    min-height: 44px;
+  }
+}
+
+.dropdown-item {
+  width: 100% !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  margin-bottom: 0 !important;
+  text-align: left;
+  padding: 8px 12px !important;
+  font-size: 0.75rem !important;
+  border-radius: 6px !important;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* Adjust sidebar footer spacing */
+.sidebar-footer {
+  padding-bottom: 20px;
+}
+
+/* =====================================================
    SIDEBAR DROPDOWN FOR DATA TOOLS
    ===================================================== */
 
@@ -6283,21 +6380,25 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.15);
   color: rgba(255, 255, 255, 0.75);
   padding: 10px 14px;
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   font-family: "Sora", sans-serif;
   font-size: 0.8rem;
   font-weight: 500;
   cursor: pointer;
-  transition: var(--transition);
   text-align: left;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
 }
 
-.dropdown-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  color: #fff;
+.dropdown-btn::after {
+  content: "▼";
+  font-size: 0.7rem;
+  transition: transform 0.2s;
+}
+
+.dropdown-btn.open::after {
+  transform: rotate(180deg);
 }
 
 .dropdown-content {
@@ -6317,17 +6418,34 @@ button {
 .dropdown-item {
   width: 100% !important;
   background: rgba(255, 255, 255, 0.05) !important;
-  margin-bottom: 0 !important;
   text-align: left;
   padding: 8px 12px !important;
-  font-size: 0.75rem !important;
+  border-radius: 6px !important;
+  margin-bottom: 0 !important;
 }
 
 .dropdown-item:hover {
   background: rgba(255, 255, 255, 0.12) !important;
 }
 
-/* Adjust sidebar footer spacing */
+/* Mobile touch optimization */
+@media (max-width: 820px) {
+  .dropdown-btn {
+    padding: 12px 14px;
+    min-height: 48px;
+    font-size: 0.85rem;
+  }
+
+  .dropdown-item {
+    padding: 10px 12px !important;
+    min-height: 44px;
+  }
+
+  .dropdown-content {
+    margin-left: 8px;
+  }
+}
+
 .sidebar-footer {
   padding-bottom: 20px;
 }
