@@ -9,6 +9,163 @@ if (typeof renderListView === "undefined") {
     renderIncomeTable();
   };
 }
+
+// Auto-sync variables
+let autoSyncTimer = null;
+let isSyncing = false;
+let pendingSync = false;
+const AUTO_SYNC_DELAY = 10000; // 10 seconds
+
+// =====================================================
+//  AUTO SYNC FUNCTIONS (Mobile Optimized)
+// =====================================================
+
+function triggerAutoSync() {
+  // Clear existing timer
+  if (autoSyncTimer) {
+    clearTimeout(autoSyncTimer);
+  }
+
+  // Check if online
+  if (!navigator.onLine) {
+    showToast("📡 Waiting for internet connection...", "warning");
+    pendingSync = true;
+    return;
+  }
+
+  // Check if already syncing
+  if (isSyncing) {
+    pendingSync = true;
+    return;
+  }
+
+  // Show pending notification
+  showToast("⏳ Auto-sync in 10 seconds...", "info");
+
+  // Start timer
+  autoSyncTimer = setTimeout(() => {
+    performAutoSync();
+  }, AUTO_SYNC_DELAY);
+}
+
+async function performAutoSync() {
+  // Prevent multiple syncs
+  if (isSyncing) {
+    pendingSync = true;
+    return;
+  }
+
+  // Check online status
+  if (!navigator.onLine) {
+    showToast("📡 No internet. Will sync when online.", "warning");
+    pendingSync = true;
+    return;
+  }
+
+  // Get saved token
+  const savedToken = localStorage.getItem("gharkhata_github_token");
+
+  if (!savedToken) {
+    // First time - ask for token
+    const token = prompt(
+      "🔐 Enter GitHub token for auto-backup (required once):\n\nGet token from: github.com/settings/tokens\n\nRequired scope: repo",
+    );
+
+    if (token && token.trim()) {
+      localStorage.setItem("gharkhata_github_token", token.trim());
+      showToast("💾 Token saved! Auto-sync enabled.", "success");
+      performAutoSync(); // Retry sync
+    } else {
+      showToast("⚠️ Auto-sync disabled. Sync manually.", "warning");
+    }
+    return;
+  }
+
+  isSyncing = true;
+
+  // Show syncing notification
+  showToast("🔄 Auto-syncing to cloud...", "info");
+
+  try {
+    // Collect data
+    const cloudData = {
+      household: loadData("household"),
+      income: loadData("income"),
+      agriculture: loadData("agriculture"),
+      livestock: loadData("livestock"),
+      labour: loadData("labour"),
+      vehicle: loadData("vehicle"),
+      medical: loadData("medical"),
+      family: loadData("family"),
+      users: loadUsers(),
+      lastUpdated: new Date().toISOString(),
+    };
+
+    const content = JSON.stringify(cloudData, null, 2);
+    const encodedContent = btoa(unescape(encodeURIComponent(content)));
+
+    // Get SHA
+    let sha = "";
+    const fileCheck = await fetch(GITHUB_API);
+    if (fileCheck.ok) {
+      const fileInfo = await fileCheck.json();
+      sha = fileInfo.sha;
+    }
+
+    // Upload
+    const response = await fetch(GITHUB_API, {
+      method: "PUT",
+      headers: {
+        Accept: "application/vnd.github.v3+json",
+        Authorization: `token ${savedToken}`,
+      },
+      body: JSON.stringify({
+        message: "Auto-sync from GharKhata",
+        content: encodedContent,
+        sha: sha,
+        branch: "main",
+      }),
+    });
+
+    if (response.ok) {
+      showToast("✅ Auto-backup complete!", "success");
+    } else {
+      const error = await response.json();
+      if (error.message === "Bad credentials") {
+        localStorage.removeItem("gharkhata_github_token");
+        showToast("❌ Invalid token. Please sync manually.", "error");
+      } else {
+        showToast("⚠️ Auto-sync failed. Will retry.", "warning");
+        pendingSync = true;
+      }
+    }
+  } catch (error) {
+    console.error("Auto-sync error:", error);
+    showToast("⚠️ Auto-sync failed. Will retry later.", "warning");
+    pendingSync = true;
+  } finally {
+    isSyncing = false;
+
+    // Check for pending sync
+    if (pendingSync) {
+      pendingSync = false;
+      triggerAutoSync();
+    }
+  }
+}
+
+// Listen for online/offline events (mobile friendly)
+window.addEventListener("online", function () {
+  showToast("📡 Back online! Syncing...", "success");
+  if (pendingSync) {
+    triggerAutoSync();
+  }
+});
+
+window.addEventListener("offline", function () {
+  showToast("📡 You're offline. Changes saved locally.", "warning");
+});
+
 /* =====================================================
    GharKhata v2 — script.js
    Complete Household Management System
@@ -1847,6 +2004,156 @@ window.calculateAgriFromRate = calculateAgriFromRate;
 window.setAgriAmount = setAgriAmount;
 window.updateAgriInsightPanel = updateAgriInsightPanel;
 
+// =====================================================
+//  AUTO SYNC FUNCTIONS (Add this entire block)
+// =====================================================
+
+function triggerAutoSync() {
+  // Clear existing timer
+  if (autoSyncTimer) {
+    clearTimeout(autoSyncTimer);
+  }
+
+  // Check if online
+  if (!navigator.onLine) {
+    showToast("📡 Waiting for internet connection...", "warning");
+    pendingSync = true;
+    return;
+  }
+
+  // Check if already syncing
+  if (isSyncing) {
+    pendingSync = true;
+    return;
+  }
+
+  // Show pending notification
+  showToast("⏳ Auto-sync in 10 seconds...", "info");
+
+  // Start timer
+  autoSyncTimer = setTimeout(() => {
+    performAutoSync();
+  }, AUTO_SYNC_DELAY);
+}
+
+async function performAutoSync() {
+  // Prevent multiple syncs
+  if (isSyncing) {
+    pendingSync = true;
+    return;
+  }
+
+  // Check online status
+  if (!navigator.onLine) {
+    showToast("📡 No internet. Will sync when online.", "warning");
+    pendingSync = true;
+    return;
+  }
+
+  // Get saved token
+  const savedToken = localStorage.getItem("gharkhata_github_token");
+
+  if (!savedToken) {
+    // First time - ask for token
+    const token = prompt(
+      "🔐 Enter GitHub token for auto-backup (required once):\n\nGet token from: github.com/settings/tokens\n\nRequired scope: repo",
+    );
+
+    if (token && token.trim()) {
+      localStorage.setItem("gharkhata_github_token", token.trim());
+      showToast("💾 Token saved! Auto-sync enabled.", "success");
+      performAutoSync(); // Retry sync
+    } else {
+      showToast("⚠️ Auto-sync disabled. Sync manually.", "warning");
+    }
+    return;
+  }
+
+  isSyncing = true;
+
+  // Show syncing notification
+  showToast("🔄 Auto-syncing to cloud...", "info");
+
+  try {
+    // Collect data
+    const cloudData = {
+      household: loadData("household"),
+      income: loadData("income"),
+      agriculture: loadData("agriculture"),
+      livestock: loadData("livestock"),
+      labour: loadData("labour"),
+      vehicle: loadData("vehicle"),
+      medical: loadData("medical"),
+      family: loadData("family"),
+      users: loadUsers(),
+      lastUpdated: new Date().toISOString(),
+    };
+
+    const content = JSON.stringify(cloudData, null, 2);
+    const encodedContent = btoa(unescape(encodeURIComponent(content)));
+
+    // Get SHA
+    let sha = "";
+    const fileCheck = await fetch(GITHUB_API);
+    if (fileCheck.ok) {
+      const fileInfo = await fileCheck.json();
+      sha = fileInfo.sha;
+    }
+
+    // Upload
+    const response = await fetch(GITHUB_API, {
+      method: "PUT",
+      headers: {
+        Accept: "application/vnd.github.v3+json",
+        Authorization: `token ${savedToken}`,
+      },
+      body: JSON.stringify({
+        message: "Auto-sync from GharKhata",
+        content: encodedContent,
+        sha: sha,
+        branch: "main",
+      }),
+    });
+
+    if (response.ok) {
+      showToast("✅ Auto-backup complete!", "success");
+    } else {
+      const error = await response.json();
+      if (error.message === "Bad credentials") {
+        localStorage.removeItem("gharkhata_github_token");
+        showToast("❌ Invalid token. Please sync manually.", "error");
+      } else {
+        showToast("⚠️ Auto-sync failed. Will retry.", "warning");
+        pendingSync = true;
+      }
+    }
+  } catch (error) {
+    console.error("Auto-sync error:", error);
+    showToast("⚠️ Auto-sync failed. Will retry later.", "warning");
+    pendingSync = true;
+  } finally {
+    isSyncing = false;
+
+    // Check for pending sync
+    if (pendingSync) {
+      pendingSync = false;
+      triggerAutoSync();
+    }
+  }
+}
+
+// Listen for online/offline events
+window.addEventListener("online", function () {
+  showToast("📡 Back online! Syncing...", "success");
+  if (pendingSync) {
+    triggerAutoSync();
+  }
+});
+
+window.addEventListener("offline", function () {
+  showToast("📡 You're offline. Changes saved locally.", "warning");
+});
+
 // ============================================================
 //  SAVE & DELETE RECORDS
 // ============================================================
@@ -1945,24 +2252,19 @@ function saveRecord() {
       notes: fval("f_notes"),
     });
   } else if (module === "livestock") {
-    // Get morning and evening quantities
     const morningQty =
       parseFloat(document.getElementById("f_morning_qty")?.value) || 0;
     const eveningQty =
       parseFloat(document.getElementById("f_evening_qty")?.value) || 0;
     const totalQty = morningQty + eveningQty;
-
-    // Get regular quantity (for expenses)
     const regularQty =
       parseFloat(document.getElementById("f_quantity")?.value) || 0;
 
-    // Determine which quantity to use
     let finalQuantity = 0;
     let finalMorningQty = 0;
     let finalEveningQty = 0;
     let finalType = fval("f_type");
 
-    // If this is milk production (has morning or evening fields)
     if (morningQty > 0 || eveningQty > 0) {
       finalQuantity = totalQty;
       finalMorningQty = morningQty;
@@ -1972,11 +2274,9 @@ function saveRecord() {
       finalQuantity = regularQty;
     }
 
-    // Get amount (for milk production it's 0, for expenses it's the entered amount)
     let finalAmount =
       parseFloat(document.getElementById("f_amount")?.value) || 0;
 
-    // If amount is empty and it's milk production, set to 0
     if (finalType === "Milk Production") {
       finalAmount = 0;
     }
@@ -1991,8 +2291,6 @@ function saveRecord() {
       amount: finalAmount,
       notes: fval("f_notes"),
     });
-
-    console.log("Saving livestock record:", record);
   } else if (module === "labour") {
     const days = fnum("f_days"),
       wage = fnum("f_wage");
@@ -2059,6 +2357,9 @@ function saveRecord() {
     refreshRecentTransactions();
   showToast(editingId ? "Record updated!" : "Record added!", "success");
   populateMemberDropdowns();
+
+  // ========== ADD THIS LINE ==========
+  triggerAutoSync(); // Trigger auto-sync after saving
 }
 
 function deleteRecord(module, id) {
@@ -6396,14 +6697,70 @@ function calculateTotalMilk() {
         e.preventDefault();
         const page = this.getAttribute("data-page");
         if (page) navigate(page);
-        // Close sidebar after clicking on mobile
         closeSidebarMobile();
       };
     });
     console.log("Navigation items connected");
 
-    // Fix print buttons (they use inline onclick, but ensure function exists)
+    // Fix print buttons
     window.printModuleReport = printModuleReport;
+
+    // ========== ADD TOKEN MANAGEMENT CODE HERE ==========
+    const TOKEN_STORAGE_KEY = "gharkhata_github_token";
+
+    function updateTokenStatusDisplay() {
+      const token = localStorage.getItem(TOKEN_STORAGE_KEY);
+      const statusDiv = document.getElementById("tokenStatus");
+      const tokenInput = document.getElementById("githubTokenInput");
+
+      if (statusDiv) {
+        if (token && token.length > 10) {
+          statusDiv.innerHTML = "✅ Token saved! Auto-sync enabled.";
+          statusDiv.className = "token-status saved";
+          if (tokenInput) tokenInput.value = "";
+        } else {
+          statusDiv.innerHTML =
+            "⚠️ No token saved. Enter your GitHub token above.";
+          statusDiv.className = "token-status missing";
+        }
+      }
+    }
+
+    // Save token button
+    const saveTokenBtn = document.getElementById("saveTokenBtn");
+    if (saveTokenBtn) {
+      saveTokenBtn.onclick = function (e) {
+        e.preventDefault();
+        const tokenInput = document.getElementById("githubTokenInput");
+        const token = tokenInput ? tokenInput.value.trim() : "";
+
+        if (token && token.startsWith("ghp_") && token.length > 30) {
+          localStorage.setItem(TOKEN_STORAGE_KEY, token);
+          if (tokenInput) tokenInput.value = "";
+          updateTokenStatusDisplay();
+          showToast("✅ Token saved! Auto-sync will work now.", "success");
+        } else if (token) {
+          showToast(
+            "❌ Invalid token format. Token should start with 'ghp_'",
+            "error",
+          );
+        } else {
+          showToast("❌ Please paste your GitHub token", "error");
+        }
+      };
+    }
+
+    // Load saved token on page load
+    function loadSavedToken() {
+      const token = localStorage.getItem(TOKEN_STORAGE_KEY);
+      if (token) {
+        console.log("✅ Token found in storage");
+      }
+      updateTokenStatusDisplay();
+    }
+
+    loadSavedToken();
+    // ========== END TOKEN MANAGEMENT CODE ==========
 
     console.log("All buttons connected! Ready to use.");
   });
@@ -6860,9 +7217,71 @@ async function downloadFromCloud() {
   }
 }
 
+// =====================================================
+//  GITHUB TOKEN STORAGE
+// =====================================================
+
+const TOKEN_STORAGE_KEY = "gharkhata_github_token";
+
+function saveGitHubToken(token) {
+  if (token && token.trim()) {
+    localStorage.setItem(TOKEN_STORAGE_KEY, token.trim());
+    return true;
+  }
+  return false;
+}
+
+function getSavedGitHubToken() {
+  return localStorage.getItem(TOKEN_STORAGE_KEY);
+}
+
+function clearGitHubToken() {
+  localStorage.removeItem(TOKEN_STORAGE_KEY);
+  showToast(
+    "✅ Token cleared. You'll be prompted again on next sync.",
+    "success",
+  );
+}
+
 // Sync current device data to GitHub JSON (overwrites cloud database)
 async function syncToCloud() {
   showToast("☁️ Syncing to cloud...", "info");
+
+  // ===== NEW CODE: Check for saved token =====
+  const TOKEN_STORAGE_KEY = "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";
+
+  function getSavedGitHubToken() {
+    return localStorage.getItem(TOKEN_STORAGE_KEY);
+  }
+
+  function saveGitHubToken(token) {
+    if (token && token.trim()) {
+      localStorage.setItem(TOKEN_STORAGE_KEY, token.trim());
+      return true;
+    }
+    return false;
+  }
+
+  function clearGitHubToken() {
+    localStorage.removeItem(TOKEN_STORAGE_KEY);
+  }
+
+  let GITHUB_TOKEN = getSavedGitHubToken();
+
+  if (!GITHUB_TOKEN) {
+    GITHUB_TOKEN = prompt(
+      "🔐 Enter your GitHub Personal Access Token (will be saved for future use):\n\nCreate at: https://github.com/settings/tokens\n\nRequired scope: repo",
+    );
+
+    if (!GITHUB_TOKEN) {
+      showToast("❌ Token required to sync to cloud", "error");
+      return;
+    }
+
+    saveGitHubToken(GITHUB_TOKEN);
+    showToast("💾 Token saved for future syncs!", "success");
+  }
+  // ===== END NEW CODE =====
 
   // Collect all current data
   const cloudData = {
@@ -6890,16 +7309,6 @@ async function syncToCloud() {
       sha = fileInfo.sha;
     }
 
-    // IMPORTANT: You need a GitHub token
-    const GITHUB_TOKEN = prompt(
-      "🔐 Enter your GitHub Personal Access Token (create at github.com/settings/tokens):",
-    );
-
-    if (!GITHUB_TOKEN) {
-      showToast("❌ Token required to sync to cloud", "error");
-      return;
-    }
-
     const response = await fetch(GITHUB_API, {
       method: "PUT",
       headers: {
@@ -6915,19 +7324,37 @@ async function syncToCloud() {
     });
 
     if (response.ok) {
-      showToast("✅ Synced to cloud! All devices can now download.", "success");
+      showToast("✅ Synced to cloud! Token saved for next time.", "success");
     } else {
       const error = await response.json();
-      showToast(
-        "❌ Sync failed: " + (error.message || "Check your token"),
-        "error",
-      );
+      // If token is invalid, clear it so user can re-enter
+      if (
+        error.message === "Bad credentials" ||
+        error.message === "Invalid token"
+      ) {
+        clearGitHubToken();
+        showToast(
+          "❌ Invalid token! Cleared saved token. Please try again.",
+          "error",
+        );
+      } else {
+        showToast(
+          "❌ Sync failed: " + (error.message || "Check your token"),
+          "error",
+        );
+      }
     }
   } catch (error) {
     console.error(error);
     showToast("❌ Sync failed. Check console for details.", "error");
   }
 }
+
+// Quick reset token (type this in Console if needed)
+window.clearToken = function () {
+  localStorage.removeItem("gharkhata_github_token");
+  showToast("✅ Token cleared!", "success");
+};
 
 // Connect buttons
 document.addEventListener("DOMContentLoaded", function () {
@@ -7050,13 +7477,8 @@ function renderListView() {
   else if (currentPage === "medical") renderMedical();
 }
 
-
-
 // Make vehicle form functions global
 window.selectModernVehicle = selectModernVehicle;
 window.selectModernCategory = selectModernCategory;
 window.setVehicleAmountPreset = setVehicleAmountPreset;
 window.formatLargeAmount = formatLargeAmount;
-
-
-

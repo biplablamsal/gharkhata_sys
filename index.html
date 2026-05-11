@@ -471,6 +471,22 @@
               📦 Data Tools ▼
             </button>
             <div class="dropdown-content" id="dataToolsDropdown">
+              <!-- Token Input Section -->
+              <div class="token-input-section">
+                <label class="token-label">🔐 GitHub Token (paste once):</label>
+                <input
+                  type="password"
+                  id="githubTokenInput"
+                  class="token-input"
+                  placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
+                  autocomplete="off"
+                />
+                <button id="saveTokenBtn" class="token-save-btn">
+                  💾 Save Token
+                </button>
+                <div id="tokenStatus" class="token-status"></div>
+              </div>
+              <div class="dropdown-divider"></div>
               <button class="btn-export dropdown-item" id="backupBtn">
                 💾 Backup All Data
               </button>
