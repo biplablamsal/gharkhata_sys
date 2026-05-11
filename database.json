@@ -546,6 +546,18 @@
       "amount": 12000,
       "doctor": "",
       "notes": ""
+    },
+    {
+      "id": "mp0rs2ziig51",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 29,
+      "ad": "2026-05-10",
+      "member": "Gita Sharma",
+      "type": "Doctor Visit",
+      "amount": 50000,
+      "doctor": "ijoibtg",
+      "notes": "test"
     }
   ],
   "family": [
@@ -608,5 +620,5 @@
       "name": "vision"
     }
   ],
-  "lastUpdated": "2026-05-11T05:10:10.663Z"
+  "lastUpdated": "2026-05-11T05:37:18.619Z"
 }
