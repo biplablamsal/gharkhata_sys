@@ -309,6 +309,21 @@
       "wage": 420,
       "amount": 1680,
       "notes": "Rice harvest"
+    },
+    {
+      "id": "mp0pheou5dlr",
+      "bsY": 2083,
+      "bsM": 1,
+      "bsD": 29,
+      "ad": "2026-05-10",
+      "name": "jhin jhni",
+      "gender": "Female",
+      "task": "Other",
+      "hours": 0,
+      "days": 100,
+      "wage": 600,
+      "amount": 60000,
+      "notes": ""
     }
   ],
   "vehicle": [
@@ -543,5 +558,5 @@
       "name": "vision"
     }
   ],
-  "lastUpdated": "2026-05-11T04:23:34.030Z"
+  "lastUpdated": "2026-05-11T04:33:16.343Z"
 }
